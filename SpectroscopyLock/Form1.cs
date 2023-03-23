@@ -85,9 +85,27 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
 
+            //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             chart1.MouseWheel += chart1_MouseWheel;
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            var CA = chart1.ChartAreas[0];
+            CA.AxisX.ScaleView.Zoomable = true;
 
+
+
+            var S1 = chart1.Series[0];
+
+            // the vertical line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
+            var VA = new VerticalLineAnnotation();
+            VA.AxisX = CA.AxisX;
+            VA.AllowMoving = true;
+            VA.IsInfinitive = true;
+            VA.ClipToChartArea = CA.Name;
+            VA.Name = "myLine";
+            VA.LineColor = Color.Red;
+            VA.LineWidth = 2;         // use your numbers!
+            VA.X = 1;
+
+            chart1.Annotations.Add(VA);
         }
 
         private void chart1_MouseWheel(object sender, MouseEventArgs e)
