@@ -24,6 +24,7 @@ namespace ChartTest2
         Series series2;
         UDPReceiver udpReceiver;
         private delegate void SafeCallDelegate();
+        VerticalLineAnnotation VA;
 
         public Form1(Deserializer osciWriter, UDPReceiver udpReceiver)
         {
@@ -84,6 +85,7 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             chart1.MouseWheel += chart1_MouseWheel;
@@ -95,12 +97,12 @@ namespace ChartTest2
             var S1 = chart1.Series[0];
 
             // the vertical line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
-            var VA = new VerticalLineAnnotation();
+            VA = new VerticalLineAnnotation();
             VA.AxisX = CA.AxisX;
             VA.AllowMoving = true;
             VA.IsInfinitive = true;
             VA.ClipToChartArea = CA.Name;
-            VA.Name = "myLine";
+            VA.Name = "Lock Point";
             VA.LineColor = Color.Red;
             VA.LineWidth = 2;         // use your numbers!
             VA.X = 1;
@@ -135,8 +137,14 @@ namespace ChartTest2
 
         private void chart1_Click(object sender, EventArgs e)
         {
-
+            var me = e as MouseEventArgs;
+            
+            VA.X = chart1.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
