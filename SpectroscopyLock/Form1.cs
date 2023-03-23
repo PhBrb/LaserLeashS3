@@ -42,30 +42,39 @@ namespace ChartTest2
             }
             else
             {
-                series1.Points.DataBindXY(osciWriter.osciData.xData, osciWriter.osciData.yData);
-                //series1.Points.DataBindY(osciWriter.osciData.dac0);
-                //series2.Points.DataBindY(osciWriter.osciData.adc0);
+                (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
+                series1.Points.DataBindXY(xData, yData);
                 chart1.Update();
             }
         }
 
+        static (double[], double[]) getXYData(Dictionary<double, double> dict)
+        {
+            double[] xData = new double[dict.Count];
+            double[] yData = new double[dict.Count];
+
+            int i = 0;
+            foreach(var item in dict)
+            {
+                xData[i] = item.Key;
+                yData[i] = item.Value;
+                i++;
+            }
+            return (xData, yData);
+        }
 
         public void InitGraph()
         {
             // create a series for each line
             series1 = new Series("Channel0");
-            series1.Points.DataBindXY(osciWriter.osciData.dac0, osciWriter.osciData.adc0);
-            //series1.Points.DataBindY(osciWriter.osciData.adc0);
+            (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
+            series1.Points.DataBindXY(xData, yData);
             series1.ChartType = SeriesChartType.FastLine;
 
-            //series2 = new Series("dac0");
-            //series2.Points.DataBindY(osciWriter.osciData.dac0);
-            //series2.ChartType = SeriesChartType.FastLine;
 
             // add each series to the chart
             chart1.Series.Clear();
             chart1.Series.Add(series1);
-            //chart1.Series.Add(series2);
 
             // additional styling
             chart1.ResetAutoValues();

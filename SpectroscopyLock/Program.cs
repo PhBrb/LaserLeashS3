@@ -22,15 +22,15 @@ namespace ChartTest2
 
 
             OsciData osciData = new OsciData(1000);
-            for(int i=0; i<osciData.dac0.Length; i++)
+            for(int i=0; i<osciData.dac0Rolling.Length; i++)
             {
-                osciData.dac0[i] = i < osciData.dac0.Length/2? (20.0 * i) / osciData.dac0.Length: (20.0 * (osciData.dac0.Length-i)) / osciData.dac0.Length;
-                osciData.adc0[i] = (5.0 * i) / osciData.dac0.Length;
+                osciData.dac0Rolling[i] = i < osciData.dac0Rolling.Length/2? (20.0 * i) / osciData.dac0Rolling.Length: (20.0 * (osciData.dac0Rolling.Length-i)) / osciData.dac0Rolling.Length;
+                osciData.adc0Rolling[i] = (5.0 * i) / osciData.dac0Rolling.Length;
             }
             for (int iFloat = 0; iFloat < 1000; iFloat++)
             {
-                int index = Deserializer.mod(-iFloat, osciData.dac0.Length);
-                osciData.setDatapoint(osciData.dac0[index], osciData.adc0[index]);
+                int index = Deserializer.mod(-iFloat, osciData.dac0Rolling.Length);
+                osciData.setDatapoint(osciData.dac0Rolling[index], osciData.adc0Rolling[index]);
             }
             Deserializer osciWriter = new Deserializer(osciData);
 

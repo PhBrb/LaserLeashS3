@@ -9,13 +9,12 @@ namespace ChartTest2
 {
     public class OsciData
     {
-        public double[] adc0;
-        public double[] adc1;
-        public double[] dac0;
-        public double[] dac1;
+        public double[] adc0Rolling;
+        public double[] adc1Rolling;
+        public double[] dac0Rolling;
+        public double[] dac1Rolling;
 
-        public double[] xData;
-        public double[] yData;
+        public Dictionary<double, double> xyData = new Dictionary<double, double>();
         private double[] range = new double[] { 0, 10 };
         private double resolutionLimit = 0.001;
         private int size;
@@ -29,15 +28,12 @@ namespace ChartTest2
             }
             this.size = size;
 
-            xData = new double[size];
-            yData = new double[size];
-
             setRange(0, 10);
 
-            adc0 = new double[size];
-            adc1 = new double[size];
-            dac0 = new double[size];
-            dac1 = new double[size];
+            adc0Rolling = new double[size];
+            adc1Rolling = new double[size];
+            dac0Rolling = new double[size];
+            dac1Rolling = new double[size];
         }
 
         public bool setRange(double lower, double upper)
@@ -50,20 +46,13 @@ namespace ChartTest2
 
             range[0] = lower;
             range[1] = upper;
-            for (int i = 0; i < size; i++)
-            {
-                xData[i] = range[0] + (rangeLen * i) / size;
-                yData[i] = 0;
-            }
+            xyData = new Dictionary<double, double>();
             return true;
         }
 
         public void setDatapoint(double x, double y)
         {
-            int index = (int)(size*(x - range[0]) / (range[1] - range[0]));
-            index = Math.Min(size-1, index);
-            index = Math.Max(size-1, index);
-            yData[index] = y;
+            xyData[x] = y;
         }
     }
 }

@@ -63,30 +63,30 @@ namespace ChartTest2
             {
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.adc0[osciPosition] = BitConverter.ToUInt16(rawData, iBatch * batchSize * 2 + iFloat*2 + headerSize) * (5.0f / 2.0f * 4.096f) / (1 << 15);
+                    osciData.adc0Rolling[osciPosition] = BitConverter.ToUInt16(rawData, iBatch * batchSize * 2 + iFloat*2 + headerSize) * (5.0f / 2.0f * 4.096f) / (1 << 15);
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.adc1[osciPosition] = BitConverter.ToUInt16(rawData, (iBatch + 1) * batchSize * 2 + iFloat*2 + headerSize) * (5.0f / 2.0f * 4.096f) / (1 << 15);
+                    osciData.adc1Rolling[osciPosition] = BitConverter.ToUInt16(rawData, (iBatch + 1) * batchSize * 2 + iFloat*2 + headerSize) * (5.0f / 2.0f * 4.096f) / (1 << 15);
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.dac0[osciPosition] = (BitConverter.ToUInt16(rawData, (iBatch + 2) * batchSize * 2 + iFloat * 2 + headerSize) ^ (0x8000)) / ((1 << 16) / (4.096f * 5));
+                    osciData.dac0Rolling[osciPosition] = (BitConverter.ToUInt16(rawData, (iBatch + 2) * batchSize * 2 + iFloat * 2 + headerSize) ^ (0x8000)) / ((1 << 16) / (4.096f * 5));
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.dac1[osciPosition] = (BitConverter.ToUInt16(rawData, (iBatch + 3) * batchSize * 2 + iFloat*2 + headerSize) ^ (0x8000)) / ((1 << 16) / (4.096f * 5));
+                    osciData.dac1Rolling[osciPosition] = (BitConverter.ToUInt16(rawData, (iBatch + 3) * batchSize * 2 + iFloat*2 + headerSize) ^ (0x8000)) / ((1 << 16) / (4.096f * 5));
                 }
 
                 //transfer last batchSize numbers to xy data storage
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    int index = mod(-iFloat, osciData.dac0.Length);
-                    osciData.setDatapoint(osciData.adc0[index], osciData.dac0[index]);
+                    int index = mod(-iFloat, osciData.dac0Rolling.Length);
+                    osciData.setDatapoint(osciData.adc0Rolling[index], osciData.dac0Rolling[index]);
                 }
 
 
-                osciPosition = (osciPosition+ 1) % osciData.dac0.Length;
+                osciPosition = (osciPosition+ 1) % osciData.dac0Rolling.Length;
             }
         }
 
