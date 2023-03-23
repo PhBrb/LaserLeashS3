@@ -42,7 +42,9 @@ namespace ChartTest2
             }
             else
             {
-                series1.Points.DataBindXY(osciWriter.osciData.dac0, osciWriter.osciData.adc0);
+                series1.Points.DataBindXY(osciWriter.osciData.xData, osciWriter.osciData.yData);
+                //series1.Points.DataBindY(osciWriter.osciData.dac0);
+                //series2.Points.DataBindY(osciWriter.osciData.adc0);
                 chart1.Update();
             }
         }
@@ -51,8 +53,9 @@ namespace ChartTest2
         public void InitGraph()
         {
             // create a series for each line
-            series1 = new Series("adc0");
+            series1 = new Series("Channel0");
             series1.Points.DataBindXY(osciWriter.osciData.dac0, osciWriter.osciData.adc0);
+            //series1.Points.DataBindY(osciWriter.osciData.adc0);
             series1.ChartType = SeriesChartType.FastLine;
 
             //series2 = new Series("dac0");
@@ -68,8 +71,8 @@ namespace ChartTest2
             chart1.ResetAutoValues();
             chart1.Titles.Clear();
             //chart1.Titles.Add($"Fast Line Plot ({pointCount:N0} points per series)");
-            chart1.ChartAreas[0].AxisX.Title = "Horizontal Axis Label";
-            chart1.ChartAreas[0].AxisY.Title = "Vertical Axis Label";
+            chart1.ChartAreas[0].AxisX.Title = "Voltage output";
+            chart1.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
         }

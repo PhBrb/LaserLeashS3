@@ -32,7 +32,7 @@ namespace ChartTest2
         /// <param name="x"></param>
         /// <param name="m"></param>
         /// <returns></returns>
-        int mod(int x, int m)
+        public static int mod(int x, int m)
         {
             return (x % m + m) % m;
         }

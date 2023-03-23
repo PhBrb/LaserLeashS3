@@ -14,8 +14,8 @@ namespace ChartTest2
         public double[] dac0;
         public double[] dac1;
 
-        private double[] xData;
-        private double[] yData;
+        public double[] xData;
+        public double[] yData;
         private double[] range = new double[] { 0, 10 };
         private double resolutionLimit = 0.001;
         private int size;
@@ -61,6 +61,8 @@ namespace ChartTest2
         public void setDatapoint(double x, double y)
         {
             int index = (int)(size*(x - range[0]) / (range[1] - range[0]));
+            index = Math.Min(size-1, index);
+            index = Math.Max(size-1, index);
             yData[index] = y;
         }
     }
