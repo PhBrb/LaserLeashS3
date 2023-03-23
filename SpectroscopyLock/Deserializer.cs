@@ -44,12 +44,12 @@ namespace ChartTest2
             h.formatId = rawData[2];
             h.batchSize = rawData[3];
             h.sequenceNumber = BitConverter.ToUInt32(rawData, 4);
-            Console.WriteLine(h.sequenceNumber);
+            //Console.WriteLine(h.sequenceNumber);
 
             if (h.magic != 0x57B)
                 throw new Exception("wrong magic number");
             if (h.formatId != 1)
-                throw new Exception("unsupported formatingg");
+                throw new Exception("unsupported formating");
 
             //i think the structure is like this (with batch size 8)
             //array([[ 0,  1,  2,  3,  4,  5,  6,  7, 32, 33, 34, 35, 36, 37, 38, 39, 64, 65, 66, 67, 68, 69, 70, 71],
