@@ -84,6 +84,35 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+
+            chart1.MouseWheel += chart1_MouseWheel;
+            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+
+        }
+
+        private void chart1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var chart = (Chart)sender;
+            var xAxis = chart.ChartAreas[0].AxisX;
+
+            try
+            {
+                if (e.Delta < 0) // Scrolled down.
+                {
+                    xAxis.ScaleView.ZoomReset();
+                }
+                else if (e.Delta > 0) // Scrolled up.
+                {
+                    var xMin = xAxis.ScaleView.ViewMinimum;
+                    var xMax = xAxis.ScaleView.ViewMaximum;
+
+                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 4;
+                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 4;
+
+                    xAxis.ScaleView.Zoom(posXStart, posXFinish);
+                }
+            }
+            catch { }
         }
 
         private void chart1_Click(object sender, EventArgs e)
