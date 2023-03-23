@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using MQTTnet.Samples.Client;
 
 namespace ChartTest2
 {
@@ -34,11 +35,14 @@ namespace ChartTest2
             }
             Deserializer osciWriter = new Deserializer(osciData);
 
-            
+
+            MQTTPublisher mqtt = new MQTTPublisher();
+            mqtt.connect();
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form = new Form1(osciWriter, udpReceiver);
+            Form1 form = new Form1(osciWriter, udpReceiver, mqtt);
 
             //transfer data from udp to osci memory
             Task.Run(() =>

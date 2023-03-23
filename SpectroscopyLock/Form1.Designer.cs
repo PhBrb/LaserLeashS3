@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -41,23 +41,24 @@
             this.FrequencyInput = new System.Windows.Forms.TextBox();
             this.PhaseInput = new System.Windows.Forms.TextBox();
             this.StreamTargetInput = new System.Windows.Forms.TextBox();
+            this.StabilizerIDInput = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(0, 147);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(800, 303);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -71,7 +72,7 @@
             this.LockButton.TabIndex = 1;
             this.LockButton.Text = "Lock";
             this.LockButton.UseVisualStyleBackColor = true;
-            this.LockButton.Click += new System.EventHandler(this.button1_Click);
+            this.LockButton.Click += new System.EventHandler(this.LockButton_Click);
             // 
             // UnlockButton
             // 
@@ -81,6 +82,7 @@
             this.UnlockButton.TabIndex = 2;
             this.UnlockButton.Text = "Unlock";
             this.UnlockButton.UseVisualStyleBackColor = true;
+            this.UnlockButton.Click += new System.EventHandler(this.UnlockButton_Click);
             // 
             // ModulationPowerInput
             // 
@@ -138,11 +140,20 @@
             this.StreamTargetInput.TabIndex = 9;
             this.StreamTargetInput.Text = "stream_target={\"\"\"ip\"\"\":[192,168,1,229],\"\"\"port\"\"\":1883}";
             // 
+            // StabilizerIDInput
+            // 
+            this.StabilizerIDInput.Location = new System.Drawing.Point(491, 40);
+            this.StabilizerIDInput.Name = "StabilizerIDInput";
+            this.StabilizerIDInput.Size = new System.Drawing.Size(297, 20);
+            this.StabilizerIDInput.TabIndex = 10;
+            this.StabilizerIDInput.Text = "StabilizerID";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.StabilizerIDInput);
             this.Controls.Add(this.StreamTargetInput);
             this.Controls.Add(this.PhaseInput);
             this.Controls.Add(this.FrequencyInput);
@@ -173,6 +184,7 @@
         private System.Windows.Forms.TextBox FrequencyInput;
         private System.Windows.Forms.TextBox PhaseInput;
         private System.Windows.Forms.TextBox StreamTargetInput;
+        private System.Windows.Forms.TextBox StabilizerIDInput;
     }
 }
 
