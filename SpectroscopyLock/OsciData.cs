@@ -52,7 +52,10 @@ namespace ChartTest2
 
         public void setDatapoint(double x, double y)
         {
-            xyData[x] = y;
+            lock (xyData)
+            {
+                xyData[x] = y;
+            }
         }
     }
 }
