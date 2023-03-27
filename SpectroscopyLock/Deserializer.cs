@@ -40,17 +40,18 @@ namespace ChartTest2
 
         public void TransferData(byte[] rawData)
         {
+            //rawData = File.ReadAllBytes(1027017276 + "packet.bytes");
+
             header h;
             h.magic = BitConverter.ToUInt16(rawData, 0);
             h.formatId = rawData[2];
             h.batchSize = rawData[3];
             h.sequenceNumber = BitConverter.ToUInt32(rawData, 4);
-            //Console.WriteLine(h.sequenceNumber);
 
             if (h.magic != 0x57B)
-                throw new Exception("wrong magic number");
+                throw new ArgumentOutOfRangeException("wrong magic number");
             if (h.formatId != 1)
-                throw new Exception("unsupported formating");
+                throw new ArgumentOutOfRangeException("unsupported formating");
 
             //i think the structure is like this (with batch size 8)
             //array([[ 0,  1,  2,  3,  4,  5,  6,  7, 32, 33, 34, 35, 36, 37, 38, 39, 64, 65, 66, 67, 68, 69, 70, 71],
@@ -60,37 +61,46 @@ namespace ChartTest2
             // first dimension element 0 and 1 are adc, 1 and 2 are dac
             int batchSize = 8;
             int headerSize = 8;
-            for (int iBatch = 0; iBatch < rawData.Length / (batchSize*4*2); iBatch+=4) //2 bytes, 4 arrays
+            int iPos = 0;
+            //TODO: if this gets refactored, use a byterunner instead of calculating which byte to read. avoids bugs when calculating the position.
+            for (int iBatch = 0; iBatch < rawData.Length / (batchSize*4*2); iBatch++) //2 bytes, 4 arrays
             {
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.adc0Rolling[osciPosition + iFloat] = BitConverter.ToUInt16(rawData, iBatch * batchSize * 2 + iFloat * 2 + headerSize);// * (5.0f / 2.0f * 4.096f) / (1 << 15);
+                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize;
+                    osciData.adc0Rolling[osciPosition + iFloat] = BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5)); //TODO: is this correct? The python script uses the DAC conversion factor also for the ADC, and ignores the also existing factor for ADC
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.adc1Rolling[osciPosition + iFloat] = BitConverter.ToUInt16(rawData, (iBatch + 1) * batchSize * 2 + iFloat*2 + headerSize);// * (5.0f / 2.0f * 4.096f) / (1 << 15);
+                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + batchSize * 2;
+                    osciData.adc1Rolling[osciPosition + iFloat] = BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5));
+                    //Console.WriteLine(osciData.dac0Rolling[osciPosition + iFloat]);
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.dac0Rolling[osciPosition + iFloat] = (BitConverter.ToUInt16(rawData, (iBatch + 2) * batchSize * 2 + iFloat * 2 + headerSize) ^ (0x8000));// / ((1 << 16) / (4.096f * 5));
+                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 2 * batchSize * 2;
+                    osciData.dac0Rolling[osciPosition + iFloat] = (BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000)))  / ((1 << 16) / (4.096f * 5));
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    osciData.dac1Rolling[osciPosition + iFloat] = (BitConverter.ToUInt16(rawData, (iBatch + 3) * batchSize * 2 + iFloat*2 + headerSize) ^ (0x8000));// / ((1 << 16) / (4.096f * 5));
+                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 3 * batchSize * 2;
+                    osciData.dac1Rolling[osciPosition + iFloat] = (BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000))) / ((1 << 16) / (4.096f * 5));
                 }
 
 
                 //transfer last batchSize numbers to xy data storage
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
-                    int index = mod(osciPosition-iFloat, osciData.dac0Rolling.Length);
+                    int index = mod(osciPosition, osciData.dac0Rolling.Length);
                     osciData.setDatapoint(osciData.dac0Rolling[index], osciData.adc0Rolling[index]);
                 }
 
 
                 osciPosition = (osciPosition + batchSize) % osciData.dac0Rolling.Length;
-
+                //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData);
             }
+
+
         }
 
 

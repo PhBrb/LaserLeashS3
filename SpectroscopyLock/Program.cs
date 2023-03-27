@@ -22,19 +22,9 @@ namespace ChartTest2
             UDPReceiver udpReceiver = new UDPReceiver();
 
 
-            OsciData osciData = new OsciData(1000);
-            for(int i=0; i<osciData.dac0Rolling.Length; i++)
-            {
-                osciData.dac0Rolling[i] = i < osciData.dac0Rolling.Length/2? (20.0 * i) / osciData.dac0Rolling.Length: (20.0 * (osciData.dac0Rolling.Length-i)) / osciData.dac0Rolling.Length;
-                osciData.adc0Rolling[i] = (5.0 * i) / osciData.dac0Rolling.Length;
-            }
-            for (int iFloat = 0; iFloat < 1000; iFloat++)
-            {
-                int index = Deserializer.mod(-iFloat, osciData.dac0Rolling.Length);
-                osciData.setDatapoint(osciData.dac0Rolling[index], osciData.adc0Rolling[index]);
-            }
-            Deserializer osciWriter = new Deserializer(osciData);
+            OsciData osciData = new OsciData(176);
 
+            Deserializer osciWriter = new Deserializer(osciData);
 
             MQTTPublisher mqtt = new MQTTPublisher();
             mqtt.connect();
@@ -53,11 +43,11 @@ namespace ChartTest2
                     {
                         osciWriter.TransferData(udpReceiver.b.lastRawData);
                     }
-                    catch
+                    catch (ArgumentException e)
                     {
-
+                        Console.WriteLine("Couldnt convert data");
                     }
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 }
             });
 
