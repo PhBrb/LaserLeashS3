@@ -15,7 +15,6 @@ namespace ChartTest2
         public double[] dac1Rolling;
 
         public SortedDictionary<double, double[]> xyData = new SortedDictionary<double, double[]>();
-        private double[] range = new double[] { 0, 10 };
         public double resolution = 0.001;
         public int avgSize = 50;
 

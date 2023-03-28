@@ -33,6 +33,8 @@ namespace ChartTest2
         MQTTPublisher mqtt;
         bool lockMode = false;
         private double scanFreq = 1;
+        private int samples = 400;
+        private int averages = 400;
 
         public Form1(Deserializer osciWriter, UDPReceiver udpReceiver, MQTTPublisher mqtt)
         {
@@ -164,20 +166,7 @@ namespace ChartTest2
             {
                 if (e.Delta < 0) // Scrolled down.
                 {
-                    mqtt.sendScanOffset(5);
-                    mqtt.sendScanAmplitude(5);
-
-                    Task.Run(() =>
-                    {
-                        Thread.Sleep(100);
-                        lock (osciWriter.osciData.xyData)
-                        {
-                            osciWriter.osciData.resolution = (10.0 - 0) / 400;
-                            osciWriter.osciData.avgSize = 50;
-                            osciWriter.osciData.resetXY();
-
-                        }
-                    });
+                    setRange(0, 10);
                 }
                 else if (e.Delta > 0) // Scrolled up.
                 {
@@ -187,24 +176,7 @@ namespace ChartTest2
                     var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 3;
                     var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 3;
 
-                    posXStart = Math.Max(posXStart, 0);
-                    posXFinish = Math.Min(posXFinish, 10);
-
-
-                    mqtt.sendScanOffset((posXStart + posXFinish) / 2);
-                    mqtt.sendScanAmplitude((posXFinish - posXStart) / 2);
-
-                    Task.Run(() =>
-                    {
-                        Thread.Sleep(100);
-                        lock (osciWriter.osciData.xyData)
-                        {
-                            osciWriter.osciData.resolution = (posXFinish - posXStart) / 400;
-                            osciWriter.osciData.avgSize = 50;
-                            osciWriter.osciData.resetXY();
-                        }
-
-                    });
+                    setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
                 }
             }
             catch { }
@@ -236,7 +208,23 @@ namespace ChartTest2
             series3.Enabled = false;
         }
 
+        private void setRange(double min, double max)
+        {
+            mqtt.sendScanOffset((min + max) / 2);
+            mqtt.sendScanAmplitude((max - min) / 2);
 
+            Task.Run(() =>
+            {
+                Thread.Sleep(100);
+                lock (osciWriter.osciData.xyData)
+                {
+                    osciWriter.osciData.resolution = (max - min) / samples;
+                    osciWriter.osciData.avgSize = averages;
+                    osciWriter.osciData.resetXY();
+                }
+
+            });
+        }
 
         private void chart1_DoubleClick(object sender, EventArgs e)
         {
@@ -249,25 +237,7 @@ namespace ChartTest2
             var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 3;
             var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 3;
 
-            posXStart = Math.Max(posXStart, 0);
-            posXFinish = Math.Min(posXFinish, 10);
-
-
-            mqtt.sendScanOffset((posXStart + posXFinish) / 2);
-            mqtt.sendScanAmplitude((posXFinish - posXStart) / 2);
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(100);
-                lock (osciWriter.osciData.xyData)
-                {
-                    osciWriter.osciData.resolution = (posXFinish - posXStart) / 400;
-                    osciWriter.osciData.avgSize = 50;
-                    osciWriter.osciData.resetXY();
-                }
-                
-            });
-
+            setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
 
         }
         private void ModulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
@@ -345,12 +315,20 @@ namespace ChartTest2
 
         private void AveragesInput_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                averages = int.Parse(txt);
+            }
         }
 
         private void SamplesInput_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                samples = int.Parse(txt);
+            }
         }
 
         private void ScanFreqDownButton_Click(object sender, EventArgs e)
@@ -365,5 +343,6 @@ namespace ChartTest2
             scanFreq *= 2;
             mqtt.sendScanFrequency(scanFreq);
         }
+
     }
 }
