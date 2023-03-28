@@ -22,7 +22,7 @@ namespace ChartTest2
             UDPReceiver udpReceiver = new UDPReceiver();
 
 
-            OsciData osciData = new OsciData(176);
+            OsciData osciData = new OsciData(5000);
 
             Deserializer osciWriter = new Deserializer(osciData);
 

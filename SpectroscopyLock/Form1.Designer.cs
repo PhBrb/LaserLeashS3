@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
-            this.ModulationPowerInput = new System.Windows.Forms.TextBox();
+            this.ModulationAmplitudeInput = new System.Windows.Forms.TextBox();
             this.ModulationAttenuationInput = new System.Windows.Forms.TextBox();
             this.DemodulationPowerInput = new System.Windows.Forms.TextBox();
             this.DemodulationAttenuationInput = new System.Windows.Forms.TextBox();
@@ -47,18 +47,18 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 147);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(800, 303);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -84,13 +84,14 @@
             this.UnlockButton.UseVisualStyleBackColor = true;
             this.UnlockButton.Click += new System.EventHandler(this.UnlockButton_Click);
             // 
-            // ModulationPowerInput
+            // ModulationAmplitudeInput
             // 
-            this.ModulationPowerInput.Location = new System.Drawing.Point(13, 43);
-            this.ModulationPowerInput.Name = "ModulationPowerInput";
-            this.ModulationPowerInput.Size = new System.Drawing.Size(121, 20);
-            this.ModulationPowerInput.TabIndex = 3;
-            this.ModulationPowerInput.Text = "ModulationPower";
+            this.ModulationAmplitudeInput.Location = new System.Drawing.Point(13, 43);
+            this.ModulationAmplitudeInput.Name = "ModulationAmplitudeInput";
+            this.ModulationAmplitudeInput.Size = new System.Drawing.Size(121, 20);
+            this.ModulationAmplitudeInput.TabIndex = 3;
+            this.ModulationAmplitudeInput.Text = "ModulationAmplitude";
+            this.ModulationAmplitudeInput.TextChanged += new System.EventHandler(this.ModulationAmplitudeInput_TextChanged);
             // 
             // ModulationAttenuationInput
             // 
@@ -99,6 +100,7 @@
             this.ModulationAttenuationInput.Size = new System.Drawing.Size(121, 20);
             this.ModulationAttenuationInput.TabIndex = 4;
             this.ModulationAttenuationInput.Text = "ModulationAttenuation";
+            this.ModulationAttenuationInput.TextChanged += new System.EventHandler(this.ModulationAttenuationInput_TextChanged);
             // 
             // DemodulationPowerInput
             // 
@@ -160,7 +162,7 @@
             this.Controls.Add(this.DemodulationAttenuationInput);
             this.Controls.Add(this.DemodulationPowerInput);
             this.Controls.Add(this.ModulationAttenuationInput);
-            this.Controls.Add(this.ModulationPowerInput);
+            this.Controls.Add(this.ModulationAmplitudeInput);
             this.Controls.Add(this.UnlockButton);
             this.Controls.Add(this.LockButton);
             this.Controls.Add(this.chart1);
@@ -177,7 +179,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button LockButton;
         private System.Windows.Forms.Button UnlockButton;
-        private System.Windows.Forms.TextBox ModulationPowerInput;
+        private System.Windows.Forms.TextBox ModulationAmplitudeInput;
         private System.Windows.Forms.TextBox ModulationAttenuationInput;
         private System.Windows.Forms.TextBox DemodulationPowerInput;
         private System.Windows.Forms.TextBox DemodulationAttenuationInput;

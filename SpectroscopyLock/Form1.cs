@@ -16,6 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Net.Mime.MediaTypeNames;
 using MQTTnet.Client;
 using MQTTnet.Samples.Client;
+using System.Xml.Linq;
 
 namespace ChartTest2
 {
@@ -24,6 +25,7 @@ namespace ChartTest2
         Deserializer osciWriter;
         Series series1;
         Series series2;
+        Series series3;
         UDPReceiver udpReceiver;
         private delegate void SafeCallDelegate();
         VerticalLineAnnotation VA;
@@ -51,9 +53,8 @@ namespace ChartTest2
 
                 if (lockMode)
                 {
-                    series1.Points.DataBindY(osciWriter.osciData.dac0Rolling);
-                    series2.Points.DataBindY(osciWriter.osciData.adc0Rolling);
-                    throw new Exception();
+                    series2.Points.DataBindY(osciWriter.osciData.dac0Rolling);
+                    series3.Points.DataBindY(osciWriter.osciData.adc0Rolling);
                 }
                 {
                     (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
@@ -88,23 +89,32 @@ namespace ChartTest2
         {
             // create a series for each line
             series1 = new Series("Channel0");
-            (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
-            series1.Points.DataBindXY(xData, yData);
-            series1.ChartType = SeriesChartType.FastPoint;
+            //(double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
+            //series1.Points.DataBindXY(xData, yData);
 
 
-            //series2 = new Series("asd");
-            //series2.Points.DataBindY(osciWriter.osciData.adc0Rolling);
-            //series2.ChartType = SeriesChartType.FastLine;
+            series1.ChartType = SeriesChartType.FastLine;
+                series1.ChartType = SeriesChartType.FastPoint;
 
+            series2 = new Series("asd");
+            series2.ChartType = SeriesChartType.FastLine;
+            series2.Enabled= false;
+            series3 = new Series("das");
+            series3.ChartType = SeriesChartType.FastLine;
+            series3.Enabled= false;
+
+            chart1.Legends.Clear();
 
             // add each series to the chart
             chart1.Series.Clear();
             chart1.Series.Add(series1);
-            //chart1.Series.Add(series2);
+            chart1.Series.Add(series2);
+            chart1.Series.Add(series3);
 
             chart1.Series[0].YAxisType = AxisType.Primary;
-            //chart1.Series[1].YAxisType = AxisType.Secondary;
+
+            chart1.Series[1].YAxisType = AxisType.Secondary;
+            chart1.Series[2].YAxisType = AxisType.Primary;
 
             // additional styling
             chart1.ResetAutoValues();
@@ -134,13 +144,17 @@ namespace ChartTest2
             VA.ClipToChartArea = CA.Name;
             VA.Name = "Lock Point";
             VA.LineColor = Color.Red;
-            VA.LineWidth = 2;         // use your numbers!
+            VA.LineWidth = 2;
             VA.X = 1;
             chart1.Annotations.Add(VA);
         }
 
         private void chart1_MouseWheel(object sender, MouseEventArgs e)
         {
+
+            if (lockMode)
+                return;
+
             var chart = (Chart)sender;
             var xAxis = chart.ChartAreas[0].AxisX;
 
@@ -148,7 +162,6 @@ namespace ChartTest2
             {
                 if (e.Delta < 0) // Scrolled down.
                 {
-                    //xAxis.ScaleView.ZoomReset();
                     mqtt.sendOffset(5);
                     mqtt.sendAmplitude(5);
                 }
@@ -166,9 +179,7 @@ namespace ChartTest2
                     mqtt.sendOffset((posXStart + posXFinish) / 2);
                     mqtt.sendAmplitude((posXFinish - posXStart) / 2);
 
-
-                    //xAxis.ScaleView.Zoom(posXStart, posXFinish);
-
+                    osciWriter.osciData.resetXY();
                 }
             }
             catch { }
@@ -177,9 +188,7 @@ namespace ChartTest2
         private void chart1_Click(object sender, EventArgs e)
         {
             var me = e as MouseEventArgs;
-            
             VA.X = chart1.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
-
         }
 
         private void LockButton_Click(object sender, EventArgs e)
@@ -187,8 +196,9 @@ namespace ChartTest2
             mqtt.sendOffset(VA.X);
             mqtt.sendAmplitude(0);
             lockMode= true;
-            OnNewData();
-            chart1.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            series1.Enabled = false;
+            series2.Enabled = true;
+            series3.Enabled = true;
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -196,8 +206,28 @@ namespace ChartTest2
             mqtt.sendOffset(5);
             mqtt.sendAmplitude(5);
             lockMode= false;
-            OnNewData();
-            chart1.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            series1.Enabled = true;
+            series2.Enabled = false;
+            series3.Enabled = false;
+        }
+
+        private void ModulationAmplitudeInput_TextChanged(object sender, EventArgs e)
+        {
+            var ke = e as KeyEventArgs;
+            if (ke.KeyCode == Keys.Enter)
+            {
+                System.Windows.Forms.TextBox txt = (System.Windows.Forms.TextBox)sender;
+                mqtt.sendAmplitude(double.Parse(txt.Text));
+            }
+        }
+
+        private void ModulationAttenuationInput_TextChanged(object sender, EventArgs e)
+        {
+            var ke = e as KeyEventArgs;
+            if (ke.KeyCode == Keys.Enter)
+            {
+                Console.WriteLine("not implemented");
+            }
         }
     }
 }

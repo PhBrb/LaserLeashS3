@@ -28,7 +28,6 @@ namespace ChartTest2
             }
             this.size = size;
 
-            setRange(0, 10);
 
             adc0Rolling = new double[size];
             adc1Rolling = new double[size];
@@ -36,18 +35,9 @@ namespace ChartTest2
             dac1Rolling = new double[size];
         }
 
-        public bool setRange(double lower, double upper)
+        public void resetXY()
         {
-            double rangeLen = range[1] - range[0];
-            if(rangeLen/size < resolutionLimit)
-            {
-                return false;
-            }
-
-            range[0] = lower;
-            range[1] = upper;
             xyData = new Dictionary<double, double>();
-            return true;
         }
 
         public void setDatapoint(double x, double y)
