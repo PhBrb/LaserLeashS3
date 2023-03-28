@@ -42,6 +42,7 @@ namespace ChartTest2
             h.batchSize = rawData[3];
             h.sequenceNumber = BitConverter.ToUInt32(rawData, 4);
 
+
             if (h.magic != 0x57B)
                 throw new ArgumentOutOfRangeException("wrong magic number");
             if (h.formatId != 1)

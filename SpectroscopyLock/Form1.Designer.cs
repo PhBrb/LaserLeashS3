@@ -28,41 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
             this.ModulationAmplitudeInput = new System.Windows.Forms.TextBox();
             this.ModulationAttenuationInput = new System.Windows.Forms.TextBox();
-            this.DemodulationPowerInput = new System.Windows.Forms.TextBox();
+            this.DemodulationAmplitudeInput = new System.Windows.Forms.TextBox();
             this.DemodulationAttenuationInput = new System.Windows.Forms.TextBox();
-            this.FrequencyInput = new System.Windows.Forms.TextBox();
+            this.ModulationFrequencyInput = new System.Windows.Forms.TextBox();
             this.PhaseInput = new System.Windows.Forms.TextBox();
             this.StreamTargetInput = new System.Windows.Forms.TextBox();
             this.StabilizerIDInput = new System.Windows.Forms.TextBox();
+            this.ScanFreqDownButton = new System.Windows.Forms.Button();
+            this.ScanFreqUpButton = new System.Windows.Forms.Button();
+            this.DemodulationFrequencyInput = new System.Windows.Forms.TextBox();
+            this.AveragesInput = new System.Windows.Forms.TextBox();
+            this.SamplesInput = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(0, 147);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(800, 303);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
+            this.chart1.DoubleClick += new System.EventHandler(this.chart1_DoubleClick);
             // 
             // LockButton
             // 
@@ -91,24 +97,25 @@
             this.ModulationAmplitudeInput.Size = new System.Drawing.Size(121, 20);
             this.ModulationAmplitudeInput.TabIndex = 3;
             this.ModulationAmplitudeInput.Text = "ModulationAmplitude";
-            this.ModulationAmplitudeInput.TextChanged += new System.EventHandler(this.ModulationAmplitudeInput_TextChanged);
+            this.ModulationAmplitudeInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ModulationAmplitudeInput_TextChanged);
             // 
             // ModulationAttenuationInput
             // 
-            this.ModulationAttenuationInput.Location = new System.Drawing.Point(140, 42);
+            this.ModulationAttenuationInput.Location = new System.Drawing.Point(13, 71);
             this.ModulationAttenuationInput.Name = "ModulationAttenuationInput";
             this.ModulationAttenuationInput.Size = new System.Drawing.Size(121, 20);
             this.ModulationAttenuationInput.TabIndex = 4;
             this.ModulationAttenuationInput.Text = "ModulationAttenuation";
-            this.ModulationAttenuationInput.TextChanged += new System.EventHandler(this.ModulationAttenuationInput_TextChanged);
+            this.ModulationAttenuationInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ModulationAttenuationInput_TextChanged);
             // 
-            // DemodulationPowerInput
+            // DemodulationAmplitudeInput
             // 
-            this.DemodulationPowerInput.Location = new System.Drawing.Point(13, 70);
-            this.DemodulationPowerInput.Name = "DemodulationPowerInput";
-            this.DemodulationPowerInput.Size = new System.Drawing.Size(121, 20);
-            this.DemodulationPowerInput.TabIndex = 5;
-            this.DemodulationPowerInput.Text = "DemodulationPower";
+            this.DemodulationAmplitudeInput.Location = new System.Drawing.Point(140, 43);
+            this.DemodulationAmplitudeInput.Name = "DemodulationAmplitudeInput";
+            this.DemodulationAmplitudeInput.Size = new System.Drawing.Size(121, 20);
+            this.DemodulationAmplitudeInput.TabIndex = 5;
+            this.DemodulationAmplitudeInput.Text = "DemodulationAmplitude";
+            this.DemodulationAmplitudeInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DemodulationAmplitudeInput_TextChanged);
             // 
             // DemodulationAttenuationInput
             // 
@@ -117,22 +124,25 @@
             this.DemodulationAttenuationInput.Size = new System.Drawing.Size(121, 20);
             this.DemodulationAttenuationInput.TabIndex = 6;
             this.DemodulationAttenuationInput.Text = "DemodulationAttenuation";
+            this.DemodulationAttenuationInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DemodulationAttenuationInput_TextChanged);
             // 
-            // FrequencyInput
+            // ModulationFrequencyInput
             // 
-            this.FrequencyInput.Location = new System.Drawing.Point(13, 97);
-            this.FrequencyInput.Name = "FrequencyInput";
-            this.FrequencyInput.Size = new System.Drawing.Size(121, 20);
-            this.FrequencyInput.TabIndex = 7;
-            this.FrequencyInput.Text = "Frequency";
+            this.ModulationFrequencyInput.Location = new System.Drawing.Point(13, 97);
+            this.ModulationFrequencyInput.Name = "ModulationFrequencyInput";
+            this.ModulationFrequencyInput.Size = new System.Drawing.Size(121, 20);
+            this.ModulationFrequencyInput.TabIndex = 7;
+            this.ModulationFrequencyInput.Text = "ModulationFrequency";
+            this.ModulationFrequencyInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ModulationFrequencyInput_TextChanged);
             // 
             // PhaseInput
             // 
-            this.PhaseInput.Location = new System.Drawing.Point(140, 96);
+            this.PhaseInput.Location = new System.Drawing.Point(13, 123);
             this.PhaseInput.Name = "PhaseInput";
             this.PhaseInput.Size = new System.Drawing.Size(121, 20);
             this.PhaseInput.TabIndex = 8;
             this.PhaseInput.Text = "Phase";
+            this.PhaseInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PhaseInput_TextChanged);
             // 
             // StreamTargetInput
             // 
@@ -141,6 +151,7 @@
             this.StreamTargetInput.Size = new System.Drawing.Size(297, 20);
             this.StreamTargetInput.TabIndex = 9;
             this.StreamTargetInput.Text = "stream_target={\"\"\"ip\"\"\":[192,168,1,229],\"\"\"port\"\"\":1883}";
+            this.StreamTargetInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
             // 
             // StabilizerIDInput
             // 
@@ -149,18 +160,71 @@
             this.StabilizerIDInput.Size = new System.Drawing.Size(297, 20);
             this.StabilizerIDInput.TabIndex = 10;
             this.StabilizerIDInput.Text = "StabilizerID";
+            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_TextChanged);
+            // 
+            // ScanFreqDownButton
+            // 
+            this.ScanFreqDownButton.Location = new System.Drawing.Point(364, 118);
+            this.ScanFreqDownButton.Name = "ScanFreqDownButton";
+            this.ScanFreqDownButton.Size = new System.Drawing.Size(75, 23);
+            this.ScanFreqDownButton.TabIndex = 11;
+            this.ScanFreqDownButton.Text = "ScanFreq/2";
+            this.ScanFreqDownButton.UseVisualStyleBackColor = true;
+            this.ScanFreqDownButton.Click += new System.EventHandler(this.ScanFreqDownButton_Click);
+            // 
+            // ScanFreqUpButton
+            // 
+            this.ScanFreqUpButton.Location = new System.Drawing.Point(446, 118);
+            this.ScanFreqUpButton.Name = "ScanFreqUpButton";
+            this.ScanFreqUpButton.Size = new System.Drawing.Size(75, 23);
+            this.ScanFreqUpButton.TabIndex = 12;
+            this.ScanFreqUpButton.Text = "ScanFreq*2";
+            this.ScanFreqUpButton.UseVisualStyleBackColor = true;
+            this.ScanFreqUpButton.Click += new System.EventHandler(this.ScanFreqUpButton_Click);
+            // 
+            // DemodulationFrequencyInput
+            // 
+            this.DemodulationFrequencyInput.Location = new System.Drawing.Point(140, 97);
+            this.DemodulationFrequencyInput.Name = "DemodulationFrequencyInput";
+            this.DemodulationFrequencyInput.Size = new System.Drawing.Size(121, 20);
+            this.DemodulationFrequencyInput.TabIndex = 13;
+            this.DemodulationFrequencyInput.Text = "DemodulationFrequency";
+            this.DemodulationFrequencyInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DemodulationFrequencyInput_TextChanged);
+            // 
+            // AveragesInput
+            // 
+            this.AveragesInput.Location = new System.Drawing.Point(688, 67);
+            this.AveragesInput.Name = "AveragesInput";
+            this.AveragesInput.Size = new System.Drawing.Size(100, 20);
+            this.AveragesInput.TabIndex = 14;
+            this.AveragesInput.Text = "Averages";
+            this.AveragesInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AveragesInput_KeyDown);
+            // 
+            // SamplesInput
+            // 
+            this.SamplesInput.Location = new System.Drawing.Point(687, 94);
+            this.SamplesInput.Name = "SamplesInput";
+            this.SamplesInput.Size = new System.Drawing.Size(100, 20);
+            this.SamplesInput.TabIndex = 15;
+            this.SamplesInput.Text = "Samples";
+            this.SamplesInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesInput_KeyDown);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.SamplesInput);
+            this.Controls.Add(this.AveragesInput);
+            this.Controls.Add(this.DemodulationFrequencyInput);
+            this.Controls.Add(this.ScanFreqUpButton);
+            this.Controls.Add(this.ScanFreqDownButton);
             this.Controls.Add(this.StabilizerIDInput);
             this.Controls.Add(this.StreamTargetInput);
             this.Controls.Add(this.PhaseInput);
-            this.Controls.Add(this.FrequencyInput);
+            this.Controls.Add(this.ModulationFrequencyInput);
             this.Controls.Add(this.DemodulationAttenuationInput);
-            this.Controls.Add(this.DemodulationPowerInput);
+            this.Controls.Add(this.DemodulationAmplitudeInput);
             this.Controls.Add(this.ModulationAttenuationInput);
             this.Controls.Add(this.ModulationAmplitudeInput);
             this.Controls.Add(this.UnlockButton);
@@ -181,12 +245,17 @@
         private System.Windows.Forms.Button UnlockButton;
         private System.Windows.Forms.TextBox ModulationAmplitudeInput;
         private System.Windows.Forms.TextBox ModulationAttenuationInput;
-        private System.Windows.Forms.TextBox DemodulationPowerInput;
+        private System.Windows.Forms.TextBox DemodulationAmplitudeInput;
         private System.Windows.Forms.TextBox DemodulationAttenuationInput;
-        private System.Windows.Forms.TextBox FrequencyInput;
+        private System.Windows.Forms.TextBox ModulationFrequencyInput;
         private System.Windows.Forms.TextBox PhaseInput;
         private System.Windows.Forms.TextBox StreamTargetInput;
         private System.Windows.Forms.TextBox StabilizerIDInput;
+        private System.Windows.Forms.Button ScanFreqDownButton;
+        private System.Windows.Forms.Button ScanFreqUpButton;
+        private System.Windows.Forms.TextBox DemodulationFrequencyInput;
+        private System.Windows.Forms.TextBox AveragesInput;
+        private System.Windows.Forms.TextBox SamplesInput;
     }
 }
 

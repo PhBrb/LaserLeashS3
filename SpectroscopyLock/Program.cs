@@ -47,7 +47,7 @@ namespace ChartTest2
                     {
                         Console.WriteLine("Couldnt convert data");
                     }
-                    Thread.Sleep(10);
+                    //Thread.Sleep(1);
                 }
             });
 

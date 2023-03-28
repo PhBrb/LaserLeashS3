@@ -17,6 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 using MQTTnet.Client;
 using MQTTnet.Samples.Client;
 using System.Xml.Linq;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace ChartTest2
 {
@@ -31,6 +32,7 @@ namespace ChartTest2
         VerticalLineAnnotation VA;
         MQTTPublisher mqtt;
         bool lockMode = false;
+        private double scanFreq = 1;
 
         public Form1(Deserializer osciWriter, UDPReceiver udpReceiver, MQTTPublisher mqtt)
         {
@@ -57,7 +59,7 @@ namespace ChartTest2
                     series3.Points.DataBindY(osciWriter.osciData.adc0Rolling);
                 }
                 {
-                    (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
+                    (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData, osciWriter.osciData.avgSize);
                     series1.Points.DataBindXY(xData, yData);
                 }
 
@@ -66,7 +68,7 @@ namespace ChartTest2
             }
         }
 
-        static (double[], double[]) getXYData(Dictionary<double, double> dict)
+        static (double[], double[]) getXYData(SortedDictionary<double, double[]> dict, int avgSize)
         {
 
 
@@ -78,7 +80,7 @@ namespace ChartTest2
                 foreach (var item in dict)
                 {
                     xData[i] = item.Key;
-                    yData[i] = item.Value;
+                    yData[i] = item.Value.Sum()/avgSize;
                     i++;
                 }
                 return (xData, yData);
@@ -94,7 +96,7 @@ namespace ChartTest2
 
 
             series1.ChartType = SeriesChartType.FastLine;
-                series1.ChartType = SeriesChartType.FastPoint;
+                series1.ChartType = SeriesChartType.FastLine;
 
             series2 = new Series("asd");
             series2.ChartType = SeriesChartType.FastLine;
@@ -144,7 +146,7 @@ namespace ChartTest2
             VA.ClipToChartArea = CA.Name;
             VA.Name = "Lock Point";
             VA.LineColor = Color.Red;
-            VA.LineWidth = 2;
+            VA.LineWidth = 1;
             VA.X = 1;
             chart1.Annotations.Add(VA);
         }
@@ -162,24 +164,47 @@ namespace ChartTest2
             {
                 if (e.Delta < 0) // Scrolled down.
                 {
-                    mqtt.sendOffset(5);
-                    mqtt.sendAmplitude(5);
+                    mqtt.sendScanOffset(5);
+                    mqtt.sendScanAmplitude(5);
+
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(100);
+                        lock (osciWriter.osciData.xyData)
+                        {
+                            osciWriter.osciData.resolution = (10.0 - 0) / 400;
+                            osciWriter.osciData.avgSize = 50;
+                            osciWriter.osciData.resetXY();
+
+                        }
+                    });
                 }
                 else if (e.Delta > 0) // Scrolled up.
                 {
                     var xMin = xAxis.ScaleView.ViewMinimum;
                     var xMax = xAxis.ScaleView.ViewMaximum;
 
-                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 4;
-                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 4;
+                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 3;
+                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 3;
 
                     posXStart = Math.Max(posXStart, 0);
                     posXFinish = Math.Min(posXFinish, 10);
 
-                    mqtt.sendOffset((posXStart + posXFinish) / 2);
-                    mqtt.sendAmplitude((posXFinish - posXStart) / 2);
 
-                    osciWriter.osciData.resetXY();
+                    mqtt.sendScanOffset((posXStart + posXFinish) / 2);
+                    mqtt.sendScanAmplitude((posXFinish - posXStart) / 2);
+
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(100);
+                        lock (osciWriter.osciData.xyData)
+                        {
+                            osciWriter.osciData.resolution = (posXFinish - posXStart) / 400;
+                            osciWriter.osciData.avgSize = 50;
+                            osciWriter.osciData.resetXY();
+                        }
+
+                    });
                 }
             }
             catch { }
@@ -193,8 +218,8 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendOffset(VA.X);
-            mqtt.sendAmplitude(0);
+            mqtt.sendScanOffset(VA.X);
+            mqtt.sendScanAmplitude(0);
             lockMode= true;
             series1.Enabled = false;
             series2.Enabled = true;
@@ -203,31 +228,142 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendOffset(5);
-            mqtt.sendAmplitude(5);
+            mqtt.sendScanOffset(5);
+            mqtt.sendScanAmplitude(5);
             lockMode= false;
             series1.Enabled = true;
             series2.Enabled = false;
             series3.Enabled = false;
         }
 
-        private void ModulationAmplitudeInput_TextChanged(object sender, EventArgs e)
+
+
+        private void chart1_DoubleClick(object sender, EventArgs e)
         {
-            var ke = e as KeyEventArgs;
-            if (ke.KeyCode == Keys.Enter)
+            var me = e as MouseEventArgs;
+            var chart = (Chart)sender;
+            var xAxis = chart.ChartAreas[0].AxisX;
+            var xMin = xAxis.ScaleView.ViewMinimum;
+            var xMax = xAxis.ScaleView.ViewMaximum;
+
+            var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 3;
+            var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 3;
+
+            posXStart = Math.Max(posXStart, 0);
+            posXFinish = Math.Min(posXFinish, 10);
+
+
+            mqtt.sendScanOffset((posXStart + posXFinish) / 2);
+            mqtt.sendScanAmplitude((posXFinish - posXStart) / 2);
+
+            Task.Run(() =>
             {
-                System.Windows.Forms.TextBox txt = (System.Windows.Forms.TextBox)sender;
-                mqtt.sendAmplitude(double.Parse(txt.Text));
+                Thread.Sleep(100);
+                lock (osciWriter.osciData.xyData)
+                {
+                    osciWriter.osciData.resolution = (posXFinish - posXStart) / 400;
+                    osciWriter.osciData.avgSize = 50;
+                    osciWriter.osciData.resetXY();
+                }
+                
+            });
+
+
+        }
+        private void ModulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendModulationAmplitude(double.Parse(txt));
             }
         }
 
-        private void ModulationAttenuationInput_TextChanged(object sender, EventArgs e)
+        private void ModulationAttenuationInput_TextChanged(object sender, KeyEventArgs e)
         {
-            var ke = e as KeyEventArgs;
-            if (ke.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                Console.WriteLine("not implemented");
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendModulationAttenuation(double.Parse(txt));
             }
+        }
+
+        private void DemodulationAttenuationInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                System.Windows.Forms.TextBox txt = (System.Windows.Forms.TextBox)sender;
+                mqtt.sendDemodulationAttenuation(double.Parse(txt.Text));
+            }
+        }
+
+        private void PhaseInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendPhase(double.Parse(txt));
+            }
+        }
+
+        private void StreamTargetInput_TextChanged(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void StabilizerIDInput_TextChanged(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void DemodulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendDemodulationAmplitude(double.Parse(txt));
+            }
+        }
+
+        private void DemodulationFrequencyInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendDemodulationFrequency(double.Parse(txt));
+            }
+        }
+
+        private void ModulationFrequencyInput_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendModulationFrequency(double.Parse(txt));
+            }
+        }
+
+        private void AveragesInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void SamplesInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void ScanFreqDownButton_Click(object sender, EventArgs e)
+        {
+            scanFreq /= 2;
+            mqtt.sendScanFrequency(scanFreq);
+        }
+
+        private void ScanFreqUpButton_Click(object sender, EventArgs e)
+        {
+
+            scanFreq *= 2;
+            mqtt.sendScanFrequency(scanFreq);
         }
     }
 }

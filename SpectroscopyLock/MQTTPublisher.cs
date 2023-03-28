@@ -31,46 +31,47 @@ namespace MQTTnet.Samples.Client
             mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
         }
 
-        public void sendAmplitude(double amplitude)
+        private void send(string path, double value)
         {
             if (mqttClient.IsConnected)
             {
                 var applicationMessage = new MqttApplicationMessageBuilder()
-                    .WithTopic("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/amplitude")
-                    .WithPayload($"{amplitude:0.####}")
-                    .Build();
-
-                mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine($"Sent amplitude {amplitude:0.####}");
-            }
-        }
-
-        public void sendOffset(double offset)
-        {
-            if (mqttClient.IsConnected)
-            {
-                var applicationMessage = new MqttApplicationMessageBuilder()
-                    .WithTopic("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/offset")
-                    .WithPayload($"{offset:0.####}")
-                    .Build();
-
-                mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine($"Sent offset{offset:0.####}");
-            }
-        }
-
-        public void sendSweepFrequency(double frequency)
-        {
-            if (mqttClient.IsConnected)
-            {
-                var applicationMessage = new MqttApplicationMessageBuilder()
-                    .WithTopic("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/frequency")
-                    .WithPayload($"{frequency:0.####}")
+                    .WithTopic(path)
+                    .WithPayload($"{value:0.####}")
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
                 Console.WriteLine("MQTT application message is published");
             }
+        }
+
+        private void send(string path, int value)
+        {
+            if (mqttClient.IsConnected)
+            {
+                var applicationMessage = new MqttApplicationMessageBuilder()
+                    .WithTopic(path)
+                    .WithPayload($"{value}")
+                    .Build();
+
+                mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
+                Console.WriteLine("MQTT application message is published");
+            }
+        }
+
+        public void sendScanAmplitude(double amplitude)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/amplitude", amplitude);
+        }
+
+        public void sendScanOffset(double offset)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/offset", offset);
+        }
+
+        public void sendScanFrequency(double frequency)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/signal_generator/0/frequency", frequency);
         }
 
         public void sendPID()
@@ -83,7 +84,7 @@ namespace MQTTnet.Samples.Client
                 //    .Build();
 
                 //mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine("sent pid");
+
             }
         }
 
@@ -96,6 +97,41 @@ namespace MQTTnet.Samples.Client
         public void disconnect()
         {
             mqttClient.DisconnectAsync();
+        }
+
+
+        public void sendPhase(double phase)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/out_channel/0/dds/phase_offset", phase);
+        }
+
+        public void sendModulationAmplitude(double amplitude)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/out_channel/0/dds/amplitude", amplitude);
+        }
+
+        public void sendDemodulationAmplitude(double amplitude)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/in_channel/0/dds/amplitude", amplitude);
+        }
+
+        public void sendModulationFrequency(double frequency)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/out_channel/0/dds/frequency", frequency);
+        }
+        public void sendDemodulationFrequency(double frequency)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/in_channel/0/dds/frequency", frequency);
+        }
+
+        public void sendModulationAttenuation(double attenuation)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/out_channel/0/attenuation", attenuation);
+        }
+
+        public void sendDemodulationAttenuation(double attenuation)
+        {
+            send("dt/sinara/dual-iir/04-91-62-d2-60-2f/settings/pounder/in_channel/0/attenuation", attenuation);
         }
 
 

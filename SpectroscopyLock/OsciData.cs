@@ -14,10 +14,10 @@ namespace ChartTest2
         public double[] dac0Rolling;
         public double[] dac1Rolling;
 
-        public Dictionary<double, double> xyData = new Dictionary<double, double>();
+        public SortedDictionary<double, double[]> xyData = new SortedDictionary<double, double[]>();
         private double[] range = new double[] { 0, 10 };
-        private double resolutionLimit = 0.001;
-        private int size;
+        public double resolution = 0.001;
+        public int avgSize = 50;
 
 
         public OsciData(int size)
@@ -26,7 +26,6 @@ namespace ChartTest2
             {
                 throw new ArgumentException("too few datapoints");
             }
-            this.size = size;
 
 
             adc0Rolling = new double[size];
@@ -37,14 +36,25 @@ namespace ChartTest2
 
         public void resetXY()
         {
-            xyData = new Dictionary<double, double>();
+            xyData = new SortedDictionary<double, double[]>();
         }
 
         public void setDatapoint(double x, double y)
         {
             lock (xyData)
             {
-                xyData[x] = y;
+
+                double xRounded = ((int)(x / resolution)) * resolution;
+                double[] ys = new double[avgSize];
+                if(!xyData.TryGetValue(xRounded, out ys)){
+                    ys = new double[avgSize];
+                }
+                for(int i = 0; i < avgSize - 1; i++)
+                {
+                    ys[i] = ys[i + 1];
+                }
+                ys[avgSize-1] = y;
+                xyData[xRounded] = ys;
             }
         }
     }
