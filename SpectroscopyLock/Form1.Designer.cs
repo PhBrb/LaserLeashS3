@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -40,30 +40,33 @@
             this.DemodulationAttenuationInput = new System.Windows.Forms.TextBox();
             this.ModulationFrequencyInput = new System.Windows.Forms.TextBox();
             this.PhaseInput = new System.Windows.Forms.TextBox();
-            this.StreamTargetInput = new System.Windows.Forms.TextBox();
-            this.StabilizerIDInput = new System.Windows.Forms.TextBox();
+            this.StreamTargetPortInput = new System.Windows.Forms.TextBox();
             this.ScanFreqDownButton = new System.Windows.Forms.Button();
             this.ScanFreqUpButton = new System.Windows.Forms.Button();
             this.DemodulationFrequencyInput = new System.Windows.Forms.TextBox();
             this.AveragesInput = new System.Windows.Forms.TextBox();
             this.SamplesInput = new System.Windows.Forms.TextBox();
+            this.InitButton = new System.Windows.Forms.Button();
+            this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
+            this.StabilizerIDInput = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(0, 147);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(800, 303);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -144,23 +147,14 @@
             this.PhaseInput.Text = "Phase";
             this.PhaseInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PhaseInput_TextChanged);
             // 
-            // StreamTargetInput
+            // StreamTargetPortInput
             // 
-            this.StreamTargetInput.Location = new System.Drawing.Point(491, 13);
-            this.StreamTargetInput.Name = "StreamTargetInput";
-            this.StreamTargetInput.Size = new System.Drawing.Size(297, 20);
-            this.StreamTargetInput.TabIndex = 9;
-            this.StreamTargetInput.Text = "stream_target={\"\"\"ip\"\"\":[192,168,1,229],\"\"\"port\"\"\":1883}";
-            this.StreamTargetInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
-            // 
-            // StabilizerIDInput
-            // 
-            this.StabilizerIDInput.Location = new System.Drawing.Point(491, 40);
-            this.StabilizerIDInput.Name = "StabilizerIDInput";
-            this.StabilizerIDInput.Size = new System.Drawing.Size(297, 20);
-            this.StabilizerIDInput.TabIndex = 10;
-            this.StabilizerIDInput.Text = "StabilizerID";
-            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_TextChanged);
+            this.StreamTargetPortInput.Location = new System.Drawing.Point(687, 13);
+            this.StreamTargetPortInput.Name = "StreamTargetPortInput";
+            this.StreamTargetPortInput.Size = new System.Drawing.Size(101, 20);
+            this.StreamTargetPortInput.TabIndex = 9;
+            this.StreamTargetPortInput.Text = "1883";
+            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
             // 
             // ScanFreqDownButton
             // 
@@ -209,18 +203,57 @@
             this.SamplesInput.Text = "Samples";
             this.SamplesInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesInput_KeyDown);
             // 
+            // InitButton
+            // 
+            this.InitButton.Location = new System.Drawing.Point(301, 13);
+            this.InitButton.Name = "InitButton";
+            this.InitButton.Size = new System.Drawing.Size(75, 23);
+            this.InitButton.TabIndex = 17;
+            this.InitButton.Text = "Init";
+            this.InitButton.UseVisualStyleBackColor = true;
+            this.InitButton.Click += new System.EventHandler(this.InitButton_Click);
+            // 
+            // StreamTargetIPInput
+            // 
+            this.StreamTargetIPInput.Location = new System.Drawing.Point(581, 13);
+            this.StreamTargetIPInput.Name = "StreamTargetIPInput";
+            this.StreamTargetIPInput.Size = new System.Drawing.Size(100, 20);
+            this.StreamTargetIPInput.TabIndex = 19;
+            this.StreamTargetIPInput.Text = "127.0.0.1";
+            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetIPInput_KeyDown);
+            // 
+            // StabilizerIDInput
+            // 
+            this.StabilizerIDInput.Location = new System.Drawing.Point(581, 40);
+            this.StabilizerIDInput.Name = "StabilizerIDInput";
+            this.StabilizerIDInput.Size = new System.Drawing.Size(206, 20);
+            this.StabilizerIDInput.TabIndex = 20;
+            this.StabilizerIDInput.Text = "04-91-62-d2-60-2f";
+            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(338, 70);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 21;
+            this.textBox1.Text = "YOffset";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.StabilizerIDInput);
+            this.Controls.Add(this.StreamTargetIPInput);
+            this.Controls.Add(this.InitButton);
             this.Controls.Add(this.SamplesInput);
             this.Controls.Add(this.AveragesInput);
             this.Controls.Add(this.DemodulationFrequencyInput);
             this.Controls.Add(this.ScanFreqUpButton);
             this.Controls.Add(this.ScanFreqDownButton);
-            this.Controls.Add(this.StabilizerIDInput);
-            this.Controls.Add(this.StreamTargetInput);
+            this.Controls.Add(this.StreamTargetPortInput);
             this.Controls.Add(this.PhaseInput);
             this.Controls.Add(this.ModulationFrequencyInput);
             this.Controls.Add(this.DemodulationAttenuationInput);
@@ -249,13 +282,16 @@
         private System.Windows.Forms.TextBox DemodulationAttenuationInput;
         private System.Windows.Forms.TextBox ModulationFrequencyInput;
         private System.Windows.Forms.TextBox PhaseInput;
-        private System.Windows.Forms.TextBox StreamTargetInput;
-        private System.Windows.Forms.TextBox StabilizerIDInput;
+        private System.Windows.Forms.TextBox StreamTargetPortInput;
         private System.Windows.Forms.Button ScanFreqDownButton;
         private System.Windows.Forms.Button ScanFreqUpButton;
         private System.Windows.Forms.TextBox DemodulationFrequencyInput;
         private System.Windows.Forms.TextBox AveragesInput;
         private System.Windows.Forms.TextBox SamplesInput;
+        private System.Windows.Forms.Button InitButton;
+        private System.Windows.Forms.TextBox StreamTargetIPInput;
+        private System.Windows.Forms.TextBox StabilizerIDInput;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

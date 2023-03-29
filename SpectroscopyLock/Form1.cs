@@ -190,22 +190,32 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendScanOffset(VA.X);
             mqtt.sendScanAmplitude(0);
+            mqtt.sendScanOffset(VA.X);
             lockMode= true;
             series1.Enabled = false;
             series2.Enabled = true;
             series3.Enabled = true;
+            Task.Run(() =>
+            {
+                Thread.Sleep(100);
+                mqtt.sendPID();
+            });
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendScanOffset(5);
             mqtt.sendScanAmplitude(5);
-            lockMode= false;
+            mqtt.sendScanOffset(5);
+            lockMode = false;
             series1.Enabled = true;
             series2.Enabled = false;
             series3.Enabled = false;
+            Task.Run(() =>
+            {
+                Thread.Sleep(100);
+                mqtt.sendPIDOff();
+            });
         }
 
         private void setRange(double min, double max)
@@ -276,15 +286,26 @@ namespace ChartTest2
             }
         }
 
-        private void StreamTargetInput_TextChanged(object sender, KeyEventArgs e)
-        {
 
+        private void StreamTargetIPInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendStreamTarget(txt.Replace('.', ','), StreamTargetIPInput.Text);
+            }
         }
 
-        private void StabilizerIDInput_TextChanged(object sender, KeyEventArgs e)
+        private void StreamTargetPortInput_TextChanged(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), txt);
+            }
         }
+
+
 
         private void DemodulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
         {
@@ -344,5 +365,29 @@ namespace ChartTest2
             mqtt.sendScanFrequency(scanFreq);
         }
 
+        private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                mqtt.setStabilizerID(txt);
+            }
+        }
+
+        private void InitButton_Click(object sender, EventArgs e)
+        {
+            mqtt.sendStreamTarget("127,0,0,1", "1883");
+            mqtt.sendPIDOff();
+            mqtt.sendModulationAmplitude(1);
+            mqtt.sendModulationAttenuation(0);
+            mqtt.sendModulationFrequency  (3000000);
+            mqtt.sendDemodulationFrequency(3000000);
+            mqtt.sendDemodulationAttenuation(0);
+            mqtt.sendDemodulationAmplitude(1);
+            mqtt.sendPhase(0);
+            mqtt.sendScanAmplitude(5);
+            mqtt.sendScanOffset(5);
+            mqtt.sendScanFrequency(1);
+        }
     }
 }
