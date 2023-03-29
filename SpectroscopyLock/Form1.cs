@@ -195,10 +195,29 @@ namespace ChartTest2
             series1.Enabled = false;
             series2.Enabled = true;
             series3.Enabled = true;
+
+            double offset = 0;
+            if (OffsetCompensationCheckbox.Checked)
+            {
+
+                double keyOfClosest = 9999999999999;
+                lock (osciWriter.osciData.xyData)
+                {
+                    foreach (var entry in osciWriter.osciData.xyData)
+                    {
+                        if (Math.Abs(entry.Key - VA.X) < Math.Abs(keyOfClosest - VA.X))
+                        {
+                            offset = entry.Value.Sum()/entry.Value.Length;
+                            keyOfClosest = entry.Key;
+                        }
+                    }
+                }
+            }
+
             Task.Run(() =>
             {
                 Thread.Sleep(100);
-                mqtt.sendPID();
+                mqtt.sendPID(-offset);
             });
         }
 
