@@ -18,14 +18,12 @@ namespace ChartTest2
         [STAThread]
         static void Main()
         {
-            //start receiving data
+
+            //Data flow: udpReceiver -> osciWriter -> osciData -> form -> (user input) mqtt
             UDPReceiver udpReceiver = new UDPReceiver();
-
-
             OsciData osciData = new OsciData(5000);
-
             Deserializer osciWriter = new Deserializer(osciData);
-
+            
             MQTTPublisher mqtt = new MQTTPublisher();
             mqtt.connect();
 

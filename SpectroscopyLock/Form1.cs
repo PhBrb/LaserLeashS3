@@ -100,14 +100,13 @@ namespace ChartTest2
             series1.ChartType = SeriesChartType.FastLine;
                 series1.ChartType = SeriesChartType.FastLine;
 
-            series2 = new Series("asd");
+            series2 = new Series("Output (right)");
             series2.ChartType = SeriesChartType.FastLine;
             series2.Enabled= false;
-            series3 = new Series("das");
+            series3 = new Series("Demodulated (left)");
             series3.ChartType = SeriesChartType.FastLine;
             series3.Enabled= false;
 
-            chart1.Legends.Clear();
 
             // add each series to the chart
             chart1.Series.Clear();
