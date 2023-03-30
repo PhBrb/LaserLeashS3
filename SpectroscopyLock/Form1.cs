@@ -18,6 +18,7 @@ using MQTTnet.Client;
 using MQTTnet.Samples.Client;
 using System.Xml.Linq;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace ChartTest2
 {
@@ -35,6 +36,7 @@ namespace ChartTest2
         private double scanFreq = 1;
         private int samples = 400;
         private int averages = 400;
+        bool update = true;
 
         public Form1(Deserializer osciWriter, UDPReceiver udpReceiver, MQTTPublisher mqtt)
         {
@@ -47,6 +49,10 @@ namespace ChartTest2
 
         public void OnNewData()
         {
+            if(!update) 
+                return;
+
+
             if (chart1.InvokeRequired)
             {
                 var d = new SafeCallDelegate(OnNewData);
@@ -57,12 +63,21 @@ namespace ChartTest2
 
                 if (lockMode)
                 {
-                    series2.Points.DataBindY(osciWriter.osciData.dac0Rolling);
-                    series3.Points.DataBindY(osciWriter.osciData.adc0Rolling);
+                    double[] dataDac, dataAdc;
+                    lock(osciWriter.osciData.dacQueue) lock(osciWriter.osciData.adcQueue)
+                    {
+                        dataDac = osciWriter.osciData.dacQueue.ToArray();
+                        dataAdc = osciWriter.osciData.adcQueue.ToArray();
+                        }
+
+
+                    series2.Points.DataBindY(dataDac);
+                    series3.Points.DataBindY(dataAdc);
                 }
                 {
-                    (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData, osciWriter.osciData.avgSize);
-                    series1.Points.DataBindXY(xData, yData);
+                    (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData, osciWriter.osciData.AvgSize);
+                    if(xData.Length > 0)
+                        series1.Points.DataBindXY(xData, yData);
                 }
 
 
@@ -132,6 +147,7 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             chart1.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
             chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
+            chart1.ChartAreas[0].AxisY2.IsStartedFromZero= false;
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             chart1.MouseWheel += chart1_MouseWheel;
@@ -190,8 +206,11 @@ namespace ChartTest2
         private void LockButton_Click(object sender, EventArgs e)
         {
             mqtt.sendScanAmplitude(0);
+            Thread.Sleep(200);
             mqtt.sendScanOffset(VA.X);
-            lockMode= true;
+            Thread.Sleep(200);
+
+            lockMode = true;
             series1.Enabled = false;
             series2.Enabled = true;
             series3.Enabled = true;
@@ -214,11 +233,8 @@ namespace ChartTest2
                 }
             }
 
-            Task.Run(() =>
-            {
-                Thread.Sleep(100);
-                mqtt.sendPID(-offset);
-            });
+            Thread.Sleep(200);
+            mqtt.sendPID(-offset);
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -247,7 +263,7 @@ namespace ChartTest2
                 lock (osciWriter.osciData.xyData)
                 {
                     osciWriter.osciData.resolution = (max - min) / samples;
-                    osciWriter.osciData.avgSize = averages;
+                    osciWriter.osciData.AvgSize = averages;
                     osciWriter.osciData.resetXY();
                 }
 
@@ -358,6 +374,7 @@ namespace ChartTest2
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
                 averages = int.Parse(txt);
+                osciWriter.osciData.AvgSize = averages;
             }
         }
 
@@ -394,7 +411,7 @@ namespace ChartTest2
 
         private void InitButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendStreamTarget("127,0,0,1", "1883");
+            mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), StreamTargetPortInput.Text);
             mqtt.sendPIDOff();
             mqtt.sendModulationAmplitude(1);
             mqtt.sendModulationAttenuation(0);
@@ -406,6 +423,11 @@ namespace ChartTest2
             mqtt.sendScanAmplitude(5);
             mqtt.sendScanOffset(5);
             mqtt.sendScanFrequency(1);
+        }
+
+        private void HoldButton_Click(object sender, EventArgs e)
+        {
+            update = !update;
         }
     }
 }

@@ -51,6 +51,7 @@
             this.StabilizerIDInput = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.OffsetCompensationCheckbox = new System.Windows.Forms.CheckBox();
+            this.HoldButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -250,11 +251,22 @@
             this.OffsetCompensationCheckbox.Text = "Offset compensation";
             this.OffsetCompensationCheckbox.UseVisualStyleBackColor = true;
             // 
+            // HoldButton
+            // 
+            this.HoldButton.Location = new System.Drawing.Point(543, 118);
+            this.HoldButton.Name = "HoldButton";
+            this.HoldButton.Size = new System.Drawing.Size(75, 23);
+            this.HoldButton.TabIndex = 23;
+            this.HoldButton.Text = "Hold";
+            this.HoldButton.UseVisualStyleBackColor = true;
+            this.HoldButton.Click += new System.EventHandler(this.HoldButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.HoldButton);
             this.Controls.Add(this.OffsetCompensationCheckbox);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.StabilizerIDInput);
@@ -305,6 +317,7 @@
         private System.Windows.Forms.TextBox StabilizerIDInput;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox OffsetCompensationCheckbox;
+        private System.Windows.Forms.Button HoldButton;
     }
 }
 

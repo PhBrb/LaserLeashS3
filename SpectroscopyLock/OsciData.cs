@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,10 +14,21 @@ namespace ChartTest2
         public double[] adc1Rolling;
         public double[] dac0Rolling;
         public double[] dac1Rolling;
+        public Queue<double> adcQueue = new Queue<double>();
+        public Queue<double> dacQueue = new Queue<double>();
 
         public SortedDictionary<double, double[]> xyData = new SortedDictionary<double, double[]>();
         public double resolution = 0.001;
-        public int avgSize = 50;
+
+        private int avgSize = 50;
+        public int AvgSize { get { return avgSize; } set
+            {
+                lock (xyData)
+                {
+                    avgSize = value;
+                    xyData.Clear();
+                }
+            } }
 
 
         public OsciData(int size)
@@ -25,7 +37,6 @@ namespace ChartTest2
             {
                 throw new ArgumentException("too few datapoints");
             }
-
 
             adc0Rolling = new double[size];
             adc1Rolling = new double[size];

@@ -86,9 +86,37 @@ namespace ChartTest2
                 //transfer last batchSize numbers to xy data storage
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
+                    //transfer to xy storage
                     int index = mod(osciPosition, osciData.dac0Rolling.Length);
                     osciData.setDatapoint(osciData.dac0Rolling[index], osciData.adc0Rolling[index]);
+
+                    //transfer to queue storage
+                    
+                    if(((osciPosition + iFloat) % osciData.dac0Rolling.Length)%osciData.AvgSize == 0)
+                    {
+                        double adcAvg = 0;
+                        double dacAvg = 0;
+                        for (int iAvgPos = 0; iAvgPos < osciData.AvgSize;iAvgPos++)
+                        {
+                            adcAvg += osciData.adc0Rolling[mod((osciPosition + iFloat) % osciData.adc0Rolling.Length - iAvgPos, osciData.adc0Rolling.Length)];
+                            dacAvg += osciData.dac0Rolling[mod((osciPosition + iFloat) % osciData.dac0Rolling.Length - iAvgPos, osciData.dac0Rolling.Length)];
+                        }
+                        adcAvg /= osciData.AvgSize;
+                        dacAvg /= osciData.AvgSize;
+
+                        osciData.adcQueue.Enqueue(adcAvg);
+                        osciData.dacQueue.Enqueue(dacAvg);
+                        while (osciData.adcQueue.Count > 400)
+                        {
+                            osciData.adcQueue.Dequeue();
+                            osciData.dacQueue.Dequeue();
+                        }
+
+                    }
+
                 }
+
+
 
 
                 osciPosition = (osciPosition + batchSize) % osciData.dac0Rolling.Length;

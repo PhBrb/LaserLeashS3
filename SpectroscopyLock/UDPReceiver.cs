@@ -13,7 +13,7 @@ namespace ChartTest2
     {
         public class Buffer
         {
-            public byte[] lastRawData = new byte[] {0x7C, 0x5, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            public byte[] lastRawData = new byte[] {};
         }
 
 

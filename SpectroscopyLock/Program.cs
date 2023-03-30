@@ -39,7 +39,8 @@ namespace ChartTest2
                 {
                     try
                     {
-                        osciWriter.TransferData(udpReceiver.b.lastRawData);
+                        if(udpReceiver.b.lastRawData.Length > 0)
+                            osciWriter.TransferData(udpReceiver.b.lastRawData);
                     }
                     catch (ArgumentException e)
                     {
