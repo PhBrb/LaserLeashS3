@@ -104,13 +104,16 @@ namespace ChartTest2
                         adcAvg /= osciData.AvgSize;
                         dacAvg /= osciData.AvgSize;
 
-                        osciData.adcQueue.Enqueue(adcAvg);
-                        osciData.dacQueue.Enqueue(dacAvg);
-                        while (osciData.adcQueue.Count > 400)
-                        {
-                            osciData.adcQueue.Dequeue();
-                            osciData.dacQueue.Dequeue();
-                        }
+                        lock (osciData.adcQueue) lock (osciData.dacQueue)
+                            {
+                                osciData.adcQueue.Enqueue(adcAvg);
+                                osciData.dacQueue.Enqueue(dacAvg);
+                                while (osciData.adcQueue.Count > 400)
+                                {
+                                    osciData.adcQueue.Dequeue();
+                                    osciData.dacQueue.Dequeue();
+                                }
+                            }
 
                     }
 
