@@ -143,6 +143,8 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
             chart1.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
+            chart1.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
+            chart1.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
 
             chart1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             chart1.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
@@ -215,6 +217,22 @@ namespace ChartTest2
             series2.Enabled = true;
             series3.Enabled = true;
 
+
+            lock (osciWriter.osciData.adcQueue) lock (osciWriter.osciData.dacQueue)
+                {
+                    double min, max;
+                    min = osciWriter.osciData.dacQueue.ToArray().Min();
+                    max = osciWriter.osciData.dacQueue.ToArray().Max();
+                    chart1.ChartAreas[0].AxisY2.Maximum = max + 0.5 * (max - min);
+                    chart1.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
+                    min = osciWriter.osciData.adcQueue.ToArray().Min();
+                    max = osciWriter.osciData.adcQueue.ToArray().Max();
+                    chart1.ChartAreas[0].AxisY.Maximum = max + 0.5 * (max - min);
+                    chart1.ChartAreas[0].AxisY.Minimum = min - 0.5 * (max - min);
+
+
+                }
+
             double offset = 0;
             if (OffsetCompensationCheckbox.Checked)
             {
@@ -234,7 +252,7 @@ namespace ChartTest2
             }
 
             Thread.Sleep(200);
-            mqtt.sendPID(-offset);
+            mqtt.sendPID(-offset, textBox1.Text);
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
