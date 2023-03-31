@@ -252,7 +252,7 @@ namespace ChartTest2
             }
 
             Thread.Sleep(200);
-            mqtt.sendPID(-offset, textBox1.Text);
+            mqtt.sendPID(-offset, textBox1.Text, -VA.X);
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -263,6 +263,10 @@ namespace ChartTest2
             series1.Enabled = true;
             series2.Enabled = false;
             series3.Enabled = false;
+            chart1.ChartAreas[0].AxisY2.Maximum = double.NaN;
+            chart1.ChartAreas[0].AxisY2.Minimum = double.NaN;
+            chart1.ChartAreas[0].AxisY.Maximum = double.NaN;
+            chart1.ChartAreas[0].AxisY.Minimum = double.NaN;
             Task.Run(() =>
             {
                 Thread.Sleep(100);
