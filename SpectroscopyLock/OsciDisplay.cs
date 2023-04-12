@@ -7,7 +7,11 @@ using System.Windows.Forms;
 
 namespace ChartTest2
 {
-    internal class OsciDisplay
+
+    /// <summary>
+    /// Prepares date for displaying
+    /// </summary>
+    public class OsciDisplay
     {
         Memory memory;
         bool useAllData = true;
@@ -41,13 +45,34 @@ namespace ChartTest2
         }
 
 
-        public (double[], double[]) GetXY()
+        /// <summary>
+        /// Transfers the data from TimeSeries storage in (sorted) XY format. <see cref="GetTimeSeries"/> has to be called first to update the internal data storage.
+        /// </summary>
+        /// <returns></returns>
+        public (double[], double[]) GetXYNoUpdate()
         {
             Array.Copy(adcData, adcDataSorted, pointsOnDisplay);
             Array.Copy(dacData, dacDataSorted, pointsOnDisplay);
 
             Array.Sort(dacDataSorted, adcDataSorted);
-            return (adcDataSorted, dacDataSorted);
+            return (dacDataSorted, adcDataSorted);
+        }
+
+        public double GetADCMinNoUpdate()
+        {
+            return adcDataSorted[0];
+        }
+        public double GetADCMaxNoUpdate()
+        {
+            return adcDataSorted[adcDataSorted.Length - 1];
+        }
+        public double GetDACMinNoUpdate()
+        {
+            return dacDataSorted[0];
+        }
+        public double GetDACMaxNoUpdate()
+        {
+            return dacDataSorted[adcDataSorted.Length - 1];
         }
     }
 }

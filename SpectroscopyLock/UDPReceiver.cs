@@ -36,9 +36,9 @@ namespace ChartTest2
         /// </summary>
         /// <param name="d"></param>
         /// <param name="osciData"></param>
-        public void TransferData(Deserializer d, Memory osciData)
+        public void TransferData( Memory osciData)
         {
-            d.Deserialize(lastRawData, osciData);
+            Deserializer.Deserialize(lastRawData, osciData);
         }
 
         /// <summary>

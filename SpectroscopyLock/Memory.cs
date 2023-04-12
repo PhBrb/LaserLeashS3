@@ -25,6 +25,12 @@ namespace ChartTest2
             dac = new ArrayQueue(size);
         }
 
+        public void Clear()
+        {
+            adc.Clear();
+            dac.Clear();
+        }
+
         public void ADCEnqueue(double value, int skip)
         {
             for (int i = 0; i < skip; i++)

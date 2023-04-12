@@ -31,7 +31,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
             this.ModulationAmplitudeInput = new System.Windows.Forms.TextBox();
@@ -52,28 +55,30 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.OffsetCompensationCheckbox = new System.Windows.Forms.CheckBox();
             this.HoldButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.chartXY.ChartAreas.Add(chartArea1);
+            this.chartXY.Dock = System.Windows.Forms.DockStyle.Bottom;
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 147);
-            this.chart1.Name = "chart1";
+            this.chartXY.Legends.Add(legend1);
+            this.chartXY.Location = new System.Drawing.Point(0, 435);
+            this.chartXY.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(800, 303);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
-            this.chart1.DoubleClick += new System.EventHandler(this.chart1_DoubleClick);
+            this.chartXY.Series.Add(series1);
+            this.chartXY.Size = new System.Drawing.Size(800, 303);
+            this.chartXY.TabIndex = 0;
+            this.chartXY.Text = "chart1";
+            this.chartXY.Click += new System.EventHandler(this.chart1_Click);
+            this.chartXY.DoubleClick += new System.EventHandler(this.chart1_DoubleClick);
             // 
             // LockButton
             // 
@@ -261,11 +266,29 @@
             this.HoldButton.UseVisualStyleBackColor = true;
             this.HoldButton.Click += new System.EventHandler(this.HoldButton_Click);
             // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend2);
+            this.chartTimeseries.Location = new System.Drawing.Point(0, 149);
+            this.chartTimeseries.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartTimeseries.Series.Add(series2);
+            this.chartTimeseries.Size = new System.Drawing.Size(800, 280);
+            this.chartTimeseries.TabIndex = 24;
+            this.chartTimeseries.Text = "chart2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 738);
+            this.Controls.Add(this.chartTimeseries);
             this.Controls.Add(this.HoldButton);
             this.Controls.Add(this.OffsetCompensationCheckbox);
             this.Controls.Add(this.textBox1);
@@ -286,10 +309,11 @@
             this.Controls.Add(this.ModulationAmplitudeInput);
             this.Controls.Add(this.UnlockButton);
             this.Controls.Add(this.LockButton);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.chartXY);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartXY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,7 +321,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartXY;
         private System.Windows.Forms.Button LockButton;
         private System.Windows.Forms.Button UnlockButton;
         private System.Windows.Forms.TextBox ModulationAmplitudeInput;
@@ -318,6 +342,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox OffsetCompensationCheckbox;
         private System.Windows.Forms.Button HoldButton;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
     }
 }
 

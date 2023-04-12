@@ -27,6 +27,11 @@ namespace ChartTest2
             return (x % m + m) % m;
         }
 
+        public void Clear()
+        {
+            array = new double[size];
+        }
+
         public void Enqueue(double value)
         {
             lastWrittenPosition = (lastWrittenPosition+1) % size;

@@ -24,137 +24,125 @@ namespace ChartTest2
 {
     public partial class Form1 : Form
     {
-        Deserializer osciWriter;
-        Series series1;
-        Series series2;
-        Series series3;
-        UDPReceiver udpReceiver;
+        Series seriesXY;
+        Series seriesOutput;
+        Series seriesDemod;
         private delegate void SafeCallDelegate();
         VerticalLineAnnotation VA;
         MQTTPublisher mqtt;
         bool lockMode = false;
         private double scanFreq = 1;
-        private int samples = 400;
-        private int averages = 400;
         bool update = true;
+        OsciDisplay osciDisplay;
+        Memory memory;
 
-        public Form1(Deserializer osciWriter, UDPReceiver udpReceiver, MQTTPublisher mqtt)
+        public Form1(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
             InitializeComponent();
-            this.osciWriter = osciWriter;
-            this.udpReceiver = udpReceiver;
             InitGraph();
             this.mqtt = mqtt;
+            this.osciDisplay = osciDisplay;
+            this.memory = memory;
         }
 
-        public void OnNewData()
+        public void OnNewDataXY()
         {
-            if(!update) 
-                return;
-
-
-            if (chart1.InvokeRequired)
+            if (chartXY.InvokeRequired)
             {
-                var d = new SafeCallDelegate(OnNewData);
-                chart1.Invoke(d, new object[] {});
+                var d = new SafeCallDelegate(OnNewDataXY);
+                chartXY.Invoke(d, new object[] { });
+            }
+            else
+            {
+                if (!lockMode)
+                {
+                    osciDisplay.GetTimeSeries();
+                    (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
+                    if (xData.Length > 0)
+                        seriesXY.Points.DataBindXY(xData, yData);
+                }
+                chartXY.Update();
+            }
+        }
+        public void OnNewDataTimeSeries()
+        {
+            if (chartTimeseries.InvokeRequired)
+            {
+                var d = new SafeCallDelegate(OnNewDataTimeSeries);
+                chartTimeseries.Invoke(d, new object[] { });
             }
             else
             {
 
-                if (lockMode)
-                {
-                    double[] dataDac, dataAdc;
-                    lock(osciWriter.osciData.dacQueue) lock(osciWriter.osciData.adcQueue)
-                    {
-                        dataDac = osciWriter.osciData.dacQueue.ToArray();
-                        dataAdc = osciWriter.osciData.adcQueue.ToArray();
-                        }
+                double[] dataDac, dataAdc;
+                (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
 
-
-                    series2.Points.DataBindY(dataDac);
-                    series3.Points.DataBindY(dataAdc);
-                }
-                {
-                    (double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData, osciWriter.osciData.AvgSize);
-                    if(xData.Length > 0)
-                        series1.Points.DataBindXY(xData, yData);
-                }
-
-
-                chart1.Update();
+                seriesOutput.Points.DataBindY(dataDac);
+                seriesDemod.Points.DataBindY(dataAdc);
+                chartTimeseries.Update();
             }
         }
-
-        static (double[], double[]) getXYData(SortedDictionary<double, double[]> dict, int avgSize)
+        public void OnNewData()
         {
+            if (!update)
+                return;
 
+            OnNewDataTimeSeries();
+            OnNewDataXY();
 
-            lock (dict)
-            {
-                double[] xData = new double[dict.Count];
-                double[] yData = new double[dict.Count];
-                int i = 0;
-                foreach (var item in dict)
-                {
-                    xData[i] = item.Key;
-                    yData[i] = item.Value.Sum()/avgSize;
-                    i++;
-                }
-                return (xData, yData);
-            }
         }
 
         public void InitGraph()
         {
             // create a series for each line
-            series1 = new Series("Channel0");
-            //(double[] xData, double[] yData) = getXYData(osciWriter.osciData.xyData);
-            //series1.Points.DataBindXY(xData, yData);
-
-
-            series1.ChartType = SeriesChartType.FastLine;
-                series1.ChartType = SeriesChartType.FastLine;
-
-            series2 = new Series("Output (right)");
-            series2.ChartType = SeriesChartType.FastLine;
-            series2.Enabled= false;
-            series3 = new Series("Demodulated (left)");
-            series3.ChartType = SeriesChartType.FastLine;
-            series3.Enabled= false;
+            seriesXY = new Series("Channel 0");
+            seriesXY.ChartType = SeriesChartType.FastLine;
+            seriesOutput = new Series("Output (left)");
+            seriesOutput.ChartType = SeriesChartType.FastLine;
+            seriesDemod = new Series("Demodulated (right)");
+            seriesDemod.ChartType = SeriesChartType.FastLine;
 
 
             // add each series to the chart
-            chart1.Series.Clear();
-            chart1.Series.Add(series1);
-            chart1.Series.Add(series2);
-            chart1.Series.Add(series3);
+            chartXY.Series.Clear();
+            chartXY.Series.Add(seriesXY);
+            chartTimeseries.Series.Clear();
+            chartTimeseries.Series.Add(seriesOutput);
+            chartTimeseries.Series.Add(seriesDemod);
 
-            chart1.Series[0].YAxisType = AxisType.Primary;
-
-            chart1.Series[1].YAxisType = AxisType.Secondary;
-            chart1.Series[2].YAxisType = AxisType.Primary;
+            chartXY.Series[0].YAxisType = AxisType.Primary;
+            chartTimeseries.Series[0].YAxisType = AxisType.Primary;
+            chartTimeseries.Series[1].YAxisType = AxisType.Secondary;
 
             // additional styling
-            chart1.ResetAutoValues();
-            chart1.Titles.Clear();
+            chartXY.ResetAutoValues();
+            chartTimeseries.ResetAutoValues();
+            chartXY.Titles.Clear();
+            chartTimeseries.Titles.Clear();
             //chart1.Titles.Add($"Fast Line Plot ({pointCount:N0} points per series)");
-            chart1.ChartAreas[0].AxisX.Title = "Voltage output";
-            chart1.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
-            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
-            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
-            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
-            chart1.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
-            chart1.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
+            chartXY.ChartAreas[0].AxisX.Title = "Voltage output";
+            chartXY.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
+            chartTimeseries.ChartAreas[0].AxisX.Title = "Time (Samples)";
+            chartTimeseries.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
+            chartTimeseries.ChartAreas[0].AxisY2.Title = "Voltage output";
+            chartXY.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartXY.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartTimeseries.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartTimeseries.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartXY.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
+            chartXY.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
+            chartTimeseries.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
+            chartTimeseries.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
+            chartTimeseries.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
 
-            chart1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
-            chart1.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
-            chart1.ChartAreas[0].AxisY2.IsStartedFromZero= false;
+            chartTimeseries.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
+            chartTimeseries.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
+            chartTimeseries.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
+            chartTimeseries.ChartAreas[0].AxisY2.IsStartedFromZero= false;
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
-            chart1.MouseWheel += chart1_MouseWheel;
-            var CA = chart1.ChartAreas[0];
-            //CA.AxisX.ScaleView.Zoomable = true;
+            chartXY.MouseWheel += chart1_MouseWheel;
+            var CA = chartXY.ChartAreas[0];
 
 
             // the vertical line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -167,12 +155,11 @@ namespace ChartTest2
             VA.LineColor = Color.Red;
             VA.LineWidth = 1;
             VA.X = 1;
-            chart1.Annotations.Add(VA);
+            chartXY.Annotations.Add(VA);
         }
 
         private void chart1_MouseWheel(object sender, MouseEventArgs e)
         {
-
             if (lockMode)
                 return;
 
@@ -190,8 +177,8 @@ namespace ChartTest2
                     var xMin = xAxis.ScaleView.ViewMinimum;
                     var xMax = xAxis.ScaleView.ViewMaximum;
 
-                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 3;
-                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 3;
+                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 4;
+                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 4;
 
                     setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
                 }
@@ -202,7 +189,7 @@ namespace ChartTest2
         private void chart1_Click(object sender, EventArgs e)
         {
             var me = e as MouseEventArgs;
-            VA.X = chart1.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
+            VA.X = chartXY.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
         }
 
         private void LockButton_Click(object sender, EventArgs e)
@@ -213,23 +200,19 @@ namespace ChartTest2
             Thread.Sleep(200);
 
             lockMode = true;
-            series1.Enabled = false;
-            series2.Enabled = true;
-            series3.Enabled = true;
+            seriesXY.Enabled = false;
+            seriesOutput.Enabled = true;
+            seriesDemod.Enabled = true;
 
-
-            lock (osciWriter.osciData.adcQueue) lock (osciWriter.osciData.dacQueue)
-                {
-                    double min, max;
-                    min = osciWriter.osciData.dacQueue.Min();
-                    max = osciWriter.osciData.dacQueue.Max();
-                    chart1.ChartAreas[0].AxisY2.Maximum = max + 0.5 * (max - min);
-                    chart1.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
-                    min = osciWriter.osciData.adcQueue.Min();
-                    max = osciWriter.osciData.adcQueue.Max();
-                    chart1.ChartAreas[0].AxisY.Maximum = max + 0.5 * (max - min);
-                    chart1.ChartAreas[0].AxisY.Minimum = min - 0.5 * (max - min);
-                }
+            double min, max;
+            min = osciDisplay.GetDACMinNoUpdate();
+            max = osciDisplay.GetDACMaxNoUpdate();
+            chartTimeseries.ChartAreas[0].AxisY.Maximum = max + 0.5 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY.Minimum = min - 0.5 * (max - min);
+            min = osciDisplay.GetADCMinNoUpdate();
+            max = osciDisplay.GetADCMaxNoUpdate();
+            chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.5 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
 
             Thread.Sleep(200);
             mqtt.sendPID(0, textBox1.Text, 0);
@@ -240,13 +223,13 @@ namespace ChartTest2
             mqtt.sendScanAmplitude(5);
             mqtt.sendScanOffset(5);
             lockMode = false;
-            series1.Enabled = true;
-            series2.Enabled = false;
-            series3.Enabled = false;
-            chart1.ChartAreas[0].AxisY2.Maximum = double.NaN;
-            chart1.ChartAreas[0].AxisY2.Minimum = double.NaN;
-            chart1.ChartAreas[0].AxisY.Maximum = double.NaN;
-            chart1.ChartAreas[0].AxisY.Minimum = double.NaN;
+            seriesXY.Enabled = true;
+            seriesOutput.Enabled = false;
+            seriesDemod.Enabled = false;
+            chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
         }
 
         private void setRange(double min, double max)
@@ -257,13 +240,7 @@ namespace ChartTest2
             Task.Run(() =>
             {
                 Thread.Sleep(100);
-                lock (osciWriter.osciData.xyData)
-                {
-                    osciWriter.osciData.resolution = (max - min) / samples;
-                    osciWriter.osciData.AvgSize = averages;
-                    osciWriter.osciData.resetXY();
-                }
-
+                memory.Clear();
             });
         }
 
@@ -275,12 +252,12 @@ namespace ChartTest2
             var xMin = xAxis.ScaleView.ViewMinimum;
             var xMax = xAxis.ScaleView.ViewMaximum;
 
-            var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 3;
-            var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 3;
+            var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
+            var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
 
             setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
-
         }
+
         private void ModulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -336,8 +313,6 @@ namespace ChartTest2
             }
         }
 
-
-
         private void DemodulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -370,8 +345,8 @@ namespace ChartTest2
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                averages = int.Parse(txt);
-                osciWriter.osciData.AvgSize = averages;
+                int averages = int.Parse(txt);
+                throw new NotImplementedException();
             }
         }
 
@@ -380,7 +355,8 @@ namespace ChartTest2
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                samples = int.Parse(txt);
+                int samples = int.Parse(txt);
+                throw new NotImplementedException();
             }
         }
 

@@ -2,7 +2,7 @@
 using System.IO;
 namespace ChartTest2
 {
-    public class Deserializer
+    public static class Deserializer
     {
         /// <summary>
         /// Data at the beginning of each packet
@@ -16,7 +16,7 @@ namespace ChartTest2
         }
 
 
-        public void Deserialize(byte[] rawData, Memory memory)
+        public static void Deserialize(byte[] rawData, Memory memory)
         {
             //rawData = File.ReadAllBytes(1027017276 + "packet.bytes"); //read data from a file for debuging purpose
 
