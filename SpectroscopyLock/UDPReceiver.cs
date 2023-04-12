@@ -11,23 +11,40 @@ namespace ChartTest2
 {
     public class UDPReceiver
     {
-        public class Buffer
-        {
-            public byte[] lastRawData = new byte[] {};
-        }
+        /// <summary>
+        /// Buffer for last received data
+        /// </summary>
+        private byte[] lastRawData = new byte[] {};
+        
+        public int Size { get { return lastRawData.Length; } }
 
-
-        Task thread;
+        /// <summary>
+        /// Stop the thread
+        /// </summary>
         bool stop = false;
-        public Buffer b;
 
+        /// <summary>
+        /// Starts a continuously running thread that receives and buffers data
+        /// </summary>
         public UDPReceiver()
         {
-            b = new Buffer();
-
-            thread = UDPListener();
+            UDPListener();
         }
 
+        /// <summary>
+        /// Transfers data from the buffer to bigger memory and converts from machine units to floats
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="osciData"></param>
+        public void TransferData(Deserializer d, Memory osciData)
+        {
+            d.Deserialize(lastRawData, osciData);
+        }
+
+        /// <summary>
+        /// Starts continuously running thread that writes received data into the buffer
+        /// </summary>
+        /// <returns></returns>
         Task UDPListener()
         {
             return Task.Run(() =>
@@ -39,7 +56,7 @@ namespace ChartTest2
                     while (!stop)
                     {
                         byte[] receivedResults = udpClient.Receive(ref remoteEndPoint);
-                        b.lastRawData = receivedResults;
+                        lastRawData = receivedResults;
                     }
                 }
             });

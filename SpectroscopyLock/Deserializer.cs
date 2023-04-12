@@ -4,6 +4,9 @@ namespace ChartTest2
 {
     public class Deserializer
     {
+        /// <summary>
+        /// Data at the beginning of each packet
+        /// </summary>
         struct header
         {
             public ushort magic;
@@ -12,29 +15,10 @@ namespace ChartTest2
             public uint sequenceNumber;
         }
 
-        public OsciData osciData { get; private set; }
 
-        int osciPosition = 0;
-
-        public Deserializer(OsciData osciData)
+        public void Deserialize(byte[] rawData, Memory memory)
         {
-            this.osciData = osciData;
-        }
-
-        /// <summary>
-        /// mod(-4,3) = 2
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="m"></param>
-        /// <returns></returns>
-        public static int mod(int x, int m)
-        {
-            return (x % m + m) % m;
-        }
-
-        public void TransferData(byte[] rawData)
-        {
-            //rawData = File.ReadAllBytes(1027017276 + "packet.bytes");
+            //rawData = File.ReadAllBytes(1027017276 + "packet.bytes"); //read data from a file for debuging purpose
 
             header h;
             h.magic = BitConverter.ToUInt16(rawData, 0);
@@ -42,13 +26,17 @@ namespace ChartTest2
             h.batchSize = rawData[3];
             h.sequenceNumber = BitConverter.ToUInt32(rawData, 4);
 
+            if (h.sequenceNumber == memory.lastSequenceNumber) //cancel if already processed previously
+                return;
+            memory.lastSequenceNumber = h.sequenceNumber;
+
 
             if (h.magic != 0x57B)
                 throw new ArgumentOutOfRangeException("wrong magic number");
             if (h.formatId != 1)
                 throw new ArgumentOutOfRangeException("unsupported formating");
 
-            //i think the structure is like this (with batch size 8)
+            //I think the structure is like this (with batch size 8)
             //array([[ 0,  1,  2,  3,  4,  5,  6,  7, 32, 33, 34, 35, 36, 37, 38, 39, 64, 65, 66, 67, 68, 69, 70, 71],
             //[ 8,  9, 10, 11, 12, 13, 14, 15, 40, 41, 42, 43, 44, 45, 46, 47, 72, 73, 74, 75, 76, 77, 78, 79],
             //[16, 17, 18, 19, 20, 21, 22, 23, 48, 49, 50, 51, 52, 53, 54, 55, 80, 81, 82, 83, 84, 85, 86, 87],
@@ -63,72 +51,16 @@ namespace ChartTest2
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
                     iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize;
-                    osciData.adc0Rolling[osciPosition + iFloat] = BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5)); //TODO: is this correct? The python script uses the DAC conversion factor also for the ADC, and ignores the also existing factor for ADC
-                }
-                for (int iFloat = 0; iFloat < batchSize; iFloat++)
-                {
-                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + batchSize * 2;
-                    osciData.adc1Rolling[osciPosition + iFloat] = BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5));
-                    //Console.WriteLine(osciData.dac0Rolling[osciPosition + iFloat]);
+                    memory.ADCEnqueue(BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5))); //TODO: is this correct? The python script uses the DAC conversion factor also for the ADC, and ignores the also existing factor for ADC
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
                     iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 2 * batchSize * 2;
-                    osciData.dac0Rolling[osciPosition + iFloat] = (BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000)))  / ((1 << 16) / (4.096f * 5));
-                }
-                for (int iFloat = 0; iFloat < batchSize; iFloat++)
-                {
-                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 3 * batchSize * 2;
-                    osciData.dac1Rolling[osciPosition + iFloat] = (BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000))) / ((1 << 16) / (4.096f * 5));
+                    memory.DACEnqueue((BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000)))  / ((1 << 16) / (4.096f * 5)));
                 }
 
-
-                //transfer last batchSize numbers to xy data storage
-                for (int iFloat = 0; iFloat < batchSize; iFloat++)
-                {
-                    //transfer to xy storage
-                    int index = mod(osciPosition, osciData.dac0Rolling.Length);
-                    osciData.setDatapoint(osciData.dac0Rolling[index], osciData.adc0Rolling[index]);
-
-                    //transfer to queue storage
-                    
-                    if(((osciPosition + iFloat) % osciData.dac0Rolling.Length)%osciData.AvgSize == 0)
-                    {
-                        double adcAvg = 0;
-                        double dacAvg = 0;
-                        for (int iAvgPos = 0; iAvgPos < osciData.AvgSize;iAvgPos++)
-                        {
-                            adcAvg += osciData.adc0Rolling[mod((osciPosition + iFloat) % osciData.adc0Rolling.Length - iAvgPos, osciData.adc0Rolling.Length)];
-                            dacAvg += osciData.dac0Rolling[mod((osciPosition + iFloat) % osciData.dac0Rolling.Length - iAvgPos, osciData.dac0Rolling.Length)];
-                        }
-                        adcAvg /= osciData.AvgSize;
-                        dacAvg /= osciData.AvgSize;
-
-                        lock (osciData.adcQueue) lock (osciData.dacQueue)
-                            {
-                                osciData.adcQueue.Enqueue(adcAvg);
-                                osciData.dacQueue.Enqueue(dacAvg);
-                                while (osciData.adcQueue.Count > 400)
-                                {
-                                    osciData.adcQueue.Dequeue();
-                                    osciData.dacQueue.Dequeue();
-                                }
-                            }
-
-                    }
-
-                }
-
-
-
-
-                osciPosition = (osciPosition + batchSize) % osciData.dac0Rolling.Length;
-                //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData);
+                //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData); //save data to a file for debuging purpose
             }
-
-
         }
-
-
     }
 }

@@ -221,38 +221,18 @@ namespace ChartTest2
             lock (osciWriter.osciData.adcQueue) lock (osciWriter.osciData.dacQueue)
                 {
                     double min, max;
-                    min = osciWriter.osciData.dacQueue.ToArray().Min();
-                    max = osciWriter.osciData.dacQueue.ToArray().Max();
+                    min = osciWriter.osciData.dacQueue.Min();
+                    max = osciWriter.osciData.dacQueue.Max();
                     chart1.ChartAreas[0].AxisY2.Maximum = max + 0.5 * (max - min);
                     chart1.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
-                    min = osciWriter.osciData.adcQueue.ToArray().Min();
-                    max = osciWriter.osciData.adcQueue.ToArray().Max();
+                    min = osciWriter.osciData.adcQueue.Min();
+                    max = osciWriter.osciData.adcQueue.Max();
                     chart1.ChartAreas[0].AxisY.Maximum = max + 0.5 * (max - min);
                     chart1.ChartAreas[0].AxisY.Minimum = min - 0.5 * (max - min);
-
-
                 }
-
-            double offset = 0;
-            if (OffsetCompensationCheckbox.Checked)
-            {
-
-                double keyOfClosest = 9999999999999;
-                lock (osciWriter.osciData.xyData)
-                {
-                    foreach (var entry in osciWriter.osciData.xyData)
-                    {
-                        if (Math.Abs(entry.Key - VA.X) < Math.Abs(keyOfClosest - VA.X))
-                        {
-                            offset = entry.Value.Sum()/entry.Value.Length;
-                            keyOfClosest = entry.Key;
-                        }
-                    }
-                }
-            }
 
             Thread.Sleep(200);
-            mqtt.sendPID(-offset, textBox1.Text, -VA.X);
+            mqtt.sendPID(0, textBox1.Text, 0);
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -267,11 +247,6 @@ namespace ChartTest2
             chart1.ChartAreas[0].AxisY2.Minimum = double.NaN;
             chart1.ChartAreas[0].AxisY.Maximum = double.NaN;
             chart1.ChartAreas[0].AxisY.Minimum = double.NaN;
-            Task.Run(() =>
-            {
-                Thread.Sleep(100);
-                mqtt.sendPIDOff();
-            });
         }
 
         private void setRange(double min, double max)
@@ -434,7 +409,6 @@ namespace ChartTest2
         private void InitButton_Click(object sender, EventArgs e)
         {
             mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), StreamTargetPortInput.Text);
-            mqtt.sendPIDOff();
             mqtt.sendModulationAmplitude(1);
             mqtt.sendModulationAttenuation(0);
             mqtt.sendModulationFrequency  (3000000);

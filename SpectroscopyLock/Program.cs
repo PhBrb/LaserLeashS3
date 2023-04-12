@@ -19,10 +19,10 @@ namespace ChartTest2
         static void Main()
         {
 
-            //Data flow: udpReceiver -> osciWriter -> osciData -> form -> (user input) mqtt
+            //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
             UDPReceiver udpReceiver = new UDPReceiver();
-            OsciData osciData = new OsciData(5000);
-            Deserializer osciWriter = new Deserializer(osciData);
+            Memory memory = new Memory(5000);
+            Deserializer deserializer = new Deserializer();
             
             MQTTPublisher mqtt = new MQTTPublisher();
             mqtt.connect();
@@ -30,7 +30,7 @@ namespace ChartTest2
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form = new Form1(osciWriter, udpReceiver, mqtt);
+            Form1 form = new Form1(deserializer, udpReceiver, mqtt);
 
             //transfer data from udp to osci memory
             Task.Run(() =>
@@ -39,8 +39,8 @@ namespace ChartTest2
                 {
                     try
                     {
-                        if(udpReceiver.b.lastRawData.Length > 0)
-                            osciWriter.TransferData(udpReceiver.b.lastRawData);
+                        if(udpReceiver.Size > 0)
+                            udpReceiver.TransferData(deserializer, memory);
                     }
                     catch (ArgumentException e)
                     {
