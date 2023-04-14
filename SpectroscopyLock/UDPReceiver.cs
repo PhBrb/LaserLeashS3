@@ -56,7 +56,7 @@ namespace ChartTest2
                     while (!stop)
                     {
                         byte[] receivedResults = udpClient.Receive(ref remoteEndPoint);
-                        lastRawData = receivedResults;
+                        lastRawData = receivedResults; ///this is the only code that writes to <see cref="lastRawData"/>. Since udp.Receive returns a new array this should be safe/consistent to read at any time, if the reader has a copy of the reference
                     }
                 }
             });

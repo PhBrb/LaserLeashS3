@@ -28,13 +28,18 @@ namespace ChartTest2
         Series seriesOutput;
         Series seriesDemod;
         private delegate void SafeCallDelegate();
-        VerticalLineAnnotation VA;
+        VerticalLineAnnotation LockLineAnnotation;
         MQTTPublisher mqtt;
         bool lockMode = false;
         private double scanFreq = 1;
-        bool update = true;
         OsciDisplay osciDisplay;
         Memory memory;
+        private double dacMax;
+        private double dacMin;
+        private double adcMax;
+        private double adcMin;
+        private double xMax;
+        private double xMin;
 
         public Form1(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
@@ -60,6 +65,18 @@ namespace ChartTest2
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
                     if (xData.Length > 0)
                         seriesXY.Points.DataBindXY(xData, yData);
+
+                    //keep x scale at maximum range
+                    if (xData.Max() > xMax)
+                    {
+                        xMax = xData.Max();
+                        chartXY.ChartAreas[0].AxisX.Maximum = xMax;
+                    }
+                    if (xData.Min() < xMin)
+                    {
+                        xMin = xData.Min();
+                        chartXY.ChartAreas[0].AxisX.Minimum = xMin;
+                    }
                 }
                 chartXY.Update();
             }
@@ -73,23 +90,58 @@ namespace ChartTest2
             }
             else
             {
-
                 double[] dataDac, dataAdc;
                 (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
 
                 seriesOutput.Points.DataBindY(dataDac);
                 seriesDemod.Points.DataBindY(dataAdc);
                 chartTimeseries.Update();
+
+                //keep DAC&ADC y scale at its maximum range
+                if (dataDac.Max() > dacMax)
+                {
+                    dacMax = dataDac.Max();
+                    chartTimeseries.ChartAreas[0].AxisY.Maximum = dacMax;
+                }
+                if (dataDac.Min() < dacMin)
+                {
+                    dacMin = dataDac.Min();
+                    chartTimeseries.ChartAreas[0].AxisY.Minimum = dacMin;
+                }
+                if (dataAdc.Max() > adcMax)
+                {
+                    adcMax = dataAdc.Max();
+                    chartTimeseries.ChartAreas[0].AxisY.Maximum = adcMax;
+                }
+                if (dataAdc.Min() < adcMin)
+                {
+                    adcMin = dataAdc.Min();
+                    chartTimeseries.ChartAreas[0].AxisY.Minimum = adcMin;
+                }
             }
         }
+
+        private void OnChartReload()
+        {
+            memory.Clear();
+            dacMax = 0;
+            dacMin = 0;
+            chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
+            adcMax = 0;
+            adcMin = 0;
+            chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
+            xMax = 0;
+            xMin = 0;
+            chartXY.ChartAreas[0].AxisX.Maximum = double.NaN;
+            chartXY.ChartAreas[0].AxisX.Minimum = double.NaN;
+        }
+
         public void OnNewData()
         {
-            if (!update)
-                return;
-
             OnNewDataTimeSeries();
             OnNewDataXY();
-
         }
 
         public void InitGraph()
@@ -123,15 +175,15 @@ namespace ChartTest2
             chartXY.ChartAreas[0].AxisX.Title = "Voltage output";
             chartXY.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
             chartTimeseries.ChartAreas[0].AxisX.Title = "Time (Samples)";
-            chartTimeseries.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
-            chartTimeseries.ChartAreas[0].AxisY2.Title = "Voltage output";
+            chartTimeseries.ChartAreas[0].AxisY2.Title = "Demodulation Voltage";
+            chartTimeseries.ChartAreas[0].AxisY.Title = "Voltage output";
             chartXY.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartXY.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartTimeseries.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartTimeseries.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartXY.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
             chartXY.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
-            chartTimeseries.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
+            chartTimeseries.ChartAreas[0].AxisX.LabelStyle.Format = "{0:#}";
             chartTimeseries.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
             chartTimeseries.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
 
@@ -141,30 +193,29 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.IsStartedFromZero= false;
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
-            chartXY.MouseWheel += chart1_MouseWheel;
+            chartXY.MouseWheel += chartXY_MouseWheel;
             var CA = chartXY.ChartAreas[0];
 
 
             // the vertical line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
-            VA = new VerticalLineAnnotation();
-            VA.AxisX = CA.AxisX;
-            VA.AllowMoving = true;
-            VA.IsInfinitive = true;
-            VA.ClipToChartArea = CA.Name;
-            VA.Name = "Lock Point";
-            VA.LineColor = Color.Red;
-            VA.LineWidth = 1;
-            VA.X = 1;
-            chartXY.Annotations.Add(VA);
+            LockLineAnnotation = new VerticalLineAnnotation();
+            LockLineAnnotation.AxisX = CA.AxisX;
+            LockLineAnnotation.AllowMoving = true;
+            LockLineAnnotation.IsInfinitive = true;
+            LockLineAnnotation.ClipToChartArea = CA.Name;
+            LockLineAnnotation.Name = "Lock Point";
+            LockLineAnnotation.LineColor = Color.Red;
+            LockLineAnnotation.LineWidth = 1;
+            LockLineAnnotation.X = 1;
+            chartXY.Annotations.Add(LockLineAnnotation);
         }
 
-        private void chart1_MouseWheel(object sender, MouseEventArgs e)
+        private void chartXY_MouseWheel(object sender, MouseEventArgs e)
         {
             if (lockMode)
                 return;
 
-            var chart = (Chart)sender;
-            var xAxis = chart.ChartAreas[0].AxisX;
+            var xAxis = chartXY.ChartAreas[0].AxisX;
 
             try
             {
@@ -189,21 +240,19 @@ namespace ChartTest2
         private void chart1_Click(object sender, EventArgs e)
         {
             var me = e as MouseEventArgs;
-            VA.X = chartXY.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
+            LockLineAnnotation.X = chartXY.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
         }
 
         private void LockButton_Click(object sender, EventArgs e)
         {
             mqtt.sendScanAmplitude(0);
             Thread.Sleep(200);
-            mqtt.sendScanOffset(VA.X);
+            mqtt.sendScanOffset(LockLineAnnotation.X);
             Thread.Sleep(200);
 
             lockMode = true;
-            seriesXY.Enabled = false;
-            seriesOutput.Enabled = true;
-            seriesDemod.Enabled = true;
 
+            //keep previous range
             double min, max;
             min = osciDisplay.GetDACMinNoUpdate();
             max = osciDisplay.GetDACMaxNoUpdate();
@@ -215,40 +264,34 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
 
             Thread.Sleep(200);
-            mqtt.sendPID(0, textBox1.Text, 0);
+            mqtt.sendPID(0, iirTextBox.Text, 0);
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendScanAmplitude(5);
-            mqtt.sendScanOffset(5);
+            mqtt.sendPIDOff();
+            setRange(0, 10);
             lockMode = false;
-            seriesXY.Enabled = true;
-            seriesOutput.Enabled = false;
-            seriesDemod.Enabled = false;
-            chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
-            chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
-            chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
-            chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
         }
 
         private void setRange(double min, double max)
         {
-            mqtt.sendScanOffset((min + max) / 2);
             mqtt.sendScanAmplitude((max - min) / 2);
+            mqtt.sendScanOffset((min + max) / 2);
 
             Task.Run(() =>
             {
                 Thread.Sleep(100);
-                memory.Clear();
+                OnChartReload();
             });
         }
 
         private void chart1_DoubleClick(object sender, EventArgs e)
         {
+            if (lockMode)
+                return;
             var me = e as MouseEventArgs;
-            var chart = (Chart)sender;
-            var xAxis = chart.ChartAreas[0].AxisX;
+            var xAxis = chartXY.ChartAreas[0].AxisX;
             var xMin = xAxis.ScaleView.ViewMinimum;
             var xMax = xAxis.ScaleView.ViewMaximum;
 
@@ -368,7 +411,6 @@ namespace ChartTest2
 
         private void ScanFreqUpButton_Click(object sender, EventArgs e)
         {
-
             scanFreq *= 2;
             mqtt.sendScanFrequency(scanFreq);
         }
@@ -399,7 +441,7 @@ namespace ChartTest2
 
         private void HoldButton_Click(object sender, EventArgs e)
         {
-            update = !update;
+            memory.freeze = !memory.freeze;
         }
     }
 }

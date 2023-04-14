@@ -13,6 +13,7 @@ namespace ChartTest2
         private ArrayQueue adc;
         private ArrayQueue dac;
         public uint lastSequenceNumber;
+        public bool freeze = false;
 
         public Memory(int size)
         {
@@ -33,6 +34,9 @@ namespace ChartTest2
 
         public void ADCEnqueue(double value, int skip)
         {
+            if (freeze)
+                return;
+
             for (int i = 0; i < skip; i++)
             {
                 adc.Enqueue(adc.GetLast());
@@ -42,11 +46,17 @@ namespace ChartTest2
 
         public void ADCEnqueue(double value)
         {
+            if (freeze)
+                return;
+
             adc.Enqueue(value);
         }
 
         public void DACEnqueue(double value, int skip)
         {
+            if (freeze)
+                return;
+
             for (int i = 0; i < skip; i++)
             {
                 dac.Enqueue(dac.GetLast());
@@ -56,6 +66,9 @@ namespace ChartTest2
 
         public void DACEnqueue(double value)
         {
+            if (freeze)
+                return;
+
             dac.Enqueue(value);
         }
 

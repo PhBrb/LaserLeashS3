@@ -21,7 +21,7 @@ namespace ChartTest2
 
             //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
             UDPReceiver udpReceiver = new UDPReceiver();
-            Memory memory = new Memory(50000);
+            Memory memory = new Memory(500000);
             OsciDisplay osciDisplay = new OsciDisplay(memory);
             
             MQTTPublisher mqtt = new MQTTPublisher();

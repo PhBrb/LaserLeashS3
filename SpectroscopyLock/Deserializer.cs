@@ -61,6 +61,8 @@ namespace ChartTest2
 
                 //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData); //save data to a file for debuging purpose
             }
+            if (BitConverter.ToUInt32(rawData, 4) != h.sequenceNumber)
+                throw new Exception("converting data wasnt thread safe");
         }
     }
 }

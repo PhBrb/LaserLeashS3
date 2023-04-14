@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -52,28 +52,27 @@
             this.InitButton = new System.Windows.Forms.Button();
             this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
             this.StabilizerIDInput = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.OffsetCompensationCheckbox = new System.Windows.Forms.CheckBox();
+            this.iirTextBox = new System.Windows.Forms.TextBox();
             this.HoldButton = new System.Windows.Forms.Button();
             this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.SuspendLayout();
             // 
-            // chart1
+            // chartXY
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea3);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend1.Name = "Legend1";
-            this.chartXY.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chartXY.Legends.Add(legend3);
             this.chartXY.Location = new System.Drawing.Point(0, 435);
-            this.chartXY.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartXY.Series.Add(series1);
+            this.chartXY.Name = "chartXY";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartXY.Series.Add(series3);
             this.chartXY.Size = new System.Drawing.Size(800, 303);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -212,7 +211,7 @@
             // 
             // InitButton
             // 
-            this.InitButton.Location = new System.Drawing.Point(409, 10);
+            this.InitButton.Location = new System.Drawing.Point(267, 12);
             this.InitButton.Name = "InitButton";
             this.InitButton.Size = new System.Drawing.Size(75, 23);
             this.InitButton.TabIndex = 17;
@@ -226,7 +225,7 @@
             this.StreamTargetIPInput.Name = "StreamTargetIPInput";
             this.StreamTargetIPInput.Size = new System.Drawing.Size(100, 20);
             this.StreamTargetIPInput.TabIndex = 19;
-            this.StreamTargetIPInput.Text = "127.0.0.1";
+            this.StreamTargetIPInput.Text = "192.168.1.229";
             this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetIPInput_KeyDown);
             // 
             // StabilizerIDInput
@@ -240,21 +239,11 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(338, 70);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(196, 20);
-            this.textBox1.TabIndex = 21;
-            this.textBox1.Text = "[0.10628318530717959, -0.1, 0.0, 1.0, -0.0]";
-            // 
-            // OffsetCompensationCheckbox
-            // 
-            this.OffsetCompensationCheckbox.AutoSize = true;
-            this.OffsetCompensationCheckbox.Location = new System.Drawing.Point(268, 13);
-            this.OffsetCompensationCheckbox.Name = "OffsetCompensationCheckbox";
-            this.OffsetCompensationCheckbox.Size = new System.Drawing.Size(123, 17);
-            this.OffsetCompensationCheckbox.TabIndex = 22;
-            this.OffsetCompensationCheckbox.Text = "Offset compensation";
-            this.OffsetCompensationCheckbox.UseVisualStyleBackColor = true;
+            this.iirTextBox.Location = new System.Drawing.Point(338, 70);
+            this.iirTextBox.Name = "textBox1";
+            this.iirTextBox.Size = new System.Drawing.Size(196, 20);
+            this.iirTextBox.TabIndex = 21;
+            this.iirTextBox.Text = "[0.10628318530717959, -0.1, 0.0, 1.0, -0.0]";
             // 
             // HoldButton
             // 
@@ -266,19 +255,19 @@
             this.HoldButton.UseVisualStyleBackColor = true;
             this.HoldButton.Click += new System.EventHandler(this.HoldButton_Click);
             // 
-            // chart2
+            // chartTimeseries
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend4);
             this.chartTimeseries.Location = new System.Drawing.Point(0, 149);
-            this.chartTimeseries.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartTimeseries.Series.Add(series2);
+            this.chartTimeseries.Name = "chartTimeseries";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartTimeseries.Series.Add(series4);
             this.chartTimeseries.Size = new System.Drawing.Size(800, 280);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -290,8 +279,7 @@
             this.ClientSize = new System.Drawing.Size(800, 738);
             this.Controls.Add(this.chartTimeseries);
             this.Controls.Add(this.HoldButton);
-            this.Controls.Add(this.OffsetCompensationCheckbox);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.iirTextBox);
             this.Controls.Add(this.StabilizerIDInput);
             this.Controls.Add(this.StreamTargetIPInput);
             this.Controls.Add(this.InitButton);
@@ -339,8 +327,7 @@
         private System.Windows.Forms.Button InitButton;
         private System.Windows.Forms.TextBox StreamTargetIPInput;
         private System.Windows.Forms.TextBox StabilizerIDInput;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox OffsetCompensationCheckbox;
+        private System.Windows.Forms.TextBox iirTextBox;
         private System.Windows.Forms.Button HoldButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
     }
