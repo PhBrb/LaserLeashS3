@@ -58,5 +58,9 @@ namespace ChartTest2
             return sum;
         }
 
+        internal int getSize()
+        {
+            return size;
+        }
     }
 }

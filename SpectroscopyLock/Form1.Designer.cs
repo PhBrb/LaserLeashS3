@@ -48,13 +48,14 @@
             this.ScanFreqUpButton = new System.Windows.Forms.Button();
             this.DemodulationFrequencyInput = new System.Windows.Forms.TextBox();
             this.AveragesInput = new System.Windows.Forms.TextBox();
-            this.SamplesInput = new System.Windows.Forms.TextBox();
+            this.SamplesMemoryInput = new System.Windows.Forms.TextBox();
             this.InitButton = new System.Windows.Forms.Button();
             this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
             this.StabilizerIDInput = new System.Windows.Forms.TextBox();
             this.iirTextBox = new System.Windows.Forms.TextBox();
             this.HoldButton = new System.Windows.Forms.Button();
             this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.SamplesOnDisplay = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.SuspendLayout();
@@ -200,14 +201,14 @@
             this.AveragesInput.Text = "Averages";
             this.AveragesInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AveragesInput_KeyDown);
             // 
-            // SamplesInput
+            // SamplesMemoryInput
             // 
-            this.SamplesInput.Location = new System.Drawing.Point(687, 94);
-            this.SamplesInput.Name = "SamplesInput";
-            this.SamplesInput.Size = new System.Drawing.Size(100, 20);
-            this.SamplesInput.TabIndex = 15;
-            this.SamplesInput.Text = "Samples";
-            this.SamplesInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesInput_KeyDown);
+            this.SamplesMemoryInput.Location = new System.Drawing.Point(687, 94);
+            this.SamplesMemoryInput.Name = "SamplesMemoryInput";
+            this.SamplesMemoryInput.Size = new System.Drawing.Size(100, 20);
+            this.SamplesMemoryInput.TabIndex = 15;
+            this.SamplesMemoryInput.Text = "SamplesInMemory";
+            this.SamplesMemoryInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesMemoryInput_KeyDown);
             // 
             // InitButton
             // 
@@ -272,18 +273,28 @@
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
             // 
+            // SamplesOnDisplay
+            // 
+            this.SamplesOnDisplay.Location = new System.Drawing.Point(687, 120);
+            this.SamplesOnDisplay.Name = "SamplesOnDisplay";
+            this.SamplesOnDisplay.Size = new System.Drawing.Size(100, 20);
+            this.SamplesOnDisplay.TabIndex = 25;
+            this.SamplesOnDisplay.Text = "Samples";
+            this.SamplesOnDisplay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesOnDisplay_KeyDown);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 738);
+            this.Controls.Add(this.SamplesOnDisplay);
             this.Controls.Add(this.chartTimeseries);
             this.Controls.Add(this.HoldButton);
             this.Controls.Add(this.iirTextBox);
             this.Controls.Add(this.StabilizerIDInput);
             this.Controls.Add(this.StreamTargetIPInput);
             this.Controls.Add(this.InitButton);
-            this.Controls.Add(this.SamplesInput);
+            this.Controls.Add(this.SamplesMemoryInput);
             this.Controls.Add(this.AveragesInput);
             this.Controls.Add(this.DemodulationFrequencyInput);
             this.Controls.Add(this.ScanFreqUpButton);
@@ -323,13 +334,14 @@
         private System.Windows.Forms.Button ScanFreqUpButton;
         private System.Windows.Forms.TextBox DemodulationFrequencyInput;
         private System.Windows.Forms.TextBox AveragesInput;
-        private System.Windows.Forms.TextBox SamplesInput;
+        private System.Windows.Forms.TextBox SamplesMemoryInput;
         private System.Windows.Forms.Button InitButton;
         private System.Windows.Forms.TextBox StreamTargetIPInput;
         private System.Windows.Forms.TextBox StabilizerIDInput;
         private System.Windows.Forms.TextBox iirTextBox;
         private System.Windows.Forms.Button HoldButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
+        private System.Windows.Forms.TextBox SamplesOnDisplay;
     }
 }
 

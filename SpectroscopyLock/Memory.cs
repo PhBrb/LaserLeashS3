@@ -26,6 +26,12 @@ namespace ChartTest2
             dac = new ArrayQueue(size);
         }
 
+        public void setSize(int size)
+        {
+            adc = new ArrayQueue(size);
+            dac = new ArrayQueue(size);
+        }
+
         public void Clear()
         {
             adc.Clear();
@@ -78,6 +84,11 @@ namespace ChartTest2
         public double GetDACSum(int previous, int size)
         {
             return dac.GetADCSum(previous, size);
+        }
+
+        internal int getSize()
+        {
+            return adc.getSize();
         }
     }
 }

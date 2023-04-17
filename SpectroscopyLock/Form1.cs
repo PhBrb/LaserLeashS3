@@ -330,17 +330,31 @@ namespace ChartTest2
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
                 int averages = int.Parse(txt);
-                throw new NotImplementedException();
+                osciDisplay.setAverages(averages);
             }
         }
 
-        private void SamplesInput_KeyDown(object sender, KeyEventArgs e)
+        private void SamplesMemoryInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
                 int samples = int.Parse(txt);
-                throw new NotImplementedException();
+                osciDisplay.oldestSampleToDisplay = Math.Min(samples, osciDisplay.oldestSampleToDisplay);
+                memory.setSize(samples);
+
+            }
+        }
+
+        private void SamplesOnDisplay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                int samples = int.Parse(txt);
+                if(memory.getSize() < samples)
+                    throw new NotImplementedException();
+                osciDisplay.oldestSampleToDisplay = samples;
             }
         }
 
@@ -384,5 +398,7 @@ namespace ChartTest2
         {
             memory.freeze = !memory.freeze;
         }
+
+
     }
 }

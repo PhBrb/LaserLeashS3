@@ -14,8 +14,8 @@ namespace ChartTest2
     public class OsciDisplay
     {
         Memory memory;
-        bool useAllData = false;
-        int oldestSampleToDisplay = 4500000;
+        int averages = 50;
+        public int oldestSampleToDisplay = 4500000;
 
         int pointsOnDisplay = 400;
         double[] adcData = new double[400];
@@ -31,17 +31,26 @@ namespace ChartTest2
         public (double[], double[]) GetTimeSeries()
         {
             int iSampleDistance = oldestSampleToDisplay / pointsOnDisplay;
-            int iAvg = useAllData ? oldestSampleToDisplay / pointsOnDisplay : 1;
+            int samplesToUse = averages + 1;
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                adcData[pointsOnDisplay - i - 1] = memory.GetADCSum(-i * iSampleDistance - iAvg, iAvg) / iAvg; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                adcData[pointsOnDisplay - i - 1] = memory.GetADCSum(-i * iSampleDistance - samplesToUse, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                dacData[pointsOnDisplay - i - 1] = memory.GetDACSum(-i * iSampleDistance - iAvg, iAvg) / iAvg; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                dacData[pointsOnDisplay - i - 1] = memory.GetDACSum(-i * iSampleDistance - samplesToUse, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
 
             return (adcData, dacData);
+        }
+
+        public void setAverages(int count)
+        {
+            if (count < 0)
+                throw new ArgumentException("must be positive");
+            if (count > oldestSampleToDisplay / pointsOnDisplay)
+                throw new ArgumentException("not enough data for averages");
+            averages = count;
         }
 
 
