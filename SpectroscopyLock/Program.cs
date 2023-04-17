@@ -21,7 +21,7 @@ namespace ChartTest2
 
             //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
             UDPReceiver udpReceiver = new UDPReceiver();
-            Memory memory = new Memory(500000);
+            Memory memory = new Memory(150000);
             OsciDisplay osciDisplay = new OsciDisplay(memory);
             
             MQTTPublisher mqtt = new MQTTPublisher();
@@ -53,6 +53,7 @@ namespace ChartTest2
             //refresh osci display
             Task.Run(() =>
             {
+                Thread.Sleep(1000);//wait for gui to load, otherwise some threading exceptions appear
                 while (true)
                 {
                     form.OnNewData();

@@ -15,7 +15,7 @@ namespace ChartTest2
     {
         Memory memory;
         bool useAllData = true;
-        int oldestSampleToDisplay = 400000;
+        int oldestSampleToDisplay = 140000;
 
         int pointsOnDisplay = 400;
         double[] adcData = new double[400];

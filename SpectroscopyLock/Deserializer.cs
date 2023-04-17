@@ -28,12 +28,20 @@ namespace ChartTest2
 
             if (h.sequenceNumber == memory.lastSequenceNumber) //cancel if already processed previously
                 return;
+
+            int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1; //not perfectly accurate, will be wrong once, when sequenceNumber has an overflow
+            if(skip > 0)
+            {
+                memory.ADCSkip(skip*22*8);//22 batches per frame, 8 numbers per batch
+                memory.DACSkip(skip*22*8);
+            }
+
             memory.lastSequenceNumber = h.sequenceNumber;
 
 
             if (h.magic != 0x57B)
                 throw new ArgumentOutOfRangeException("wrong magic number");
-            if (h.formatId != 1)
+            if (h.formatId != 1 || h.batchSize != 8)
                 throw new ArgumentOutOfRangeException("unsupported formating");
 
             //I think the structure is like this (with batch size 8)
@@ -46,7 +54,7 @@ namespace ChartTest2
             int headerSize = 8;
             int iPos = 0;
             //TODO: if this gets refactored, use a byterunner instead of calculating which byte to read. avoids bugs when calculating the position.
-            for (int iBatch = 0; iBatch < rawData.Length / (batchSize*4*2); iBatch++) //2 bytes, 4 arrays
+            for (int iBatch = 0; iBatch < 22; iBatch++)//176 2 byte intergers per frame -> with batch size 8 thats 22 batches per frame per channel
             {
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {

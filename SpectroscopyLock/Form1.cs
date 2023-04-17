@@ -54,8 +54,8 @@ namespace ChartTest2
         {
             if (chartXY.InvokeRequired)
             {
-                var d = new SafeCallDelegate(OnNewDataXY);
-                chartXY.Invoke(d, new object[] { });
+                chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
+                return;
             }
             else
             {
@@ -67,16 +67,14 @@ namespace ChartTest2
                         seriesXY.Points.DataBindXY(xData, yData);
 
                     //keep x scale at maximum range
-                    if (xData.Max() > xMax)
-                    {
-                        xMax = xData.Max();
-                        chartXY.ChartAreas[0].AxisX.Maximum = xMax;
-                    }
-                    if (xData.Min() < xMin)
-                    {
-                        xMin = xData.Min();
-                        chartXY.ChartAreas[0].AxisX.Minimum = xMin;
-                    }
+                    double max = xData.Max();
+                    double min = xData.Min();
+                    double newRange = (max - min) * 1.1;
+                    double center = (max + min) / 2;
+                    xMax = 0.8 * xMax + 0.2 * (center + newRange / 2);
+                    xMin = 0.8 * xMin + 0.2 * (center - newRange / 2);
+                    chartXY.ChartAreas[0].AxisX.Maximum = xMax;
+                    chartXY.ChartAreas[0].AxisX.Minimum = xMin;
                 }
                 chartXY.Update();
             }
@@ -85,8 +83,8 @@ namespace ChartTest2
         {
             if (chartTimeseries.InvokeRequired)
             {
-                var d = new SafeCallDelegate(OnNewDataTimeSeries);
-                chartTimeseries.Invoke(d, new object[] { });
+                chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
+                return;
             }
             else
             {
@@ -95,47 +93,57 @@ namespace ChartTest2
 
                 seriesOutput.Points.DataBindY(dataDac);
                 seriesDemod.Points.DataBindY(dataAdc);
-                chartTimeseries.Update();
 
                 //keep DAC&ADC y scale at its maximum range
-                if (dataDac.Max() > dacMax)
-                {
-                    dacMax = dataDac.Max();
-                    chartTimeseries.ChartAreas[0].AxisY.Maximum = dacMax;
-                }
-                if (dataDac.Min() < dacMin)
-                {
-                    dacMin = dataDac.Min();
-                    chartTimeseries.ChartAreas[0].AxisY.Minimum = dacMin;
-                }
-                if (dataAdc.Max() > adcMax)
-                {
-                    adcMax = dataAdc.Max();
-                    chartTimeseries.ChartAreas[0].AxisY.Maximum = adcMax;
-                }
-                if (dataAdc.Min() < adcMin)
-                {
-                    adcMin = dataAdc.Min();
-                    chartTimeseries.ChartAreas[0].AxisY.Minimum = adcMin;
-                }
+                double max = dataDac.Max();
+                double min = dataDac.Min();
+                double newRange = (max - min)*1.1;
+                if (newRange == 0)
+                    newRange = 1;
+                double center = (max + min) / 2;
+                dacMax = 0.8 * dacMax + 0.2*(center+newRange/2);
+                dacMin = 0.8 * dacMin + 0.2 * (center - newRange / 2);
+                chartTimeseries.ChartAreas[0].AxisY.Maximum = dacMax;
+                chartTimeseries.ChartAreas[0].AxisY.Minimum = dacMin;
+
+                max = dataAdc.Max();
+                min = dataAdc.Min();
+                newRange = (max - min) * 1.1;
+                if (newRange == 0)
+                    newRange = 1;
+                center = (max + min) / 2;
+                adcMax = 0.8 * adcMax + 0.2 * (center + newRange / 2);
+                adcMin = 0.8 * adcMin + 0.2 * (center - newRange / 2);
+                chartTimeseries.ChartAreas[0].AxisY2.Maximum = adcMax;
+                chartTimeseries.ChartAreas[0].AxisY2.Minimum = adcMin;
+
+                chartTimeseries.Update();
             }
         }
 
         private void OnChartReload()
         {
-            memory.Clear();
-            dacMax = 0;
-            dacMin = 0;
-            chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
-            chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
-            adcMax = 0;
-            adcMin = 0;
-            chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
-            chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
-            xMax = 0;
-            xMin = 0;
-            chartXY.ChartAreas[0].AxisX.Maximum = double.NaN;
-            chartXY.ChartAreas[0].AxisX.Minimum = double.NaN;
+            if (chartTimeseries.InvokeRequired)
+            {
+                chartTimeseries.Invoke(new SafeCallDelegate(OnChartReload), new object[] { });
+                return;
+            }
+            else
+            {
+                //memory.Clear();
+                //dacMax = 0;
+                //dacMin = 99;
+                //chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
+                //chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
+                //adcMax = 0;
+                //adcMin = 99;
+                //chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
+                //chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
+                //xMax = 0;
+                //xMin = 99;
+                //chartXY.ChartAreas[0].AxisX.Maximum = double.NaN;
+                //chartXY.ChartAreas[0].AxisX.Minimum = double.NaN;
+            }
         }
 
         public void OnNewData()
@@ -171,7 +179,6 @@ namespace ChartTest2
             chartTimeseries.ResetAutoValues();
             chartXY.Titles.Clear();
             chartTimeseries.Titles.Clear();
-            //chart1.Titles.Add($"Fast Line Plot ({pointCount:N0} points per series)");
             chartXY.ChartAreas[0].AxisX.Title = "Voltage output";
             chartXY.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
             chartTimeseries.ChartAreas[0].AxisX.Title = "Time (Samples)";
@@ -190,7 +197,6 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             chartTimeseries.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
             chartTimeseries.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
-            chartTimeseries.ChartAreas[0].AxisY2.IsStartedFromZero= false;
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             chartXY.MouseWheel += chartXY_MouseWheel;

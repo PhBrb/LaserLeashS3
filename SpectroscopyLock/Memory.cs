@@ -32,7 +32,7 @@ namespace ChartTest2
             dac.Clear();
         }
 
-        public void ADCEnqueue(double value, int skip)
+        public void ADCSkip(int skip)
         {
             if (freeze)
                 return;
@@ -41,7 +41,6 @@ namespace ChartTest2
             {
                 adc.Enqueue(adc.GetLast());
             }
-            adc.Enqueue(value);
         }
 
         public void ADCEnqueue(double value)
@@ -52,7 +51,7 @@ namespace ChartTest2
             adc.Enqueue(value);
         }
 
-        public void DACEnqueue(double value, int skip)
+        public void DACSkip(int skip)
         {
             if (freeze)
                 return;
@@ -60,8 +59,7 @@ namespace ChartTest2
             for (int i = 0; i < skip; i++)
             {
                 dac.Enqueue(dac.GetLast());
-            }
-            dac.Enqueue(value);
+            };
         }
 
         public void DACEnqueue(double value)

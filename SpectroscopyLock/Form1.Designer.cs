@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -61,18 +61,18 @@
             // 
             // chartXY
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea1);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend3.Name = "Legend1";
-            this.chartXY.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.chartXY.Legends.Add(legend1);
             this.chartXY.Location = new System.Drawing.Point(0, 435);
             this.chartXY.Name = "chartXY";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartXY.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartXY.Series.Add(series1);
             this.chartXY.Size = new System.Drawing.Size(800, 303);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -237,10 +237,10 @@
             this.StabilizerIDInput.Text = "04-91-62-d2-60-2f";
             this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
-            // textBox1
+            // iirTextBox
             // 
             this.iirTextBox.Location = new System.Drawing.Point(338, 70);
-            this.iirTextBox.Name = "textBox1";
+            this.iirTextBox.Name = "iirTextBox";
             this.iirTextBox.Size = new System.Drawing.Size(196, 20);
             this.iirTextBox.TabIndex = 21;
             this.iirTextBox.Text = "[0.10628318530717959, -0.1, 0.0, 1.0, -0.0]";
@@ -249,25 +249,25 @@
             // 
             this.HoldButton.Location = new System.Drawing.Point(543, 118);
             this.HoldButton.Name = "HoldButton";
-            this.HoldButton.Size = new System.Drawing.Size(75, 23);
+            this.HoldButton.Size = new System.Drawing.Size(93, 23);
             this.HoldButton.TabIndex = 23;
-            this.HoldButton.Text = "Hold";
+            this.HoldButton.Text = "Freeze Memory";
             this.HoldButton.UseVisualStyleBackColor = true;
             this.HoldButton.Click += new System.EventHandler(this.HoldButton_Click);
             // 
             // chartTimeseries
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend2);
             this.chartTimeseries.Location = new System.Drawing.Point(0, 149);
             this.chartTimeseries.Name = "chartTimeseries";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartTimeseries.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartTimeseries.Series.Add(series2);
             this.chartTimeseries.Size = new System.Drawing.Size(800, 280);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
