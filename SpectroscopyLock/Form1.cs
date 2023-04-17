@@ -34,12 +34,6 @@ namespace ChartTest2
         private double scanFreq = 1;
         OsciDisplay osciDisplay;
         Memory memory;
-        private double dacMax;
-        private double dacMin;
-        private double adcMax;
-        private double adcMin;
-        private double xMax;
-        private double xMin;
 
         public Form1(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
@@ -65,18 +59,8 @@ namespace ChartTest2
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
                     if (xData.Length > 0)
                         seriesXY.Points.DataBindXY(xData, yData);
-
-                    //keep x scale at maximum range
-                    double max = xData.Max();
-                    double min = xData.Min();
-                    double newRange = (max - min) * 1.1;
-                    double center = (max + min) / 2;
-                    xMax = 0.8 * xMax + 0.2 * (center + newRange / 2);
-                    xMin = 0.8 * xMin + 0.2 * (center - newRange / 2);
-                    chartXY.ChartAreas[0].AxisX.Maximum = xMax;
-                    chartXY.ChartAreas[0].AxisX.Minimum = xMin;
+                    chartXY.Update();
                 }
-                chartXY.Update();
             }
         }
         public void OnNewDataTimeSeries()
@@ -94,56 +78,13 @@ namespace ChartTest2
                 seriesOutput.Points.DataBindY(dataDac);
                 seriesDemod.Points.DataBindY(dataAdc);
 
-                //keep DAC&ADC y scale at its maximum range
-                double max = dataDac.Max();
-                double min = dataDac.Min();
-                double newRange = (max - min)*1.1;
-                if (newRange == 0)
-                    newRange = 1;
-                double center = (max + min) / 2;
-                dacMax = 0.8 * dacMax + 0.2*(center+newRange/2);
-                dacMin = 0.8 * dacMin + 0.2 * (center - newRange / 2);
-                chartTimeseries.ChartAreas[0].AxisY.Maximum = dacMax;
-                chartTimeseries.ChartAreas[0].AxisY.Minimum = dacMin;
-
-                max = dataAdc.Max();
-                min = dataAdc.Min();
-                newRange = (max - min) * 1.1;
-                if (newRange == 0)
-                    newRange = 1;
-                center = (max + min) / 2;
-                adcMax = 0.8 * adcMax + 0.2 * (center + newRange / 2);
-                adcMin = 0.8 * adcMin + 0.2 * (center - newRange / 2);
-                chartTimeseries.ChartAreas[0].AxisY2.Maximum = adcMax;
-                chartTimeseries.ChartAreas[0].AxisY2.Minimum = adcMin;
-
                 chartTimeseries.Update();
             }
         }
 
         private void OnChartReload()
         {
-            if (chartTimeseries.InvokeRequired)
-            {
-                chartTimeseries.Invoke(new SafeCallDelegate(OnChartReload), new object[] { });
-                return;
-            }
-            else
-            {
-                //memory.Clear();
-                //dacMax = 0;
-                //dacMin = 99;
-                //chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
-                //chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
-                //adcMax = 0;
-                //adcMin = 99;
-                //chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
-                //chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
-                //xMax = 0;
-                //xMin = 99;
-                //chartXY.ChartAreas[0].AxisX.Maximum = double.NaN;
-                //chartXY.ChartAreas[0].AxisX.Minimum = double.NaN;
-            }
+
         }
 
         public void OnNewData()
@@ -284,12 +225,6 @@ namespace ChartTest2
         {
             mqtt.sendScanAmplitude((max - min) / 2);
             mqtt.sendScanOffset((min + max) / 2);
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(100);
-                OnChartReload();
-            });
         }
 
         private void chart1_DoubleClick(object sender, EventArgs e)

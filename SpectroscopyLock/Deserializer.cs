@@ -30,7 +30,7 @@ namespace ChartTest2
                 return;
 
             int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1; //not perfectly accurate, will be wrong once, when sequenceNumber has an overflow
-            if(skip > 0)
+            if(skip > 0 && skip < 1000) //skip only of no overflow and if not too much to skip (eg at start)
             {
                 memory.ADCSkip(skip*22*8);//22 batches per frame, 8 numbers per batch
                 memory.DACSkip(skip*22*8);

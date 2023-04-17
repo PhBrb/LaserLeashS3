@@ -14,8 +14,8 @@ namespace ChartTest2
     public class OsciDisplay
     {
         Memory memory;
-        bool useAllData = true;
-        int oldestSampleToDisplay = 140000;
+        bool useAllData = false;
+        int oldestSampleToDisplay = 4500000;
 
         int pointsOnDisplay = 400;
         double[] adcData = new double[400];
@@ -60,11 +60,11 @@ namespace ChartTest2
 
         public double GetADCMinNoUpdate()
         {
-            return adcDataSorted[0];
+            return adcDataSorted.Min();
         }
         public double GetADCMaxNoUpdate()
         {
-            return adcDataSorted[adcDataSorted.Length - 1];
+            return adcDataSorted.Max();
         }
         public double GetDACMinNoUpdate()
         {
