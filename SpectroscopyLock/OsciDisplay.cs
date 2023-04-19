@@ -58,7 +58,7 @@ namespace ChartTest2
             int iNewCenter = iCenter - iRange + (int)(2*iRange*position);
 
             oldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
-            newestSampleToDisplay = Math.Max(0, iNewCenter - iRange);
+            newestSampleToDisplay = Math.Max(newestSampleToDisplay, iNewCenter - iRange);
 
             Console.WriteLine($"sampe old {oldestSampleToDisplay}");
             Console.WriteLine($"sample new {newestSampleToDisplay}");
