@@ -97,11 +97,11 @@ namespace ChartTest2
         {
             // create a series for each line
             seriesXY = new Series("Channel 0");
-            seriesXY.ChartType = SeriesChartType.FastLine;
+            seriesXY.ChartType = SeriesChartType.Line;
             seriesOutput = new Series("Output (left)");
-            seriesOutput.ChartType = SeriesChartType.FastLine;
+            seriesOutput.ChartType = SeriesChartType.Line;
             seriesDemod = new Series("Demodulated (right)");
-            seriesDemod.ChartType = SeriesChartType.FastLine;
+            seriesDemod.ChartType = SeriesChartType.Line;
 
 
             // add each series to the chart
