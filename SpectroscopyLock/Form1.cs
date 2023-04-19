@@ -193,9 +193,9 @@ namespace ChartTest2
         private void LockButton_Click(object sender, EventArgs e)
         {
             mqtt.sendScanAmplitude(0);
-            Thread.Sleep(200);
+            Thread.Sleep(100);
             mqtt.sendScanOffset(LockLineAnnotation.X);
-            Thread.Sleep(200);
+            Thread.Sleep(100);
 
             lockMode = true;
 
@@ -203,14 +203,14 @@ namespace ChartTest2
             double min, max;
             min = osciDisplay.GetDACMinNoUpdate();
             max = osciDisplay.GetDACMaxNoUpdate();
-            chartTimeseries.ChartAreas[0].AxisY.Maximum = max + 0.5 * (max - min);
-            chartTimeseries.ChartAreas[0].AxisY.Minimum = min - 0.5 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY.Maximum = max + 0.3 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY.Minimum = min - 0.3 * (max - min);
             min = osciDisplay.GetADCMinNoUpdate();
             max = osciDisplay.GetADCMaxNoUpdate();
-            chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.5 * (max - min);
-            chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.5 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
+            chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
 
-            Thread.Sleep(200);
+            Thread.Sleep(100);
             mqtt.sendPID(0, iirTextBox.Text, 0);
         }
 
@@ -218,6 +218,12 @@ namespace ChartTest2
         {
             mqtt.sendPIDOff();
             setRange(0, 10);
+
+            chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
+            chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
+
             lockMode = false;
         }
 
@@ -227,7 +233,7 @@ namespace ChartTest2
             mqtt.sendScanOffset((min + max) / 2);
         }
 
-        private void chart1_DoubleClick(object sender, EventArgs e)
+        private void chartXY_DoubleClick(object sender, EventArgs e)
         {
             if (lockMode)
                 return;
@@ -240,6 +246,27 @@ namespace ChartTest2
             var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
 
             setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+        }
+
+        private void chartTimeseries_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            var me = e as MouseEventArgs;
+            if (me.Button == MouseButtons.Left)
+            {
+                var xAxis = chartTimeseries.ChartAreas[0].AxisX;
+                var xMin = xAxis.ScaleView.ViewMinimum;
+                var xMax = xAxis.ScaleView.ViewMaximum;
+                double clickPos = chartTimeseries.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
+                Console.WriteLine($"click pos {clickPos}");
+                double zoomCenterRelativeNewestToOld = 1 - (clickPos - xMin) / (xMax - xMin);
+                Console.WriteLine($"zoom center {zoomCenterRelativeNewestToOld}");
+
+                osciDisplay.ZoomIn(zoomCenterRelativeNewestToOld);
+            } else if(me.Button == MouseButtons.Right)
+            {
+                osciDisplay.ZoomOut();
+            }
         }
 
         private void ModulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)

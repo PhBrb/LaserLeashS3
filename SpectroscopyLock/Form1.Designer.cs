@@ -74,11 +74,11 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartXY.Series.Add(series1);
-            this.chartXY.Size = new System.Drawing.Size(800, 303);
+            this.chartXY.Size = new System.Drawing.Size(854, 303);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
             this.chartXY.Click += new System.EventHandler(this.chart1_Click);
-            this.chartXY.DoubleClick += new System.EventHandler(this.chart1_DoubleClick);
+            this.chartXY.DoubleClick += new System.EventHandler(this.chartXY_DoubleClick);
             // 
             // LockButton
             // 
@@ -260,18 +260,20 @@
             // 
             chartArea2.Name = "ChartArea1";
             this.chartTimeseries.ChartAreas.Add(chartArea2);
+            this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Bottom;
             legend2.Name = "Legend1";
             this.chartTimeseries.Legends.Add(legend2);
-            this.chartTimeseries.Location = new System.Drawing.Point(0, 149);
+            this.chartTimeseries.Location = new System.Drawing.Point(0, 155);
             this.chartTimeseries.Name = "chartTimeseries";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chartTimeseries.Series.Add(series2);
-            this.chartTimeseries.Size = new System.Drawing.Size(800, 280);
+            this.chartTimeseries.Size = new System.Drawing.Size(854, 280);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
+            this.chartTimeseries.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.chartTimeseries_MouseDoubleClick);
             // 
             // SamplesOnDisplay
             // 
@@ -286,7 +288,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 738);
+            this.ClientSize = new System.Drawing.Size(854, 738);
             this.Controls.Add(this.SamplesOnDisplay);
             this.Controls.Add(this.chartTimeseries);
             this.Controls.Add(this.HoldButton);

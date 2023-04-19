@@ -15,13 +15,15 @@ namespace ChartTest2
     {
         Memory memory;
         int averages = 50;
-        public int oldestSampleToDisplay = 4500000;
+        public int oldestSampleToDisplay = 1000000;
 
         int pointsOnDisplay = 400;
         double[] adcData = new double[400];
         double[] dacData = new double[400];
         double[] adcDataSorted = new double[400];
         double[] dacDataSorted = new double[400];
+
+        int newestSampleToDisplay = 0;
 
         public OsciDisplay(Memory memory)
         {
@@ -30,18 +32,44 @@ namespace ChartTest2
 
         public (double[], double[]) GetTimeSeries()
         {
-            int iSampleDistance = oldestSampleToDisplay / pointsOnDisplay;
+            int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
             int samplesToUse = averages + 1;
+            int iOffset = newestSampleToDisplay;
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                adcData[pointsOnDisplay - i - 1] = memory.GetADCSum(-i * iSampleDistance - samplesToUse, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                adcData[pointsOnDisplay - i - 1] = memory.GetADCSum(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                dacData[pointsOnDisplay - i - 1] = memory.GetDACSum(-i * iSampleDistance - samplesToUse, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                dacData[pointsOnDisplay - i - 1] = memory.GetDACSum(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
 
             return (adcData, dacData);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position">Position from 0 to 1, relative to current viewing range</param>
+        public void ZoomIn(double position)
+        {
+            int iCenter = (newestSampleToDisplay + oldestSampleToDisplay)/2;
+            int iRange = (int)(0.7*(oldestSampleToDisplay - newestSampleToDisplay) / 2);
+            int iNewCenter = iCenter - iRange + (int)(2*iRange*position);
+
+            oldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
+            newestSampleToDisplay = Math.Max(0, iNewCenter - iRange);
+
+            Console.WriteLine($"sampe old {oldestSampleToDisplay}");
+            Console.WriteLine($"sample new {newestSampleToDisplay}");
+        }
+
+        public void ZoomOut() {
+            int iCenter = (int)((newestSampleToDisplay + oldestSampleToDisplay) * 0.5);
+            int iRange = (int)(1.3 * (oldestSampleToDisplay - newestSampleToDisplay) / 2);
+
+            oldestSampleToDisplay = iCenter + iRange;
+            newestSampleToDisplay = Math.Max(0, iCenter - iRange);
         }
 
         public void setAverages(int count)
