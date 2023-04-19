@@ -140,7 +140,6 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
 
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
-            chartXY.MouseWheel += chartXY_MouseWheel;
             var CA = chartXY.ChartAreas[0];
 
 
@@ -155,33 +154,6 @@ namespace ChartTest2
             LockLineAnnotation.LineWidth = 1;
             LockLineAnnotation.X = 1;
             chartXY.Annotations.Add(LockLineAnnotation);
-        }
-
-        private void chartXY_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (lockMode)
-                return;
-
-            var xAxis = chartXY.ChartAreas[0].AxisX;
-
-            try
-            {
-                if (e.Delta < 0) // Scrolled down.
-                {
-                    setRange(0, 10);
-                }
-                else if (e.Delta > 0) // Scrolled up.
-                {
-                    var xMin = xAxis.ScaleView.ViewMinimum;
-                    var xMax = xAxis.ScaleView.ViewMaximum;
-
-                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 4;
-                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 4;
-
-                    setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
-                }
-            }
-            catch { }
         }
 
         private void chart1_Click(object sender, EventArgs e)
