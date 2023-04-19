@@ -33,14 +33,14 @@ namespace ChartTest2
             Form1 form = new Form1(memory, osciDisplay, mqtt);
 
             //transfer data from udp to osci memory
-            Task.Run(() =>
+            new Thread(new ThreadStart(() =>
             {
                 while (true)
                 {
                     try
                     {
-                        if(udpReceiver.Size > 0)
-                            udpReceiver.TransferData( memory);
+                        if (udpReceiver.Size > 0)
+                            udpReceiver.TransferData(memory);
                     }
                     catch (ArgumentException e)
                     {
@@ -48,10 +48,10 @@ namespace ChartTest2
                     }
                     //Thread.Sleep(1);
                 }
-            });
+            })).Start();
 
             //refresh osci display
-            Task.Run(() =>
+            new Thread(new ThreadStart(() =>
             {
                 Thread.Sleep(1000);//wait for gui to load, otherwise some threading exceptions appear
                 while (true)
@@ -59,7 +59,7 @@ namespace ChartTest2
                     form.OnNewData();
                     Thread.Sleep(10);
                 }
-            });
+            })).Start();
 
             Application.Run(form);
         }

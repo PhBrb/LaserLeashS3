@@ -134,6 +134,7 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisX.LabelStyle.Format = "{0:#}";
             chartTimeseries.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
             chartTimeseries.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
+            chartTimeseries.ChartAreas[0].AxisY.IsStartedFromZero = false;
 
             chartTimeseries.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             chartTimeseries.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
@@ -209,16 +210,33 @@ namespace ChartTest2
         {
             if (lockMode)
                 return;
+            
+            
             var me = e as MouseEventArgs;
-            var xAxis = chartXY.ChartAreas[0].AxisX;
-            var xMin = xAxis.ScaleView.ViewMinimum;
-            var xMax = xAxis.ScaleView.ViewMaximum;
 
-            var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
-            var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
+            if (me.Button == MouseButtons.Left)
+            {
+                var xAxis = chartXY.ChartAreas[0].AxisX;
+                var xMin = xAxis.ScaleView.ViewMinimum;
+                var xMax = xAxis.ScaleView.ViewMaximum;
 
-            setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
-        }
+                var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
+                var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
+
+                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+            }
+            else if(me.Button == MouseButtons.Right)
+            {
+                var xAxis = chartXY.ChartAreas[0].AxisX;
+                var xMin = xAxis.ScaleView.ViewMinimum;
+                var xMax = xAxis.ScaleView.ViewMaximum;
+
+                var posXStart = (xMax + xMin)/2 - (xMax - xMin) / 1.3;
+                var posXFinish = (xMax + xMin) / 2 + (xMax - xMin) / 1.3;
+
+                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+            }
+}
 
         private void chartTimeseries_MouseDoubleClick(object sender, MouseEventArgs e)
         {

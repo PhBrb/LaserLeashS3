@@ -45,9 +45,9 @@ namespace ChartTest2
         /// Starts continuously running thread that writes received data into the buffer
         /// </summary>
         /// <returns></returns>
-        Task UDPListener()
+        void UDPListener()
         {
-            return Task.Run(() =>
+            new Thread(new ThreadStart(() =>
             {
                 using (var udpClient = new UdpClient(1883))
                 {
@@ -59,7 +59,7 @@ namespace ChartTest2
                         lastRawData = receivedResults; ///this is the only code that writes to <see cref="lastRawData"/>. Since udp.Receive returns a new array this should be safe/consistent to read at any time, if the reader has a copy of the reference
                     }
                 }
-            });
+            })).Start();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace ChartTest2
             public uint sequenceNumber;
         }
 
+        static uint firstSequenceNumber = 0;
+        static uint skipped = 0;
 
         public static void Deserialize(byte[] rawData, Memory memory)
         {
@@ -28,12 +30,17 @@ namespace ChartTest2
 
             if (h.sequenceNumber == memory.lastSequenceNumber) //cancel if already processed previously
                 return;
+            if (firstSequenceNumber == 0)
+                firstSequenceNumber = h.sequenceNumber;
 
             int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1; //not perfectly accurate, will be wrong once, when sequenceNumber has an overflow
             if(skip > 0 && skip < 1000) //skip only of no overflow and if not too much to skip (eg at start)
             {
                 memory.ADCSkip(skip*22*8);//22 batches per frame, 8 numbers per batch
                 memory.DACSkip(skip*22*8);
+                skipped += (uint)skip * 22;
+
+                Console.WriteLine((float)skipped/(h.sequenceNumber - firstSequenceNumber));
             }
 
             memory.lastSequenceNumber = h.sequenceNumber;
