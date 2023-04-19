@@ -68,7 +68,7 @@ namespace ChartTest2
             int iCenter = (int)((newestSampleToDisplay + oldestSampleToDisplay) * 0.5);
             int iRange = (int)(1.3 * (oldestSampleToDisplay - newestSampleToDisplay) / 2);
 
-            oldestSampleToDisplay = iCenter + iRange;
+            oldestSampleToDisplay = Math.Min(memory.getSize(),iCenter + iRange);
             newestSampleToDisplay = Math.Max(0, iCenter - iRange);
         }
 
@@ -92,7 +92,18 @@ namespace ChartTest2
             Array.Copy(dacData, dacDataSorted, pointsOnDisplay);
 
             Array.Sort(dacDataSorted, adcDataSorted);
-            return (dacDataSorted, adcDataSorted);
+            var dacList = dacDataSorted.ToList();
+            var adcList = adcDataSorted.ToList();
+            //TODO optimize memory usage
+            for(int i = pointsOnDisplay - 1; i >=0 ; i--)
+            {
+                if (double.IsNaN(dacDataSorted[i]) || double.IsNaN(adcDataSorted[i]))
+                {
+                    adcList.RemoveAt(i);
+                    dacList.RemoveAt(i);
+                }
+            }
+            return (dacList.ToArray(), adcList.ToArray());
         }
 
         public double GetADCMinNoUpdate()

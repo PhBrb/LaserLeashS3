@@ -45,7 +45,7 @@ namespace ChartTest2
 
             for (int i = 0; i < skip; i++)
             {
-                adc.Enqueue(adc.GetLast());
+                adc.Enqueue(double.NaN);
             }
         }
 
@@ -64,7 +64,7 @@ namespace ChartTest2
 
             for (int i = 0; i < skip; i++)
             {
-                dac.Enqueue(dac.GetLast());
+                dac.Enqueue(double.NaN);
             };
         }
 
