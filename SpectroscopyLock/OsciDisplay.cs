@@ -14,7 +14,7 @@ namespace ChartTest2
     public class OsciDisplay
     {
         Memory memory;
-        int averages = 50;
+        int averages = 5;
         public int oldestSampleToDisplay = 1000000;
 
         int pointsOnDisplay = 400;
@@ -94,7 +94,7 @@ namespace ChartTest2
             Array.Sort(dacDataSorted, adcDataSorted);
             var dacList = dacDataSorted.ToList();
             var adcList = adcDataSorted.ToList();
-            //TODO optimize memory usage
+            
             for(int i = pointsOnDisplay - 1; i >=0 ; i--)
             {
                 if (double.IsNaN(dacDataSorted[i]) || double.IsNaN(adcDataSorted[i]))

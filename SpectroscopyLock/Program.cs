@@ -37,16 +37,8 @@ namespace ChartTest2
             {
                 while (true)
                 {
-                    try
-                    {
-                        if (udpReceiver.Size > 0)
-                            udpReceiver.TransferData(memory);
-                    }
-                    catch (ArgumentException e)
-                    {
-                        Console.WriteLine("Couldnt convert data");
-                    }
-                    //Thread.Sleep(1);
+                    if (udpReceiver.Size > 0)
+                        udpReceiver.TransferData(memory);
                 }
             })).Start();
 
@@ -57,7 +49,7 @@ namespace ChartTest2
                 while (true)
                 {
                     form.OnNewData();
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
             })).Start();
 
