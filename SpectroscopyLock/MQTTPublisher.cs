@@ -84,7 +84,7 @@ namespace MQTTnet.Samples.Client
 
         public void sendScanOffset(double offset)
         {
-            sendPID(offset, lastUsedIIR, 0);
+            sendPID(offset, lastUsedIIR, 0, 10);
         }
 
         public void sendScanFrequency(double frequency)
@@ -92,12 +92,12 @@ namespace MQTTnet.Samples.Client
             send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/frequency", frequency);
         }
 
-        public void sendPID(double offset, string iir, double ymin)
+        public void sendPID(double offset, string iir, double ymin, double ymax)
         {
             lastUsedIIR = iir;
             //add printing of topic and payload to miniconf.py to find out what parameters get sent. (might not be needed, the iir_coefficients script  gives some logging info)
             //use eg python iir_coefficients.py --v -b 127.0.0.1 --prefix 04-91-62-d2-60-2f --no-discover --c 0 --sample-period 0.1 --x-offset 0 --y-min 0 --y-offset 0 pid --Kii 0 --Ki 0.01 --Kp 1 --Kd 0 --Kdd 0
-            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0", $"{{\"ba\":{iir},\"y_min\":{(int)(ymin*3200)},\"y_max\":32767,\"y_offset\":{(int)(3200*offset)}}}");
+            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0", $"{{\"ba\":{iir},\"y_min\":{(int)(ymin*3200)},\"y_max\":{(int)(ymax * 3200)},\"y_offset\":{(int)(3200*offset)}}}");
         }
 
         public void sendPIDOff()

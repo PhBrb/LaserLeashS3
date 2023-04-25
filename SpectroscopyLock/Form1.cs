@@ -82,10 +82,6 @@ namespace ChartTest2
             }
         }
 
-        private void OnChartReload()
-        {
-
-        }
 
         public void OnNewData()
         {
@@ -183,8 +179,65 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
 
-            Thread.Sleep(100);
-            mqtt.sendPID(0, iirTextBox.Text, 0);
+
+            // original python code
+            //
+            // kernels = [
+            //    [1, 0, 0],
+            //    [1, -1, 0],
+            //    [1, -2, 1]
+            // ]
+            // gains = [args.Kii, args.Ki, args.Kp, args.Kd, args.Kdd]
+            // limits = [args.Kii / args.Kii_limit, args.Ki / args.Ki_limit,
+            //          1, args.Kd / args.Kd_limit, args.Kdd / args.Kdd_limit]
+            // w = 2 * pi * args.sample_period
+            // b = [ sum(gains[2 - order + i] * w * *(order - i) * kernels[i][j] for i in range(3))
+            //      for j in range(3)]
+
+            // a = [sum(limits[2 - order + i] * w * *(order - i) * kernels[i][j]
+            //         for i in range(3)) for j in range(3)]
+            // b = [i / a[0] for i in b]
+            // a = [i / a[0] for i in a]
+            // assert a[0] == 1
+            // return b + [-ai for ai in a[1:]]
+            double[,] kernels = new double[,] { { 1, 0, 0 }, { 1, -1, 0 }, { 1, -2, 1 } };
+            double Ki = double.Parse(ITextBox.Text), Kp = double.Parse(PTextBox.Text), Kd = double.Parse(DTextBox.Text), samplePeriod = double.Parse(sampleRateTextBox.Text);
+            double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
+            double[] limits = new double[] { 0, 0, 1, 0, 0 };
+            int order = 1;
+            double w = 2 * Math.PI * samplePeriod;
+            double[] b = new double[] { 0, 0, 0 };
+            double[] a = new double[] { 0, 0, 0 };
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    b[j] += gains[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                }
+            }
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    a[j] += limits[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                }
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                b[i] = b[i] / a[0];
+                a[i] = a[i] / a[0];
+            }
+            if (a[0] != 1)
+                throw new Exception();
+            List<double> result = b.ToList();
+            result.AddRange(a.Skip(1));
+
+
+            Task.Run(() =>
+            {
+                Thread.Sleep(100);
+                mqtt.sendPID(0, result.ToBracketString(), double.Parse(yminTextBox.Text), double.Parse(ymaxTextBox.Text));
+            });
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -236,7 +289,7 @@ namespace ChartTest2
 
                 setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
             }
-}
+        }
 
         private void chartTimeseries_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -416,6 +469,9 @@ namespace ChartTest2
             memory.freeze = !memory.freeze;
         }
 
-
+        private void updatePIDButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

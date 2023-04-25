@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -52,28 +52,34 @@
             this.InitButton = new System.Windows.Forms.Button();
             this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
             this.StabilizerIDInput = new System.Windows.Forms.TextBox();
-            this.iirTextBox = new System.Windows.Forms.TextBox();
             this.HoldButton = new System.Windows.Forms.Button();
             this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.SamplesOnDisplay = new System.Windows.Forms.TextBox();
+            this.ITextBox = new System.Windows.Forms.TextBox();
+            this.PTextBox = new System.Windows.Forms.TextBox();
+            this.DTextBox = new System.Windows.Forms.TextBox();
+            this.yminTextBox = new System.Windows.Forms.TextBox();
+            this.ymaxTextBox = new System.Windows.Forms.TextBox();
+            this.sampleRateTextBox = new System.Windows.Forms.TextBox();
+            this.updatePIDButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.SuspendLayout();
             // 
             // chartXY
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea3);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend1.Name = "Legend1";
-            this.chartXY.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chartXY.Legends.Add(legend3);
             this.chartXY.Location = new System.Drawing.Point(0, 435);
             this.chartXY.Name = "chartXY";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartXY.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartXY.Series.Add(series3);
             this.chartXY.Size = new System.Drawing.Size(854, 303);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -238,14 +244,6 @@
             this.StabilizerIDInput.Text = "04-91-62-d2-60-2f";
             this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
-            // iirTextBox
-            // 
-            this.iirTextBox.Location = new System.Drawing.Point(338, 70);
-            this.iirTextBox.Name = "iirTextBox";
-            this.iirTextBox.Size = new System.Drawing.Size(196, 20);
-            this.iirTextBox.TabIndex = 21;
-            this.iirTextBox.Text = "[0.10628318530717959, -0.1, 0.0, 1.0, -0.0]";
-            // 
             // HoldButton
             // 
             this.HoldButton.Location = new System.Drawing.Point(543, 118);
@@ -258,18 +256,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea4);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Bottom;
-            legend2.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend4);
             this.chartTimeseries.Location = new System.Drawing.Point(0, 155);
             this.chartTimeseries.Name = "chartTimeseries";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartTimeseries.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartTimeseries.Series.Add(series4);
             this.chartTimeseries.Size = new System.Drawing.Size(854, 280);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -284,15 +282,79 @@
             this.SamplesOnDisplay.Text = "Samples";
             this.SamplesOnDisplay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SamplesOnDisplay_KeyDown);
             // 
+            // ITextBox
+            // 
+            this.ITextBox.Location = new System.Drawing.Point(403, 71);
+            this.ITextBox.Name = "ITextBox";
+            this.ITextBox.Size = new System.Drawing.Size(36, 20);
+            this.ITextBox.TabIndex = 27;
+            this.ITextBox.Text = "0.1";
+            // 
+            // PTextBox
+            // 
+            this.PTextBox.Location = new System.Drawing.Point(361, 71);
+            this.PTextBox.Name = "PTextBox";
+            this.PTextBox.Size = new System.Drawing.Size(36, 20);
+            this.PTextBox.TabIndex = 28;
+            this.PTextBox.Text = "1";
+            // 
+            // DTextBox
+            // 
+            this.DTextBox.Location = new System.Drawing.Point(445, 71);
+            this.DTextBox.Name = "DTextBox";
+            this.DTextBox.Size = new System.Drawing.Size(36, 20);
+            this.DTextBox.TabIndex = 29;
+            this.DTextBox.Text = "0";
+            // 
+            // yminTextBox
+            // 
+            this.yminTextBox.Location = new System.Drawing.Point(507, 71);
+            this.yminTextBox.Name = "yminTextBox";
+            this.yminTextBox.Size = new System.Drawing.Size(36, 20);
+            this.yminTextBox.TabIndex = 30;
+            this.yminTextBox.Text = "0";
+            // 
+            // ymaxTextBox
+            // 
+            this.ymaxTextBox.Location = new System.Drawing.Point(549, 71);
+            this.ymaxTextBox.Name = "ymaxTextBox";
+            this.ymaxTextBox.Size = new System.Drawing.Size(36, 20);
+            this.ymaxTextBox.TabIndex = 31;
+            this.ymaxTextBox.Text = "10";
+            // 
+            // sampleRateTextBox
+            // 
+            this.sampleRateTextBox.Location = new System.Drawing.Point(605, 71);
+            this.sampleRateTextBox.Name = "sampleRateTextBox";
+            this.sampleRateTextBox.Size = new System.Drawing.Size(50, 20);
+            this.sampleRateTextBox.TabIndex = 32;
+            this.sampleRateTextBox.Text = "0.001";
+            // 
+            // updatePIDButton
+            // 
+            this.updatePIDButton.Location = new System.Drawing.Point(361, 39);
+            this.updatePIDButton.Name = "updatePIDButton";
+            this.updatePIDButton.Size = new System.Drawing.Size(75, 23);
+            this.updatePIDButton.TabIndex = 33;
+            this.updatePIDButton.Text = "Update PID";
+            this.updatePIDButton.UseVisualStyleBackColor = true;
+            this.updatePIDButton.Click += new System.EventHandler(this.updatePIDButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 738);
+            this.Controls.Add(this.updatePIDButton);
+            this.Controls.Add(this.sampleRateTextBox);
+            this.Controls.Add(this.ymaxTextBox);
+            this.Controls.Add(this.yminTextBox);
+            this.Controls.Add(this.DTextBox);
+            this.Controls.Add(this.PTextBox);
+            this.Controls.Add(this.ITextBox);
             this.Controls.Add(this.SamplesOnDisplay);
             this.Controls.Add(this.chartTimeseries);
             this.Controls.Add(this.HoldButton);
-            this.Controls.Add(this.iirTextBox);
             this.Controls.Add(this.StabilizerIDInput);
             this.Controls.Add(this.StreamTargetIPInput);
             this.Controls.Add(this.InitButton);
@@ -340,10 +402,16 @@
         private System.Windows.Forms.Button InitButton;
         private System.Windows.Forms.TextBox StreamTargetIPInput;
         private System.Windows.Forms.TextBox StabilizerIDInput;
-        private System.Windows.Forms.TextBox iirTextBox;
         private System.Windows.Forms.Button HoldButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
         private System.Windows.Forms.TextBox SamplesOnDisplay;
+        private System.Windows.Forms.TextBox ITextBox;
+        private System.Windows.Forms.TextBox PTextBox;
+        private System.Windows.Forms.TextBox DTextBox;
+        private System.Windows.Forms.TextBox yminTextBox;
+        private System.Windows.Forms.TextBox ymaxTextBox;
+        private System.Windows.Forms.TextBox sampleRateTextBox;
+        private System.Windows.Forms.Button updatePIDButton;
     }
 }
 
