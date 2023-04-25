@@ -30,6 +30,11 @@ namespace ChartTest2
 
             if (h.sequenceNumber == memory.lastSequenceNumber) //cancel if already processed previously
                 return;
+            if (h.sequenceNumber < memory.lastSequenceNumber)
+            {
+                Console.WriteLine("out of order");
+                return;
+            }
             if (firstSequenceNumber == 0)
                 firstSequenceNumber = h.sequenceNumber;
 
