@@ -35,6 +35,8 @@ namespace ChartTest2
         OsciDisplay osciDisplay;
         Memory memory;
 
+        Dictionary<Control, Action<double>> OnValueMap;     
+
         public Form1(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
             InitializeComponent();
@@ -42,6 +44,17 @@ namespace ChartTest2
             this.mqtt = mqtt;
             this.osciDisplay = osciDisplay;
             this.memory = memory;
+            OnValueMap = new Dictionary<Control, Action<double>>(){
+                {modFreqText, mqtt.sendModulationFrequency},
+                {demodFreqText, mqtt.sendDemodulationFrequency},
+                {demodAmpText, mqtt.sendDemodulationAmplitude},
+                {modAmpText, mqtt.sendModulationAmplitude},
+                {modAttText, mqtt.sendModulationAttenuation},
+                {demodAttText, mqtt.sendDemodulationAttenuation},
+                {modPhaseText, mqtt.sendPhase},
+                {FGAmplitudeText, mqtt.sendScanAmplitude},
+                {FGFrequencyText, mqtt.sendScanFrequency},
+            };
         }
 
         public void OnNewDataXY()
@@ -201,25 +214,25 @@ namespace ChartTest2
             // assert a[0] == 1
             // return b + [-ai for ai in a[1:]]
             double[,] kernels = new double[,] { { 1, 0, 0 }, { 1, -1, 0 }, { 1, -2, 1 } };
-            double Ki = double.Parse(ITextBox.Text), Kp = double.Parse(PTextBox.Text), Kd = double.Parse(DTextBox.Text), samplePeriod = double.Parse(sampleRateTextBox.Text);
-            double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
+            //double Ki = double.Parse(ITextBox.Text), Kp = double.Parse(PTextBox.Text), Kd = double.Parse(DTextBox.Text), samplePeriod = double.Parse(sampleRateTextBox.Text);
+            //double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
             double[] limits = new double[] { 0, 0, 1, 0, 0 };
             int order = 1;
-            double w = 2 * Math.PI * samplePeriod;
+            //double w = 2 * Math.PI * samplePeriod;
             double[] b = new double[] { 0, 0, 0 };
             double[] a = new double[] { 0, 0, 0 };
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    b[j] += gains[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                    //b[j] += gains[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
                 }
             }
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    a[j] += limits[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                    //a[j] += limits[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
                 }
             }
             for (int i = 0; i < 3; i++)
@@ -236,7 +249,7 @@ namespace ChartTest2
             Task.Run(() =>
             {
                 Thread.Sleep(100);
-                mqtt.sendPID(0, result.ToBracketString(), double.Parse(yminTextBox.Text), double.Parse(ymaxTextBox.Text));
+                //mqtt.sendPID(0, result.ToBracketString(), double.Parse(yminTextBox.Text), double.Parse(ymaxTextBox.Text));
             });
         }
 
@@ -312,42 +325,6 @@ namespace ChartTest2
             }
         }
 
-        private void ModulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendModulationAmplitude(double.Parse(txt));
-            }
-        }
-
-        private void ModulationAttenuationInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendModulationAttenuation(double.Parse(txt));
-            }
-        }
-
-        private void DemodulationAttenuationInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                System.Windows.Forms.TextBox txt = (System.Windows.Forms.TextBox)sender;
-                mqtt.sendDemodulationAttenuation(double.Parse(txt.Text));
-            }
-        }
-
-        private void PhaseInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendPhase(double.Parse(txt));
-            }
-        }
-
 
         private void StreamTargetIPInput_KeyDown(object sender, KeyEventArgs e)
         {
@@ -364,24 +341,6 @@ namespace ChartTest2
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
                 mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), txt);
-            }
-        }
-
-        private void DemodulationAmplitudeInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendDemodulationAmplitude(double.Parse(txt));
-            }
-        }
-
-        private void DemodulationFrequencyInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendDemodulationFrequency(double.Parse(txt));
             }
         }
 
@@ -472,6 +431,32 @@ namespace ChartTest2
         private void updatePIDButton_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PID_KeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
+        {
+            decimal dec = ((NumericUpDown)sender).Value;
+            OnValueMap[(Control)sender].Invoke(Decimal.ToDouble(dec));
         }
     }
 }

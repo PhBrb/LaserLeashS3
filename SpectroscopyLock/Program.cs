@@ -45,7 +45,7 @@ namespace ChartTest2
             //refresh osci display
             new Thread(new ThreadStart(() =>
             {
-                Thread.Sleep(1000);//wait for gui to load, otherwise some threading exceptions appear
+                Thread.Sleep(1000);//TODO https://stackoverflow.com/questions/18675771/wait-until-form-is-finished-loading
                 while (true)
                 {
                     form.OnNewData();
