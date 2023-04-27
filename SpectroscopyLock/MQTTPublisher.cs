@@ -106,13 +106,13 @@ namespace MQTTnet.Samples.Client
             send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/dds/amplitude", amplitude);
         }
 
-        public void sendModulationFrequency(double frequency)
+        public void sendModulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/dds/frequency", frequency);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/dds/frequency", frequency*1000000);
         }
-        public void sendDemodulationFrequency(double frequency)
+        public void sendDemodulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/dds/frequency", frequency);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/dds/frequency", frequency*1000000);
         }
 
         public void sendModulationAttenuation(double attenuation)

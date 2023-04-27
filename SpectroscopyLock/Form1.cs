@@ -16,6 +16,7 @@ namespace ChartTest2
         Series seriesOutput;
         Series seriesDemod;
         private delegate void SafeCallDelegate();
+        private delegate void SafeCallDelegateStr(string s);
         VerticalLineAnnotation LockLineAnnotation;
         MQTTPublisher mqtt;
         bool lockMode = false;
@@ -35,8 +36,8 @@ namespace ChartTest2
             this.osciDisplay = osciDisplay;
             this.memory = memory;
             OnValueDoubleMap = new Dictionary<NumericUpDown, Action<double>>(){
-                {modFreqText, mqtt.sendModulationFrequency},
-                {demodFreqText, mqtt.sendDemodulationFrequency},
+                {modFreqText, mqtt.sendModulationFrequencyMHz},
+                {demodFreqText, mqtt.sendDemodulationFrequencyMHz},
                 {demodAmpText, mqtt.sendDemodulationAmplitude},
                 {modAmpText, mqtt.sendModulationAmplitude},
                 {modAttText, mqtt.sendModulationAttenuation},
@@ -304,7 +305,7 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendPID(0, CalculateIIR(0,0,0,0).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            mqtt.sendPID(0, CalculateIIR(0,0,0,0.1).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             setRange(Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
@@ -360,8 +361,8 @@ namespace ChartTest2
             mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
             mqtt.sendModulationAmplitude(Decimal.ToDouble(modAmpText.Value));
             mqtt.sendModulationAttenuation(Decimal.ToDouble(modAttText.Value));
-            mqtt.sendModulationFrequency  (Decimal.ToDouble(modFreqText.Value));
-            mqtt.sendDemodulationFrequency(Decimal.ToDouble(demodFreqText.Value));
+            mqtt.sendModulationFrequencyMHz  (Decimal.ToDouble(modFreqText.Value));
+            mqtt.sendDemodulationFrequencyMHz(Decimal.ToDouble(demodFreqText.Value));
             mqtt.sendDemodulationAttenuation(Decimal.ToDouble(demodAttText.Value));
             mqtt.sendDemodulationAmplitude(Decimal.ToDouble(demodAmpText.Value));
             mqtt.sendPhase(Decimal.ToDouble(modPhaseText.Value));
@@ -396,7 +397,15 @@ namespace ChartTest2
 
         public static void WriteLine(string message)
         {
-            form.logText.AppendText("\r\n" + message);
+            if (form.logText.InvokeRequired)
+            {
+                form.logText.Invoke(new SafeCallDelegateStr(SpectrscopyControlForm.WriteLine), new object[] {message});
+                return;
+            }
+            else
+            {
+                form.logText.AppendText("\r\n" + message);
+            }
         }
     }
 }
