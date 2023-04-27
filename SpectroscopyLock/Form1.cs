@@ -31,7 +31,6 @@ namespace ChartTest2
         VerticalLineAnnotation LockLineAnnotation;
         MQTTPublisher mqtt;
         bool lockMode = false;
-        private double scanFreq = 1;
         OsciDisplay osciDisplay;
         Memory memory;
 
@@ -387,18 +386,6 @@ namespace ChartTest2
             }
         }
 
-        private void ScanFreqDownButton_Click(object sender, EventArgs e)
-        {
-            scanFreq /= 2;
-            mqtt.sendScanFrequency(scanFreq);
-        }
-
-        private void ScanFreqUpButton_Click(object sender, EventArgs e)
-        {
-            scanFreq *= 2;
-            mqtt.sendScanFrequency(scanFreq);
-        }
-
         private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -428,11 +415,6 @@ namespace ChartTest2
             memory.freeze = !memory.freeze;
         }
 
-        private void updatePIDButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -443,10 +425,6 @@ namespace ChartTest2
 
         }
 
-        private void PID_KeyDown(object sender, KeyEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
@@ -457,6 +435,11 @@ namespace ChartTest2
         {
             decimal dec = ((NumericUpDown)sender).Value;
             OnValueMap[(Control)sender].Invoke(Decimal.ToDouble(dec));
+        }
+
+        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

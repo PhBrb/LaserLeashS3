@@ -98,6 +98,7 @@
             this.FGAmplitudeText = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.panel6.SuspendLayout();
@@ -150,7 +151,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartXY.Series.Add(series1);
-            this.chartXY.Size = new System.Drawing.Size(801, 192);
+            this.chartXY.Size = new System.Drawing.Size(1110, 192);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
             this.chartXY.Click += new System.EventHandler(this.chart1_Click);
@@ -161,7 +162,7 @@
             this.LockButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LockButton.Location = new System.Drawing.Point(0, 0);
             this.LockButton.Name = "LockButton";
-            this.LockButton.Size = new System.Drawing.Size(561, 72);
+            this.LockButton.Size = new System.Drawing.Size(870, 72);
             this.LockButton.TabIndex = 1;
             this.LockButton.Text = "Lock";
             this.LockButton.UseVisualStyleBackColor = true;
@@ -170,7 +171,7 @@
             // UnlockButton
             // 
             this.UnlockButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UnlockButton.Location = new System.Drawing.Point(561, 0);
+            this.UnlockButton.Location = new System.Drawing.Point(870, 0);
             this.UnlockButton.Name = "UnlockButton";
             this.UnlockButton.Size = new System.Drawing.Size(240, 72);
             this.UnlockButton.TabIndex = 2;
@@ -181,9 +182,9 @@
             // StreamTargetPortInput
             // 
             this.StreamTargetPortInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StreamTargetPortInput.Location = new System.Drawing.Point(59, 57);
+            this.StreamTargetPortInput.Location = new System.Drawing.Point(83, 57);
             this.StreamTargetPortInput.Name = "StreamTargetPortInput";
-            this.StreamTargetPortInput.Size = new System.Drawing.Size(74, 20);
+            this.StreamTargetPortInput.Size = new System.Drawing.Size(107, 20);
             this.StreamTargetPortInput.TabIndex = 9;
             this.StreamTargetPortInput.Text = "1883";
             this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
@@ -202,9 +203,9 @@
             // StreamTargetIPInput
             // 
             this.StreamTargetIPInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StreamTargetIPInput.Location = new System.Drawing.Point(59, 30);
+            this.StreamTargetIPInput.Location = new System.Drawing.Point(83, 30);
             this.StreamTargetIPInput.Name = "StreamTargetIPInput";
-            this.StreamTargetIPInput.Size = new System.Drawing.Size(74, 20);
+            this.StreamTargetIPInput.Size = new System.Drawing.Size(107, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
             this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetIPInput_KeyDown);
@@ -214,7 +215,7 @@
             this.HoldButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.HoldButton.Location = new System.Drawing.Point(3, 158);
             this.HoldButton.Name = "HoldButton";
-            this.HoldButton.Size = new System.Drawing.Size(133, 23);
+            this.HoldButton.Size = new System.Drawing.Size(189, 23);
             this.HoldButton.TabIndex = 23;
             this.HoldButton.Text = "Freeze Memory";
             this.HoldButton.UseVisualStyleBackColor = true;
@@ -234,7 +235,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chartTimeseries.Series.Add(series2);
-            this.chartTimeseries.Size = new System.Drawing.Size(801, 190);
+            this.chartTimeseries.Size = new System.Drawing.Size(1110, 190);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
             this.chartTimeseries.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.chartTimeseries_MouseDoubleClick);
@@ -247,18 +248,34 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 199);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(801, 72);
+            this.panel6.Size = new System.Drawing.Size(1110, 72);
             this.panel6.TabIndex = 36;
             // 
             // modAmpText
             // 
             this.modAmpText.BackColor = System.Drawing.Color.White;
+            this.modAmpText.DecimalPlaces = 2;
             this.modAmpText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.modAmpText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.modAmpText.Location = new System.Drawing.Point(3, 23);
+            this.modAmpText.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.modAmpText.Name = "modAmpText";
-            this.modAmpText.Size = new System.Drawing.Size(44, 20);
+            this.modAmpText.Size = new System.Drawing.Size(86, 20);
             this.modAmpText.TabIndex = 34;
             this.modAmpText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.modAmpText.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.modAmpText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // groupBox1
@@ -271,7 +288,7 @@
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.groupBox1.Size = new System.Drawing.Size(50, 159);
+            this.groupBox1.Size = new System.Drawing.Size(92, 159);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Modulation";
@@ -279,10 +296,21 @@
             // modPhaseText
             // 
             this.modPhaseText.BackColor = System.Drawing.Color.White;
+            this.modPhaseText.DecimalPlaces = 2;
             this.modPhaseText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.modPhaseText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.modPhaseText.Location = new System.Drawing.Point(3, 83);
+            this.modPhaseText.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.modPhaseText.Name = "modPhaseText";
-            this.modPhaseText.Size = new System.Drawing.Size(44, 20);
+            this.modPhaseText.Size = new System.Drawing.Size(86, 20);
             this.modPhaseText.TabIndex = 37;
             this.modPhaseText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.modPhaseText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
@@ -290,12 +318,33 @@
             // modFreqText
             // 
             this.modFreqText.BackColor = System.Drawing.Color.White;
+            this.modFreqText.DecimalPlaces = 2;
             this.modFreqText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.modFreqText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.modFreqText.Location = new System.Drawing.Point(3, 63);
+            this.modFreqText.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.modFreqText.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.modFreqText.Name = "modFreqText";
-            this.modFreqText.Size = new System.Drawing.Size(44, 20);
+            this.modFreqText.Size = new System.Drawing.Size(86, 20);
             this.modFreqText.TabIndex = 36;
             this.modFreqText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.modFreqText.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.modFreqText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // modAttText
@@ -303,8 +352,13 @@
             this.modAttText.BackColor = System.Drawing.Color.White;
             this.modAttText.Dock = System.Windows.Forms.DockStyle.Top;
             this.modAttText.Location = new System.Drawing.Point(3, 43);
+            this.modAttText.Maximum = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
             this.modAttText.Name = "modAttText";
-            this.modAttText.Size = new System.Drawing.Size(44, 20);
+            this.modAttText.Size = new System.Drawing.Size(86, 20);
             this.modAttText.TabIndex = 35;
             this.modAttText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.modAttText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
@@ -315,10 +369,10 @@
             this.groupBox2.Controls.Add(this.demodAttText);
             this.groupBox2.Controls.Add(this.demodAmpText);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(59, 3);
+            this.groupBox2.Location = new System.Drawing.Point(101, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.groupBox2.Size = new System.Drawing.Size(51, 159);
+            this.groupBox2.Size = new System.Drawing.Size(93, 159);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Demodulation";
@@ -326,12 +380,33 @@
             // demodFreqText
             // 
             this.demodFreqText.BackColor = System.Drawing.Color.White;
+            this.demodFreqText.DecimalPlaces = 2;
             this.demodFreqText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.demodFreqText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.demodFreqText.Location = new System.Drawing.Point(3, 63);
+            this.demodFreqText.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.demodFreqText.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.demodFreqText.Name = "demodFreqText";
-            this.demodFreqText.Size = new System.Drawing.Size(45, 20);
+            this.demodFreqText.Size = new System.Drawing.Size(87, 20);
             this.demodFreqText.TabIndex = 40;
             this.demodFreqText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.demodFreqText.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.demodFreqText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // demodAttText
@@ -339,8 +414,13 @@
             this.demodAttText.BackColor = System.Drawing.Color.White;
             this.demodAttText.Dock = System.Windows.Forms.DockStyle.Top;
             this.demodAttText.Location = new System.Drawing.Point(3, 43);
+            this.demodAttText.Maximum = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
             this.demodAttText.Name = "demodAttText";
-            this.demodAttText.Size = new System.Drawing.Size(45, 20);
+            this.demodAttText.Size = new System.Drawing.Size(87, 20);
             this.demodAttText.TabIndex = 39;
             this.demodAttText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.demodAttText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
@@ -348,12 +428,28 @@
             // demodAmpText
             // 
             this.demodAmpText.BackColor = System.Drawing.Color.White;
+            this.demodAmpText.DecimalPlaces = 2;
             this.demodAmpText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.demodAmpText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.demodAmpText.Location = new System.Drawing.Point(3, 23);
+            this.demodAmpText.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.demodAmpText.Name = "demodAmpText";
-            this.demodAmpText.Size = new System.Drawing.Size(45, 20);
+            this.demodAmpText.Size = new System.Drawing.Size(87, 20);
             this.demodAmpText.TabIndex = 38;
             this.demodAmpText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.demodAmpText.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.demodAmpText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // panel7
@@ -426,7 +522,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(113, 165);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(197, 165);
             this.tableLayoutPanel1.TabIndex = 37;
             // 
             // groupBox3
@@ -436,7 +532,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(211, 184);
+            this.groupBox3.Size = new System.Drawing.Size(295, 184);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "DDS";
@@ -445,9 +541,9 @@
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel7);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(365, 3);
+            this.groupBox4.Location = new System.Drawing.Point(505, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(142, 184);
+            this.groupBox4.Size = new System.Drawing.Size(199, 184);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Connectivity";
@@ -476,7 +572,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(136, 165);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(193, 165);
             this.tableLayoutPanel7.TabIndex = 18;
             // 
             // label7
@@ -492,12 +588,13 @@
             // label19
             // 
             this.label19.AutoSize = true;
+            this.tableLayoutPanel7.SetColumnSpan(this.label19, 2);
             this.label19.Location = new System.Drawing.Point(3, 0);
             this.label19.Name = "label19";
             this.label19.Padding = new System.Windows.Forms.Padding(0, 11, 0, 0);
-            this.label19.Size = new System.Drawing.Size(38, 24);
+            this.label19.Size = new System.Drawing.Size(116, 24);
             this.label19.TabIndex = 7;
-            this.label19.Text = "Server";
+            this.label19.Text = "Stream Target (this PC)";
             // 
             // label20
             // 
@@ -532,21 +629,22 @@
             // maskedTextBox1
             // 
             this.maskedTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maskedTextBox1.Location = new System.Drawing.Point(59, 111);
+            this.maskedTextBox1.Location = new System.Drawing.Point(83, 111);
             this.maskedTextBox1.Mask = "AA-AA-AA-AA-AA-AA";
             this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(74, 20);
+            this.maskedTextBox1.Size = new System.Drawing.Size(107, 20);
             this.maskedTextBox1.TabIndex = 21;
             this.maskedTextBox1.Text = "049162d2602f";
             this.maskedTextBox1.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
+            this.maskedTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
             // PID
             // 
             this.PID.Controls.Add(this.tableLayoutPanel2);
             this.PID.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PID.Location = new System.Drawing.Point(220, 3);
+            this.PID.Location = new System.Drawing.Point(304, 3);
             this.PID.Name = "PID";
-            this.PID.Size = new System.Drawing.Size(139, 184);
+            this.PID.Size = new System.Drawing.Size(195, 184);
             this.PID.TabIndex = 37;
             this.PID.TabStop = false;
             this.PID.Text = "PID";
@@ -578,7 +676,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(133, 165);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(189, 165);
             this.tableLayoutPanel2.TabIndex = 0;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
@@ -594,12 +692,28 @@
             // 
             // numericUpDown11
             // 
+            this.numericUpDown11.DecimalPlaces = 2;
             this.numericUpDown11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown11.Location = new System.Drawing.Point(47, 44);
+            this.numericUpDown11.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown11.Location = new System.Drawing.Point(66, 44);
+            this.numericUpDown11.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDown11.Size = new System.Drawing.Size(56, 20);
             this.numericUpDown11.TabIndex = 9;
-            this.numericUpDown11.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown11.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown11.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // label11
             // 
@@ -613,17 +727,33 @@
             // 
             // numericUpDown8
             // 
+            this.numericUpDown8.DecimalPlaces = 2;
             this.numericUpDown8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown8.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.numericUpDown8.Location = new System.Drawing.Point(3, 44);
+            this.numericUpDown8.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDown8.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown8.TabIndex = 6;
-            this.numericUpDown8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown8.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown8.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(47, 0);
+            this.label9.Location = new System.Drawing.Point(66, 0);
             this.label9.Name = "label9";
             this.label9.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label9.Size = new System.Drawing.Size(10, 17);
@@ -633,7 +763,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(47, 82);
+            this.label12.Location = new System.Drawing.Point(66, 82);
             this.label12.Name = "label12";
             this.label12.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label12.Size = new System.Drawing.Size(34, 17);
@@ -642,17 +772,28 @@
             // 
             // numericUpDown9
             // 
+            this.numericUpDown9.DecimalPlaces = 2;
             this.numericUpDown9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown9.Location = new System.Drawing.Point(91, 44);
+            this.numericUpDown9.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDown9.Location = new System.Drawing.Point(128, 44);
+            this.numericUpDown9.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(39, 20);
+            this.numericUpDown9.Size = new System.Drawing.Size(58, 20);
             this.numericUpDown9.TabIndex = 7;
-            this.numericUpDown9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown9.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(91, 0);
+            this.label10.Location = new System.Drawing.Point(128, 0);
             this.label10.Name = "label10";
             this.label10.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label10.Size = new System.Drawing.Size(15, 17);
@@ -662,10 +803,10 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(91, 82);
+            this.label13.Location = new System.Drawing.Point(128, 82);
             this.label13.Name = "label13";
             this.label13.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label13.Size = new System.Drawing.Size(39, 30);
+            this.label13.Size = new System.Drawing.Size(45, 30);
             this.label13.TabIndex = 5;
             this.label13.Text = "Sample Rate";
             // 
@@ -674,36 +815,57 @@
             this.numericUpDown12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown12.Location = new System.Drawing.Point(3, 126);
             this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDown12.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown12.TabIndex = 10;
-            this.numericUpDown12.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown12.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // numericUpDown10
             // 
             this.numericUpDown10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown10.Location = new System.Drawing.Point(47, 126);
+            this.numericUpDown10.Location = new System.Drawing.Point(66, 126);
             this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDown10.Size = new System.Drawing.Size(56, 20);
             this.numericUpDown10.TabIndex = 8;
-            this.numericUpDown10.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown10.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown10.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // numericUpDown13
             // 
+            this.numericUpDown13.DecimalPlaces = 3;
             this.numericUpDown13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown13.Location = new System.Drawing.Point(91, 126);
+            this.numericUpDown13.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.numericUpDown13.Location = new System.Drawing.Point(128, 126);
+            this.numericUpDown13.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(39, 20);
+            this.numericUpDown13.Size = new System.Drawing.Size(58, 20);
             this.numericUpDown13.TabIndex = 11;
-            this.numericUpDown13.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PID_KeyDown);
+            this.numericUpDown13.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.numericUpDown13.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel3);
             this.groupBox5.Controls.Add(this.HoldButton);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(513, 3);
+            this.groupBox5.Location = new System.Drawing.Point(710, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(139, 184);
+            this.groupBox5.Size = new System.Drawing.Size(195, 184);
             this.groupBox5.TabIndex = 37;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Memory";
@@ -727,7 +889,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.85715F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(133, 142);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(189, 142);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label14
@@ -744,7 +906,7 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(3, 40);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(47, 26);
+            this.label15.Size = new System.Drawing.Size(67, 13);
             this.label15.TabIndex = 1;
             this.label15.Text = "Memory Size";
             // 
@@ -753,52 +915,98 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(3, 80);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(54, 26);
+            this.label16.Size = new System.Drawing.Size(65, 26);
             this.label16.TabIndex = 2;
             this.label16.Text = "Samples on display";
             // 
             // numericUpDown14
             // 
             this.numericUpDown14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown14.Location = new System.Drawing.Point(69, 3);
+            this.numericUpDown14.Location = new System.Drawing.Point(97, 3);
             this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown14.Size = new System.Drawing.Size(89, 20);
             this.numericUpDown14.TabIndex = 3;
+            this.numericUpDown14.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // numericUpDown15
             // 
             this.numericUpDown15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown15.Location = new System.Drawing.Point(69, 43);
+            this.numericUpDown15.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDown15.Location = new System.Drawing.Point(97, 43);
+            this.numericUpDown15.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.numericUpDown15.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown15.Size = new System.Drawing.Size(89, 20);
             this.numericUpDown15.TabIndex = 4;
+            this.numericUpDown15.Value = new decimal(new int[] {
+            3000000,
+            0,
+            0,
+            0});
             // 
             // numericUpDown16
             // 
             this.numericUpDown16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown16.Location = new System.Drawing.Point(69, 83);
+            this.numericUpDown16.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDown16.Location = new System.Drawing.Point(97, 83);
+            this.numericUpDown16.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.numericUpDown16.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDown16.Name = "numericUpDown16";
-            this.numericUpDown16.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown16.Size = new System.Drawing.Size(89, 20);
             this.numericUpDown16.TabIndex = 5;
+            this.numericUpDown16.Value = new decimal(new int[] {
+            3000000,
+            0,
+            0,
+            0});
             // 
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.button1.Location = new System.Drawing.Point(3, 158);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 23);
+            this.button1.Size = new System.Drawing.Size(190, 23);
             this.button1.TabIndex = 24;
-            this.button1.Text = "Toggle";
+            this.button1.Text = "Trigger on edge";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.tableLayoutPanel4);
             this.groupBox6.Controls.Add(this.button1);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(658, 3);
+            this.groupBox6.Location = new System.Drawing.Point(911, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(140, 184);
+            this.groupBox6.Size = new System.Drawing.Size(196, 184);
             this.groupBox6.TabIndex = 38;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Function Generator";
@@ -819,7 +1027,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(134, 142);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(190, 142);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // label17
@@ -827,34 +1035,51 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(3, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(57, 13);
+            this.label17.Size = new System.Drawing.Size(79, 13);
             this.label17.TabIndex = 0;
-            this.label17.Text = "Frequency";
+            this.label17.Text = "Frequency [Hz]";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(3, 71);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 13);
+            this.label18.Size = new System.Drawing.Size(56, 26);
             this.label18.TabIndex = 1;
-            this.label18.Text = "Amplitude";
+            this.label18.Text = "Amplitude [Vpeak]";
             // 
             // FGFrequencyText
             // 
+            this.FGFrequencyText.DecimalPlaces = 1;
             this.FGFrequencyText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FGFrequencyText.Location = new System.Drawing.Point(70, 3);
+            this.FGFrequencyText.Location = new System.Drawing.Point(98, 3);
             this.FGFrequencyText.Name = "FGFrequencyText";
-            this.FGFrequencyText.Size = new System.Drawing.Size(61, 20);
+            this.FGFrequencyText.Size = new System.Drawing.Size(89, 20);
             this.FGFrequencyText.TabIndex = 2;
+            this.FGFrequencyText.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.FGFrequencyText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // FGAmplitudeText
             // 
+            this.FGAmplitudeText.DecimalPlaces = 3;
             this.FGAmplitudeText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FGAmplitudeText.Location = new System.Drawing.Point(70, 74);
+            this.FGAmplitudeText.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.FGAmplitudeText.Location = new System.Drawing.Point(98, 74);
+            this.FGAmplitudeText.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.FGAmplitudeText.Name = "FGAmplitudeText";
-            this.FGAmplitudeText.Size = new System.Drawing.Size(61, 20);
+            this.FGAmplitudeText.Size = new System.Drawing.Size(89, 20);
             this.FGAmplitudeText.TabIndex = 3;
             this.FGAmplitudeText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
@@ -877,7 +1102,7 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(801, 190);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1110, 190);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -896,14 +1121,24 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.76471F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.41176F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.41176F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(807, 668);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1116, 668);
             this.tableLayoutPanel6.TabIndex = 37;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.button2.Location = new System.Drawing.Point(3, 135);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(190, 23);
+            this.button2.TabIndex = 25;
+            this.button2.Text = "Toggle";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 668);
+            this.ClientSize = new System.Drawing.Size(1116, 668);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -1019,6 +1254,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Button button2;
     }
 }
 
