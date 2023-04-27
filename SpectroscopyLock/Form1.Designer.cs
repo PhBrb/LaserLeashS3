@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -70,17 +70,17 @@
             this.PID = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
+            this.KiText = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
+            this.KpText = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.KdText = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
+            this.YminText = new System.Windows.Forms.NumericUpDown();
+            this.YmaxText = new System.Windows.Forms.NumericUpDown();
+            this.SamplerateText = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
@@ -117,12 +117,12 @@
             this.tableLayoutPanel7.SuspendLayout();
             this.PID.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KiText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KpText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KdText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YminText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YmaxText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).BeginInit();
@@ -137,18 +137,18 @@
             // 
             // chartXY
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea1);
+            chartArea7.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea7);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartXY.Legends.Add(legend1);
+            legend7.Name = "Legend1";
+            this.chartXY.Legends.Add(legend7);
             this.chartXY.Location = new System.Drawing.Point(3, 427);
             this.chartXY.Name = "chartXY";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartXY.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chartXY.Series.Add(series7);
             this.chartXY.Size = new System.Drawing.Size(1110, 171);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -206,7 +206,7 @@
             this.StreamTargetIPInput.Size = new System.Drawing.Size(107, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
-            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetIPInput_KeyDown);
+            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
             // 
             // HoldButton
             // 
@@ -221,18 +221,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            chartArea8.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea8);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend2);
+            legend8.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend8);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 250);
             this.chartTimeseries.Name = "chartTimeseries";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartTimeseries.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chartTimeseries.Series.Add(series8);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 171);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -633,7 +633,6 @@
             this.maskedTextBox1.Size = new System.Drawing.Size(107, 20);
             this.maskedTextBox1.TabIndex = 21;
             this.maskedTextBox1.Text = "049162d2602f";
-            this.maskedTextBox1.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
             this.maskedTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
             // PID
@@ -654,17 +653,17 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Controls.Add(this.label8, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown11, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.KiText, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label11, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown8, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.KpText, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label9, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label12, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown9, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.KdText, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.label10, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label13, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown12, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown10, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.numericUpDown13, 2, 3);
+            this.tableLayoutPanel2.Controls.Add(this.YminText, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.YmaxText, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.SamplerateText, 2, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
@@ -676,7 +675,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(189, 146);
             this.tableLayoutPanel2.TabIndex = 0;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // label8
             // 
@@ -688,30 +686,30 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "P";
             // 
-            // numericUpDown11
+            // KiText
             // 
-            this.numericUpDown11.DecimalPlaces = 2;
-            this.numericUpDown11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown11.Increment = new decimal(new int[] {
+            this.KiText.DecimalPlaces = 2;
+            this.KiText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KiText.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown11.Location = new System.Drawing.Point(66, 39);
-            this.numericUpDown11.Minimum = new decimal(new int[] {
+            this.KiText.Location = new System.Drawing.Point(66, 39);
+            this.KiText.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
-            this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown11.TabIndex = 9;
-            this.numericUpDown11.Value = new decimal(new int[] {
+            this.KiText.Name = "KiText";
+            this.KiText.Size = new System.Drawing.Size(56, 20);
+            this.KiText.TabIndex = 9;
+            this.KiText.Value = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.numericUpDown11.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.KiText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
             // label11
             // 
@@ -723,30 +721,30 @@
             this.label11.TabIndex = 3;
             this.label11.Text = "y min";
             // 
-            // numericUpDown8
+            // KpText
             // 
-            this.numericUpDown8.DecimalPlaces = 2;
-            this.numericUpDown8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown8.Increment = new decimal(new int[] {
+            this.KpText.DecimalPlaces = 2;
+            this.KpText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KpText.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.numericUpDown8.Location = new System.Drawing.Point(3, 39);
-            this.numericUpDown8.Minimum = new decimal(new int[] {
+            this.KpText.Location = new System.Drawing.Point(3, 39);
+            this.KpText.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
-            this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown8.TabIndex = 6;
-            this.numericUpDown8.Value = new decimal(new int[] {
+            this.KpText.Name = "KpText";
+            this.KpText.Size = new System.Drawing.Size(57, 20);
+            this.KpText.TabIndex = 6;
+            this.KpText.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown8.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.KpText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
             // label9
             // 
@@ -768,25 +766,25 @@
             this.label12.TabIndex = 4;
             this.label12.Text = "y max";
             // 
-            // numericUpDown9
+            // KdText
             // 
-            this.numericUpDown9.DecimalPlaces = 2;
-            this.numericUpDown9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown9.Increment = new decimal(new int[] {
+            this.KdText.DecimalPlaces = 2;
+            this.KdText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KdText.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.numericUpDown9.Location = new System.Drawing.Point(128, 39);
-            this.numericUpDown9.Minimum = new decimal(new int[] {
+            this.KdText.Location = new System.Drawing.Point(128, 39);
+            this.KdText.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
-            this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(58, 20);
-            this.numericUpDown9.TabIndex = 7;
-            this.numericUpDown9.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.KdText.Name = "KdText";
+            this.KdText.Size = new System.Drawing.Size(58, 20);
+            this.KdText.TabIndex = 7;
+            this.KdText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
             // label10
             // 
@@ -808,53 +806,53 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Sample Rate";
             // 
-            // numericUpDown12
+            // YminText
             // 
-            this.numericUpDown12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown12.Location = new System.Drawing.Point(3, 111);
-            this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown12.TabIndex = 10;
-            this.numericUpDown12.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.YminText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.YminText.Location = new System.Drawing.Point(3, 111);
+            this.YminText.Name = "YminText";
+            this.YminText.Size = new System.Drawing.Size(57, 20);
+            this.YminText.TabIndex = 10;
+            this.YminText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
-            // numericUpDown10
+            // YmaxText
             // 
-            this.numericUpDown10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown10.Location = new System.Drawing.Point(66, 111);
-            this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown10.TabIndex = 8;
-            this.numericUpDown10.Value = new decimal(new int[] {
+            this.YmaxText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.YmaxText.Location = new System.Drawing.Point(66, 111);
+            this.YmaxText.Name = "YmaxText";
+            this.YmaxText.Size = new System.Drawing.Size(56, 20);
+            this.YmaxText.TabIndex = 8;
+            this.YmaxText.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown10.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.YmaxText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
-            // numericUpDown13
+            // SamplerateText
             // 
-            this.numericUpDown13.DecimalPlaces = 3;
-            this.numericUpDown13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown13.Increment = new decimal(new int[] {
+            this.SamplerateText.DecimalPlaces = 3;
+            this.SamplerateText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SamplerateText.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            this.numericUpDown13.Location = new System.Drawing.Point(128, 111);
-            this.numericUpDown13.Maximum = new decimal(new int[] {
+            this.SamplerateText.Location = new System.Drawing.Point(128, 111);
+            this.SamplerateText.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(58, 20);
-            this.numericUpDown13.TabIndex = 11;
-            this.numericUpDown13.Value = new decimal(new int[] {
+            this.SamplerateText.Name = "SamplerateText";
+            this.SamplerateText.Size = new System.Drawing.Size(58, 20);
+            this.SamplerateText.TabIndex = 11;
+            this.SamplerateText.Value = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            this.numericUpDown13.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.SamplerateText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             // 
             // groupBox5
             // 
@@ -1117,7 +1115,6 @@
             this.Controls.Add(this.tableLayoutPanel6);
             this.Name = "SpectrscopyControlForm";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).EndInit();
             this.panel6.ResumeLayout(false);
@@ -1140,12 +1137,12 @@
             this.PID.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KiText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KpText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KdText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YminText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YmaxText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -1203,12 +1200,12 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.NumericUpDown numericUpDown8;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
-        private System.Windows.Forms.NumericUpDown numericUpDown11;
-        private System.Windows.Forms.NumericUpDown numericUpDown12;
-        private System.Windows.Forms.NumericUpDown numericUpDown10;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
+        private System.Windows.Forms.NumericUpDown KpText;
+        private System.Windows.Forms.NumericUpDown KdText;
+        private System.Windows.Forms.NumericUpDown KiText;
+        private System.Windows.Forms.NumericUpDown YminText;
+        private System.Windows.Forms.NumericUpDown YmaxText;
+        private System.Windows.Forms.NumericUpDown SamplerateText;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;

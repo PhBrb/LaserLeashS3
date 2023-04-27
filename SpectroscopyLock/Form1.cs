@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
-using System.Reflection;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Net.Mime.MediaTypeNames;
-using MQTTnet.Client;
 using MQTTnet.Samples.Client;
-using System.Xml.Linq;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace ChartTest2
 {
@@ -199,7 +187,16 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
 
+            List<double> result = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
 
+            Task.Run(() =>
+            {
+                Thread.Sleep(100);
+                mqtt.sendPID(0, result.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            });
+        }
+
+        private List<double> CalculateIIR(double Kp, double Ki, double Kd, double samplePeriod) {
             // original python code
             //
             // kernels = [
@@ -220,26 +217,31 @@ namespace ChartTest2
             // a = [i / a[0] for i in a]
             // assert a[0] == 1
             // return b + [-ai for ai in a[1:]]
+
             double[,] kernels = new double[,] { { 1, 0, 0 }, { 1, -1, 0 }, { 1, -2, 1 } };
-            //double Ki = double.Parse(ITextBox.Text), Kp = double.Parse(PTextBox.Text), Kd = double.Parse(DTextBox.Text), samplePeriod = double.Parse(sampleRateTextBox.Text);
-            //double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
+
+            double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
             double[] limits = new double[] { 0, 0, 1, 0, 0 };
+
             int order = 1;
-            //double w = 2 * Math.PI * samplePeriod;
+            double w = 2 * Math.PI * samplePeriod;
+
             double[] b = new double[] { 0, 0, 0 };
             double[] a = new double[] { 0, 0, 0 };
+
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    //b[j] += gains[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                    b[j] += gains[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
                 }
             }
+
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    //a[j] += limits[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
+                    a[j] += limits[2 - order + i] * Math.Pow(w, order - i) * kernels[i, j];
                 }
             }
             for (int i = 0; i < 3; i++)
@@ -247,17 +249,14 @@ namespace ChartTest2
                 b[i] = b[i] / a[0];
                 a[i] = a[i] / a[0];
             }
+
             if (a[0] != 1)
                 throw new Exception();
+
             List<double> result = b.ToList();
             result.AddRange(a.Skip(1));
 
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(100);
-                //mqtt.sendPID(0, result.ToBracketString(), double.Parse(yminTextBox.Text), double.Parse(ymaxTextBox.Text));
-            });
+            return result;
         }
 
         private void UnlockButton_Click(object sender, EventArgs e)
@@ -332,22 +331,12 @@ namespace ChartTest2
             }
         }
 
-
-        private void StreamTargetIPInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendStreamTarget(txt, StreamTargetIPInput.Text);
-            }
-        }
-
         private void StreamTargetPortInput_TextChanged(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendStreamTarget(StreamTargetIPInput.Text, txt);
+                mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
             }
         }
 
@@ -380,22 +369,6 @@ namespace ChartTest2
             memory.freeze = !memory.freeze;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
         {
             decimal dec = ((NumericUpDown)sender).Value;
@@ -408,9 +381,10 @@ namespace ChartTest2
             OnValueIntMap[(NumericUpDown)sender].Invoke(Decimal.ToInt32(dec));
         }
 
-        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
+        private void PID_ValueChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            List<double> result = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
+            mqtt.sendPID(0, result.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
         }
 
         public static void WriteLine(string message)
