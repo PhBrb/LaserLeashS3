@@ -30,7 +30,7 @@ namespace ChartTest2
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form = new Form1(memory, osciDisplay, mqtt);
+            SpectrscopyControlForm form = new SpectrscopyControlForm(memory, osciDisplay, mqtt);
 
             //transfer data from udp to osci memory
             new Thread(new ThreadStart(() =>

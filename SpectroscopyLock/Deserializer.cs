@@ -32,7 +32,7 @@ namespace ChartTest2
                 return;
             if (h.sequenceNumber < memory.lastSequenceNumber)
             {
-                Console.WriteLine("out of order");
+                SpectrscopyControlForm.WriteLine("Received data out of order");
                 return;
             }
             if (firstSequenceNumber == 0)

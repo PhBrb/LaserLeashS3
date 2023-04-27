@@ -4,6 +4,7 @@ using System;
 using MQTTnet.Client;
 using MQTTnet.Server;
 using System.Text;
+using ChartTest2;
 
 namespace MQTTnet.Samples.Client
 {
@@ -44,7 +45,10 @@ namespace MQTTnet.Samples.Client
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine($"Sent double {value:0.####} to {path}");
+                SpectrscopyControlForm.WriteLine($"Sent  double {value:0.####} to {path}");
+            } else
+            {
+                SpectrscopyControlForm.WriteLine("MQTT client not connected");
             }
         }
 
@@ -58,7 +62,11 @@ namespace MQTTnet.Samples.Client
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine($"Sent int {value} to {path}");
+                SpectrscopyControlForm.WriteLine($"Sent int {value} to {path}");
+            }
+            else
+            {
+                SpectrscopyControlForm.WriteLine("MQTT client not connected");
             }
         }
 
@@ -72,7 +80,11 @@ namespace MQTTnet.Samples.Client
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                Console.WriteLine($"Sent string {value} to {path}");
+                SpectrscopyControlForm.WriteLine($"Sent string {value} to {path}");
+            }
+            else
+            {
+                SpectrscopyControlForm.WriteLine("MQTT client not connected");
             }
         }
 
@@ -156,7 +168,7 @@ namespace MQTTnet.Samples.Client
 
         public void sendStreamTarget(string ip, string port)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/stream_target",  $"{{\"ip\":[{ip}],\"port\":{port}}}");
+            send($"dt/sinara/dual-iir/{ID}/settings/stream_target",  $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replay . wiht ,
         }
 
         public void setStabilizerID(string id)

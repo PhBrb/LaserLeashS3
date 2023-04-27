@@ -22,7 +22,7 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace ChartTest2
 {
-    public partial class Form1 : Form
+    public partial class SpectrscopyControlForm : Form
     {
         Series seriesXY;
         Series seriesOutput;
@@ -34,16 +34,19 @@ namespace ChartTest2
         OsciDisplay osciDisplay;
         Memory memory;
 
-        Dictionary<Control, Action<double>> OnValueMap;     
+        Dictionary<NumericUpDown, Action<double>> OnValueDoubleMap;
+        Dictionary<NumericUpDown, Action<int>> OnValueIntMap;
 
-        public Form1(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
+        public static SpectrscopyControlForm form;
+
+        public SpectrscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
             InitializeComponent();
             InitGraph();
             this.mqtt = mqtt;
             this.osciDisplay = osciDisplay;
             this.memory = memory;
-            OnValueMap = new Dictionary<Control, Action<double>>(){
+            OnValueDoubleMap = new Dictionary<NumericUpDown, Action<double>>(){
                 {modFreqText, mqtt.sendModulationFrequency},
                 {demodFreqText, mqtt.sendDemodulationFrequency},
                 {demodAmpText, mqtt.sendDemodulationAmplitude},
@@ -54,6 +57,11 @@ namespace ChartTest2
                 {FGAmplitudeText, mqtt.sendScanAmplitude},
                 {FGFrequencyText, mqtt.sendScanFrequency},
             };
+            OnValueIntMap = new Dictionary<NumericUpDown, Action<int>>(){
+                {AveragesText, osciDisplay.setAverages},
+                {MemorySizeText, (size) => {osciDisplay.oldestSampleToDisplay = Math.Min(size, osciDisplay.oldestSampleToDisplay); memory.setSize(size); } },
+            };
+            SpectrscopyControlForm.form = this;
         }
 
         public void OnNewDataXY()
@@ -313,9 +321,9 @@ namespace ChartTest2
                 var xMin = xAxis.ScaleView.ViewMinimum;
                 var xMax = xAxis.ScaleView.ViewMaximum;
                 double clickPos = chartTimeseries.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
-                Console.WriteLine($"click pos {clickPos}");
+                //Console.WriteLine($"click pos {clickPos}");
                 double zoomCenterRelativeNewestToOld = 1 - (clickPos - xMin) / (xMax - xMin);
-                Console.WriteLine($"zoom center {zoomCenterRelativeNewestToOld}");
+                //Console.WriteLine($"zoom center {zoomCenterRelativeNewestToOld}");
 
                 osciDisplay.ZoomIn(zoomCenterRelativeNewestToOld);
             } else if(me.Button == MouseButtons.Right)
@@ -330,7 +338,7 @@ namespace ChartTest2
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendStreamTarget(txt.Replace('.', ','), StreamTargetIPInput.Text);
+                mqtt.sendStreamTarget(txt, StreamTargetIPInput.Text);
             }
         }
 
@@ -339,50 +347,7 @@ namespace ChartTest2
             if (e.KeyCode == Keys.Enter)
             {
                 string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), txt);
-            }
-        }
-
-        private void ModulationFrequencyInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                mqtt.sendModulationFrequency(double.Parse(txt));
-            }
-        }
-
-        private void AveragesInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                int averages = int.Parse(txt);
-                osciDisplay.setAverages(averages);
-            }
-        }
-
-        private void SamplesMemoryInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                int samples = int.Parse(txt);
-                osciDisplay.oldestSampleToDisplay = Math.Min(samples, osciDisplay.oldestSampleToDisplay);
-                memory.setSize(samples);
-
-            }
-        }
-
-        private void SamplesOnDisplay_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
-                int samples = int.Parse(txt);
-                if(memory.getSize() < samples)
-                    throw new NotImplementedException();
-                osciDisplay.oldestSampleToDisplay = samples;
+                mqtt.sendStreamTarget(StreamTargetIPInput.Text, txt);
             }
         }
 
@@ -434,12 +399,23 @@ namespace ChartTest2
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
         {
             decimal dec = ((NumericUpDown)sender).Value;
-            OnValueMap[(Control)sender].Invoke(Decimal.ToDouble(dec));
+            OnValueDoubleMap[(NumericUpDown)sender].Invoke(Decimal.ToDouble(dec));
+        }
+
+        private void NumberFieldInt_ValueChanged(object sender, EventArgs e)
+        {
+            decimal dec = ((NumericUpDown)sender).Value;
+            OnValueIntMap[(NumericUpDown)sender].Invoke(Decimal.ToInt32(dec));
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        public static void WriteLine(string message)
+        {
+            form.logText.AppendText("\r\n" + message);
         }
     }
 }

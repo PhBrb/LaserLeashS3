@@ -59,9 +59,6 @@ namespace ChartTest2
 
             oldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
             newestSampleToDisplay = Math.Max(newestSampleToDisplay, iNewCenter - iRange);
-
-            Console.WriteLine($"sampe old {oldestSampleToDisplay}");
-            Console.WriteLine($"sample new {newestSampleToDisplay}");
         }
 
         public void ZoomOut() {
