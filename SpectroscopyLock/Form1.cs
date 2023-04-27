@@ -49,53 +49,10 @@ namespace ChartTest2
                 {AveragesText, osciDisplay.setAverages},
                 {MemorySizeText, (size) => {osciDisplay.oldestSampleToDisplay = Math.Min(size, osciDisplay.oldestSampleToDisplay); memory.setSize(size); } },
             };
+
             SpectrscopyControlForm.form = this;
         }
 
-        public void OnNewDataXY()
-        {
-            if (chartXY.InvokeRequired)
-            {
-                chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
-                return;
-            }
-            else
-            {
-                if (!lockMode)
-                {
-                    osciDisplay.GetTimeSeries();
-                    (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
-                    if (xData.Length > 0)
-                        seriesXY.Points.DataBindXY(xData, yData);
-                    chartXY.Update();
-                }
-            }
-        }
-        public void OnNewDataTimeSeries()
-        {
-            if (chartTimeseries.InvokeRequired)
-            {
-                chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
-                return;
-            }
-            else
-            {
-                double[] dataDac, dataAdc;
-                (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
-
-                seriesOutput.Points.DataBindY(dataDac);
-                seriesDemod.Points.DataBindY(dataAdc);
-
-                chartTimeseries.Update();
-            }
-        }
-
-
-        public void OnNewData()
-        {
-            OnNewDataTimeSeries();
-            OnNewDataXY();
-        }
 
         public void InitGraph()
         {
@@ -147,8 +104,7 @@ namespace ChartTest2
             //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             var CA = chartXY.ChartAreas[0];
 
-
-            // the vertical line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
+            // vertical lockpoint line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
             LockLineAnnotation = new VerticalLineAnnotation();
             LockLineAnnotation.AxisX = CA.AxisX;
             LockLineAnnotation.AllowMoving = true;
@@ -161,10 +117,94 @@ namespace ChartTest2
             chartXY.Annotations.Add(LockLineAnnotation);
         }
 
-        private void chart1_Click(object sender, EventArgs e)
+
+        public void OnNewDataXY()
+        {
+            if (chartXY.InvokeRequired)
+            {
+                chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
+                return;
+            }
+            else
+            {
+                if (!lockMode)
+                {
+                    osciDisplay.GetTimeSeries();
+                    (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
+                    if (xData.Length > 0)
+                        seriesXY.Points.DataBindXY(xData, yData);
+                    chartXY.Update();
+                }
+            }
+        }
+
+        public void OnNewDataTimeSeries()
+        {
+            if (chartTimeseries.InvokeRequired)
+            {
+                chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
+                return;
+            }
+            else
+            {
+                double[] dataDac, dataAdc;
+                (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
+
+                seriesOutput.Points.DataBindY(dataDac);
+                seriesDemod.Points.DataBindY(dataAdc);
+
+                chartTimeseries.Update();
+            }
+        }
+
+        public void OnNewData()
+        {
+            OnNewDataTimeSeries();
+            OnNewDataXY();
+        }
+
+        private void chartXY_Click(object sender, EventArgs e)
         {
             var me = e as MouseEventArgs;
             LockLineAnnotation.X = chartXY.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
+        }
+
+        private void setRange(double min, double max)
+        {
+            mqtt.sendScanAmplitude((max - min) / 2);
+            mqtt.sendScanOffset((min + max) / 2);
+        }
+
+        private void chartXY_DoubleClick(object sender, EventArgs e)
+        {
+            if (lockMode)
+                return;
+
+
+            var me = e as MouseEventArgs;
+
+            if (me.Button == MouseButtons.Left)
+            {
+                var xAxis = chartXY.ChartAreas[0].AxisX;
+                var xMin = xAxis.ScaleView.ViewMinimum;
+                var xMax = xAxis.ScaleView.ViewMaximum;
+
+                var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
+                var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
+
+                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+            }
+            else if (me.Button == MouseButtons.Right)
+            {
+                var xAxis = chartXY.ChartAreas[0].AxisX;
+                var xMin = xAxis.ScaleView.ViewMinimum;
+                var xMax = xAxis.ScaleView.ViewMaximum;
+
+                var posXStart = (xMax + xMin) / 2 - (xMax - xMin) / 1.3;
+                var posXFinish = (xMax + xMin) / 2 + (xMax - xMin) / 1.3;
+
+                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+            }
         }
 
         private void LockButton_Click(object sender, EventArgs e)
@@ -262,7 +302,7 @@ namespace ChartTest2
         private void UnlockButton_Click(object sender, EventArgs e)
         {
             mqtt.sendPIDOff();
-            setRange(0, 10);
+            setRange(Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
             chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
@@ -270,44 +310,6 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
 
             lockMode = false;
-        }
-
-        private void setRange(double min, double max)
-        {
-            mqtt.sendScanAmplitude((max - min) / 2);
-            mqtt.sendScanOffset((min + max) / 2);
-        }
-
-        private void chartXY_DoubleClick(object sender, EventArgs e)
-        {
-            if (lockMode)
-                return;
-            
-            
-            var me = e as MouseEventArgs;
-
-            if (me.Button == MouseButtons.Left)
-            {
-                var xAxis = chartXY.ChartAreas[0].AxisX;
-                var xMin = xAxis.ScaleView.ViewMinimum;
-                var xMax = xAxis.ScaleView.ViewMaximum;
-
-                var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
-                var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
-
-                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
-            }
-            else if(me.Button == MouseButtons.Right)
-            {
-                var xAxis = chartXY.ChartAreas[0].AxisX;
-                var xMin = xAxis.ScaleView.ViewMinimum;
-                var xMax = xAxis.ScaleView.ViewMaximum;
-
-                var posXStart = (xMax + xMin)/2 - (xMax - xMin) / 1.3;
-                var posXFinish = (xMax + xMin) / 2 + (xMax - xMin) / 1.3;
-
-                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
-            }
         }
 
         private void chartTimeseries_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -335,7 +337,6 @@ namespace ChartTest2
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
                 mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
             }
         }
@@ -344,24 +345,25 @@ namespace ChartTest2
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string txt = ((System.Windows.Forms.TextBox)sender).Text;
+                string txt = ((TextBox)sender).Text;
                 mqtt.setStabilizerID(txt);
             }
         }
 
         private void InitButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendStreamTarget(StreamTargetIPInput.Text.Replace('.', ','), StreamTargetPortInput.Text);
-            mqtt.sendModulationAmplitude(1);
-            mqtt.sendModulationAttenuation(0);
-            mqtt.sendModulationFrequency  (3000000);
-            mqtt.sendDemodulationFrequency(3000000);
-            mqtt.sendDemodulationAttenuation(0);
-            mqtt.sendDemodulationAmplitude(1);
-            mqtt.sendPhase(0);
-            mqtt.sendScanAmplitude(5);
-            mqtt.sendScanOffset(5);
-            mqtt.sendScanFrequency(1);
+            mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
+            mqtt.sendModulationAmplitude(Decimal.ToDouble(modAmpText.Value));
+            mqtt.sendModulationAttenuation(Decimal.ToDouble(modAttText.Value));
+            mqtt.sendModulationFrequency  (Decimal.ToDouble(modFreqText.Value));
+            mqtt.sendDemodulationFrequency(Decimal.ToDouble(demodFreqText.Value));
+            mqtt.sendDemodulationAttenuation(Decimal.ToDouble(demodAttText.Value));
+            mqtt.sendDemodulationAmplitude(Decimal.ToDouble(demodAmpText.Value));
+            mqtt.sendPhase(Decimal.ToDouble(modPhaseText.Value));
+            double min = Decimal.ToDouble(YminText.Value), max = Decimal.ToDouble(YmaxText.Value);
+            mqtt.sendScanAmplitude((max-min)/2);
+            mqtt.sendScanOffset((max+min)/2, min, max);
+            mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
         }
 
         private void HoldButton_Click(object sender, EventArgs e)

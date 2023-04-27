@@ -14,7 +14,6 @@ namespace MQTTnet.Samples.Client
 
         IMqttClient mqttClient;
         string ID = "04-91-62-d2-60-2f";
-        string lastUsedIIR = "[0.0,0.0,0.0,-0.0,-0.0]";
 
         public MQTTPublisher()
         {
@@ -52,24 +51,6 @@ namespace MQTTnet.Samples.Client
             }
         }
 
-        private void send(string path, int value)
-        {
-            if (mqttClient.IsConnected)
-            {
-                var applicationMessage = new MqttApplicationMessageBuilder()
-                    .WithTopic(path)
-                    .WithPayload($"{value}")
-                    .Build();
-
-                mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                SpectrscopyControlForm.WriteLine($"Sent int {value} to {path}");
-            }
-            else
-            {
-                SpectrscopyControlForm.WriteLine("MQTT client not connected");
-            }
-        }
-
         private void send(string path, string value)
         {
             if (mqttClient.IsConnected)
@@ -94,9 +75,9 @@ namespace MQTTnet.Samples.Client
             send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/amplitude", amplitude);
         }
 
-        public void sendScanOffset(double offset)
+        public void sendScanOffset(double offset, double ymin, double ymax)
         {
-            sendPID(offset, lastUsedIIR, 0, 10);
+            sendPID(offset, "[0.0,0.0,0.0,-0.0,-0.0]", ymin, ymax);
         }
 
         public void sendScanFrequency(double frequency)
@@ -106,29 +87,7 @@ namespace MQTTnet.Samples.Client
 
         public void sendPID(double offset, string iir, double ymin, double ymax)
         {
-            lastUsedIIR = iir;
-            //add printing of topic and payload to miniconf.py to find out what parameters get sent. (might not be needed, the iir_coefficients script  gives some logging info)
-            //use eg python iir_coefficients.py --v -b 127.0.0.1 --prefix 04-91-62-d2-60-2f --no-discover --c 0 --sample-period 0.1 --x-offset 0 --y-min 0 --y-offset 0 pid --Kii 0 --Ki 0.01 --Kp 1 --Kd 0 --Kdd 0
             send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0", $"{{\"ba\":{iir},\"y_min\":{(int)(ymin*3200)},\"y_max\":{(int)(ymax * 3200)},\"y_offset\":{(int)(3200*offset)}}}");
-        }
-
-        public void sendPIDOff()
-        {
-            lastUsedIIR = "[0.0,0.0,0.0,-0.0,-0.0]";
-            //add printing of topic and payload to miniconf.py to find out what parameters get sent. (might not be needed, the iir_coefficients script gives some logging info)
-            //use eg python iir_coefficients.py --v -b 127.0.0.1 --prefix 04-91-62-d2-60-2f --no-discover --c 0 --sample-period 0.1 --x-offset 0 --y-min 0 --y-offset 0 pid --Kii 0 --Ki 0.01 --Kp 1 --Kd 0 --Kdd 0
-            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0", "{\"ba\":[0.0,0.0,0.0,-0.0,-0.0],\"y_min\":0,\"y_max\":32767,\"y_offset\":0}");
-        }
-
-        public bool isConnected()
-        {
-            return mqttClient.IsConnected;
-        }
-
-
-        public void disconnect()
-        {
-            mqttClient.DisconnectAsync();
         }
 
 
