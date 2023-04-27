@@ -172,7 +172,7 @@ namespace ChartTest2
         private void setRange(double min, double max)
         {
             mqtt.sendScanAmplitude((max - min) / 2);
-            mqtt.sendScanOffset((min + max) / 2);
+            mqtt.sendScanOffset((min + max) / 2, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
         }
 
         private void chartXY_DoubleClick(object sender, EventArgs e)
@@ -209,12 +209,6 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendScanAmplitude(0);
-            Thread.Sleep(100);
-            mqtt.sendScanOffset(LockLineAnnotation.X);
-            Thread.Sleep(100);
-
-            lockMode = true;
 
             //keep previous range
             double min, max;
@@ -226,6 +220,15 @@ namespace ChartTest2
             max = osciDisplay.GetADCMaxNoUpdate();
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
+
+            lockMode = true;
+
+            mqtt.sendScanAmplitude(0);
+            Thread.Sleep(100); //TODO instead read back the value und wait until it changed?
+            mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            Thread.Sleep(100);
+
+
 
             List<double> result = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
 
@@ -301,7 +304,7 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendPIDOff();
+            mqtt.sendPID(0, CalculateIIR(0,0,0,0).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             setRange(Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
@@ -343,10 +346,12 @@ namespace ChartTest2
 
         private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            MaskedTextBox tbSource = ((MaskedTextBox)sender);
+            if (e.KeyCode == Keys.Enter && tbSource.MaskCompleted)
             {
-                string txt = ((TextBox)sender).Text;
+                string txt = tbSource.Text;
                 mqtt.setStabilizerID(txt);
+                WriteLine("Target ID set to " + txt);
             }
         }
 
