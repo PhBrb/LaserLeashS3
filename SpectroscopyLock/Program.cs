@@ -45,7 +45,7 @@ namespace ChartTest2
             //refresh osci display
             new Thread(new ThreadStart(() =>
             {
-                Thread.Sleep(1000);//TODO https://stackoverflow.com/questions/18675771/wait-until-form-is-finished-loading
+                Thread.Sleep(1000);//TODO https://stackoverflow.com/questions/18675771/wait-until-form-is-finished-loading , also do samplesOnDisplayText.Value = osciDisplay.getSize(); there 
                 while (true)
                 {
                     form.OnNewData();

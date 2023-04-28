@@ -35,6 +35,7 @@ namespace ChartTest2
             this.mqtt = mqtt;
             this.osciDisplay = osciDisplay;
             this.memory = memory;
+
             OnValueDoubleMap = new Dictionary<NumericUpDown, Action<double>>(){
                 {modFreqText, mqtt.sendModulationFrequencyMHz},
                 {demodFreqText, mqtt.sendDemodulationFrequencyMHz},
@@ -45,10 +46,12 @@ namespace ChartTest2
                 {modPhaseText, mqtt.sendPhase},
                 {FGAmplitudeText, mqtt.sendScanAmplitude},
                 {FGFrequencyText, mqtt.sendScanFrequency},
+                {XYAveragesText, osciDisplay.setXYSmoothing }
             };
             OnValueIntMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
-                {MemorySizeText, (size) => {osciDisplay.oldestSampleToDisplay = Math.Min(size, osciDisplay.oldestSampleToDisplay); memory.setSize(size); } },
+                {MemorySizeText, (size) => {osciDisplay.oldestSampleToDisplay = Math.Min(size, osciDisplay.oldestSampleToDisplay); memory.setSize(size);} },
+                {samplesOnDisplayText, osciDisplay.setSize },
             };
 
             SpectrscopyControlForm.form = this;
@@ -102,7 +105,7 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
             chartTimeseries.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
 
-            //zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
+            // zooming https://stackoverflow.com/questions/13584061/how-to-enable-zooming-in-microsoft-chart-control-by-using-mouse-wheel
             var CA = chartXY.ChartAreas[0];
 
             // vertical lockpoint line https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -293,10 +296,8 @@ namespace ChartTest2
                 b[i] = b[i] / a[0];
                 a[i] = a[i] / a[0];
             }
-
             if (a[0] != 1)
                 throw new Exception();
-
 
 
             for (int i = 0; i < 3; i++)

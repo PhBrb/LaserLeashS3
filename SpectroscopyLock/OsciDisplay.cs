@@ -15,13 +15,14 @@ namespace ChartTest2
     {
         Memory memory;
         int averages = 5;
+        double XYSmoothing = 0.3;
         public int oldestSampleToDisplay = 1000000;
 
-        int pointsOnDisplay = 400;
-        double[] adcData = new double[400];
-        double[] dacData = new double[400];
-        double[] adcDataSorted = new double[400];
-        double[] dacDataSorted = new double[400];
+        int pointsOnDisplay = 600;
+        double[] adcData = new double[600];
+        double[] dacData = new double[600];
+        double[] adcDataSorted = new double[600];
+        double[] dacDataSorted = new double[600];
 
         int newestSampleToDisplay = 0;
 
@@ -92,12 +93,16 @@ namespace ChartTest2
             var dacList = dacDataSorted.ToList();
             var adcList = adcDataSorted.ToList();
             
-            for(int i = pointsOnDisplay - 1; i >=0 ; i--)
+            for(int i = pointsOnDisplay - 1; i >= 0 ; i--)
             {
                 if (double.IsNaN(dacDataSorted[i]) || double.IsNaN(adcDataSorted[i]))
                 {
                     adcList.RemoveAt(i);
                     dacList.RemoveAt(i);
+                }
+                else if(i < adcList.Count - 1)
+                {
+                    adcList[i] = (1-XYSmoothing)*adcList[i] + XYSmoothing* adcList[i + 1];
                 }
             }
             return (dacList.ToArray(), adcList.ToArray());
@@ -118,6 +123,25 @@ namespace ChartTest2
         public double GetDACMaxNoUpdate()
         {
             return dacDataSorted[adcDataSorted.Length - 1];
+        }
+
+        public int getSize()
+        {
+            return pointsOnDisplay;
+        }
+
+        public void setSize(int size)
+        {
+            pointsOnDisplay = size;
+            adcData = new double[size];
+            dacData = new double[size];
+            adcDataSorted = new double[size];
+            dacDataSorted = new double[size];
+        }
+
+        public void setXYSmoothing(double value)
+        {
+            XYSmoothing= value;
         }
     }
 }
