@@ -379,11 +379,6 @@ namespace ChartTest2
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
         }
 
-        private void HoldButton_Click(object sender, EventArgs e)
-        {
-            memory.freeze = !memory.freeze;
-        }
-
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
         {
             decimal dec = ((NumericUpDown)sender).Value;
@@ -413,6 +408,11 @@ namespace ChartTest2
             {
                 form.logText.AppendText("\r\n" + message);
             }
+        }
+
+        private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            memory.freeze = ((CheckBox)sender).Checked;
         }
     }
 }
