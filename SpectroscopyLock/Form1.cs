@@ -267,7 +267,7 @@ namespace ChartTest2
             double[] gains = new double[] { 0, Ki, Kp, Kd, 0 };
             double[] limits = new double[] { 0, 0, 1, 0, 0 };
 
-            int order = 1;
+            int order = Ki != 0 ? 1 : 0;
             double w = 2 * Math.PI * samplePeriod;
 
             double[] b = new double[] { 0, 0, 0 };
@@ -297,6 +297,12 @@ namespace ChartTest2
             if (a[0] != 1)
                 throw new Exception();
 
+
+
+            for (int i = 0; i < 3; i++)
+            {
+                a[i] *= -1;
+            }
             List<double> result = b.ToList();
             result.AddRange(a.Skip(1));
 
