@@ -23,6 +23,8 @@ namespace ChartTest2
         OsciDisplay osciDisplay;
         Memory memory;
 
+        double previousAmplitude, previousOffset;
+
         Dictionary<NumericUpDown, Action<double>> OnValueDoubleMap;
         Dictionary<NumericUpDown, Action<int>> OnValueIntMap;
 
@@ -225,14 +227,15 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
 
+            previousOffset = (chartTimeseries.ChartAreas[0].AxisY.Maximum + chartTimeseries.ChartAreas[0].AxisY.Minimum) / 2;
+            previousAmplitude = (chartTimeseries.ChartAreas[0].AxisY.Maximum - chartTimeseries.ChartAreas[0].AxisY.Minimum) / 2;
+
             lockMode = true;
 
             mqtt.sendScanAmplitude(0);
             Thread.Sleep(100); //TODO instead read back the value und wait until it changed?
             mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             Thread.Sleep(100);
-
-
 
             List<double> result = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
 
@@ -312,8 +315,8 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendPID(0, CalculateIIR(0,0,0,0.1).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
-            setRange(Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            mqtt.sendPID(previousOffset, CalculateIIR(0,0,0,0.1).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            setRange(previousOffset - previousAmplitude, previousOffset + previousAmplitude);
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
             chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
