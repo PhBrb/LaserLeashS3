@@ -192,7 +192,7 @@ namespace ChartTest2
             LockLineAnnotation.X = chartXY.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
         }
 
-        private void setRange(double min, double max)
+        private void setScanRange(double min, double max)
         {
             mqtt.sendScanAmplitude((max - min) / 2);
             mqtt.sendScanOffset((min + max) / 2, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
@@ -215,7 +215,7 @@ namespace ChartTest2
                 var posXStart = xAxis.PixelPositionToValue(me.Location.X) - (xMax - xMin) / 4;
                 var posXFinish = xAxis.PixelPositionToValue(me.Location.X) + (xMax - xMin) / 4;
 
-                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+                setScanRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
             }
             else if (me.Button == MouseButtons.Right)
             {
@@ -226,7 +226,7 @@ namespace ChartTest2
                 var posXStart = (xMax + xMin) / 2 - (xMax - xMin) / 1.3;
                 var posXFinish = (xMax + xMin) / 2 + (xMax - xMin) / 1.3;
 
-                setRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+                setScanRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
             }
         }
 
@@ -332,8 +332,7 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
-            mqtt.sendPID(previousOffset, CalculateIIR(0,0,0,0.1).ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
-            setRange(previousOffset - previousAmplitude, previousOffset + previousAmplitude);
+            setScanRange(previousOffset - previousAmplitude, previousOffset + previousAmplitude);
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
             chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
@@ -413,8 +412,10 @@ namespace ChartTest2
 
         private void PID_ValueChanged(object sender, EventArgs e)
         {
-            List<double> result = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
-            mqtt.sendPID(0, result.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            if (!lockMode)
+                return;
+            List<double> iirParameters = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
+            mqtt.sendPID(0, iirParameters.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
         }
 
         public static void WriteLine(string message)
