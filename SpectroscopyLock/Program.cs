@@ -21,7 +21,7 @@ namespace ChartTest2
 
             //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
             UDPReceiver udpReceiver = new UDPReceiver();
-            Memory memory = new Memory(1000000); //5000000 is roughly 7s
+            Memory memory = new Memory(1000000); //5 000 000 is roughly 7s
             OsciDisplay osciDisplay = new OsciDisplay(memory);
             
             MQTTPublisher mqtt = new MQTTPublisher();
@@ -35,18 +35,19 @@ namespace ChartTest2
             //transfer data from udp to osci memory
             new Thread(new ThreadStart(() =>
             {
-                while (true)
+                while (!form.stopped)
                 {
                     if (udpReceiver.Size > 0)
                         udpReceiver.TransferData(memory);
                 }
+                udpReceiver.stop = true;
             })).Start();
 
             //refresh osci display
             new Thread(new ThreadStart(() =>
             {
                 Thread.Sleep(1000);//TODO https://stackoverflow.com/questions/18675771/wait-until-form-is-finished-loading , also do samplesOnDisplayText.Value = osciDisplay.getSize(); there 
-                while (true)
+                while (!form.stopped)
                 {
                     form.OnNewData();
                     Thread.Sleep(100);

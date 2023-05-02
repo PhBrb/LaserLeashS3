@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using MQTTnet.Samples.Client;
+using System.Runtime.InteropServices.ComTypes;
+using System.Xml.Linq;
 
 namespace ChartTest2
 {
@@ -30,8 +32,11 @@ namespace ChartTest2
 
         public static SpectrscopyControlForm form;
 
+        public bool stopped { get; private set; }
+
         public SpectrscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
+            stopped = false;
             InitializeComponent();
             InitGraph();
             this.mqtt = mqtt;
@@ -128,12 +133,18 @@ namespace ChartTest2
         {
             if (chartXY.InvokeRequired)
             {
-                chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
+                try
+                {
+                    chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
+                } catch (System.ComponentModel.InvalidAsynchronousStateException e)
+                {
+                    Console.WriteLine("Idk how to fix this...");
+                }
                 return;
             }
             else
             {
-                if (!lockMode)
+                if (!lockMode && !stopped)
                 {
                     osciDisplay.GetTimeSeries();
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
@@ -148,10 +159,16 @@ namespace ChartTest2
         {
             if (chartTimeseries.InvokeRequired)
             {
-                chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
-                return;
+                try
+                {
+                    chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
+                } catch (System.ComponentModel.InvalidAsynchronousStateException e)
+                {
+                    Console.WriteLine("Idk how to fix this...");
+                }
+            return;
             }
-            else
+            else if(!stopped)
             {
                 double[] dataDac, dataAdc;
                 (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
@@ -409,8 +426,14 @@ namespace ChartTest2
             }
             else
             {
-                form.logText.AppendText("\r\n" + message);
+                if(!form.stopped)
+                    form.logText.AppendText("\r\n" + message);
             }
+        }
+
+        private void SpectrscopyControlForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            stopped = true;
         }
 
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)

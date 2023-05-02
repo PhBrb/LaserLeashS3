@@ -21,7 +21,7 @@ namespace ChartTest2
         /// <summary>
         /// Stop the thread
         /// </summary>
-        bool stop = false;
+        public bool stop = false;
 
         /// <summary>
         /// Starts a continuously running thread that receives and buffers data
@@ -51,21 +51,29 @@ namespace ChartTest2
             {
                 using (var udpClient = new UdpClient(1883))
                 {
+                    udpClient.Client.ReceiveTimeout = 5000;
                     IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
                     uint lastSequenceNumber = 0;
                     uint firstSequenceNumber = 0;
                     uint skipped = 0;
                     while (!stop)
                     {
-                        byte[] receivedResults = udpClient.Receive(ref remoteEndPoint); //TODO there is udpClient.Client.Receive... which takes in a buffer. could be used to improve memory usage
-                        lastRawData = receivedResults; ///this is the only code that writes to <see cref="lastRawData"/>. Since udp.Receive returns a new array this should be safe/consistent to read at any time, if the reader has a copy of the reference
-                        
-                        uint sequenceNumber = BitConverter.ToUInt32(receivedResults, 4);
-                        int skip = (int)(sequenceNumber - lastSequenceNumber) / 22 - 1;
-                        if(skip > 0 && skip < 1000)
+                        try
                         {
-                            skipped += (uint)skip * 22;
-                            Console.WriteLine("NetworkSkip: " + (float)skipped / (sequenceNumber - firstSequenceNumber));
+                            byte[] receivedResults = udpClient.Receive(ref remoteEndPoint); //TODO there is udpClient.Client.Receive... which takes in a buffer. could be used to improve memory usage
+
+                            lastRawData = receivedResults; ///this is the only code that writes to <see cref="lastRawData"/>. Since udp.Receive returns a new array this should be safe/consistent to read at any time, if the reader has a copy of the reference
+
+                            uint sequenceNumber = BitConverter.ToUInt32(receivedResults, 4);
+                            int skip = (int)(sequenceNumber - lastSequenceNumber) / 22 - 1;
+                            if (skip > 0 && skip < 1000)
+                            {
+                                skipped += (uint)skip * 22;
+                                Console.WriteLine("NetworkSkip: " + (float)skipped / (sequenceNumber - firstSequenceNumber));
+                            }
+                        } catch (System.Net.Sockets.SocketException e)
+                        {
+                            SpectrscopyControlForm.WriteLine("Timeout receiving streamed data");
                         }
                     }
                 }
