@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -83,13 +83,14 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.AveragesText = new System.Windows.Forms.NumericUpDown();
-            this.MemorySizeText = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
-            this.samplesOnDisplayText = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
             this.XYAveragesText = new System.Windows.Forms.NumericUpDown();
+            this.MemorySizeText = new System.Windows.Forms.NumericUpDown();
+            this.samplesOnDisplayText = new System.Windows.Forms.NumericUpDown();
+            this.AveragesText = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.freezeMemoryCheckbox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -101,7 +102,6 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.logText = new System.Windows.Forms.TextBox();
-            this.freezeMemoryCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.panel6.SuspendLayout();
@@ -129,10 +129,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XYAveragesText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MemorySizeText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.samplesOnDisplayText)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.XYAveragesText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FGFrequencyText)).BeginInit();
@@ -143,18 +143,18 @@
             // 
             // chartXY
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea1);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chartXY.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.chartXY.Legends.Add(legend1);
             this.chartXY.Location = new System.Drawing.Point(3, 427);
             this.chartXY.Name = "chartXY";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartXY.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartXY.Series.Add(series1);
             this.chartXY.Size = new System.Drawing.Size(1110, 171);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -216,18 +216,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea4);
+            chartArea2.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea2);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend2);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 250);
             this.chartTimeseries.Name = "chartTimeseries";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartTimeseries.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartTimeseries.Series.Add(series2);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 171);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -890,103 +890,21 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Location = new System.Drawing.Point(18, 65);
+            this.label14.Location = new System.Drawing.Point(3, 62);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(52, 13);
+            this.label14.Size = new System.Drawing.Size(88, 30);
             this.label14.TabIndex = 0;
             this.label14.Text = "Averages";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Location = new System.Drawing.Point(10, 7);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(67, 13);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Memory Size";
-            // 
-            // AveragesText
-            // 
-            this.AveragesText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AveragesText.Location = new System.Drawing.Point(108, 64);
-            this.AveragesText.Name = "AveragesText";
-            this.AveragesText.Size = new System.Drawing.Size(89, 20);
-            this.AveragesText.TabIndex = 3;
-            this.AveragesText.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.AveragesText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
-            // 
-            // MemorySizeText
-            // 
-            this.MemorySizeText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MemorySizeText.Increment = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.MemorySizeText.Location = new System.Drawing.Point(109, -1);
-            this.MemorySizeText.Maximum = new decimal(new int[] {
-            5000000,
-            0,
-            0,
-            0});
-            this.MemorySizeText.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.MemorySizeText.Name = "MemorySizeText";
-            this.MemorySizeText.Size = new System.Drawing.Size(89, 20);
-            this.MemorySizeText.TabIndex = 4;
-            this.MemorySizeText.Value = new decimal(new int[] {
-            3000000,
-            0,
-            0,
-            0});
-            this.MemorySizeText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Location = new System.Drawing.Point(10, 34);
+            this.label16.Location = new System.Drawing.Point(3, 31);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(88, 30);
+            this.label16.Size = new System.Drawing.Size(88, 31);
             this.label16.TabIndex = 5;
             this.label16.Text = "Display resolution";
-            // 
-            // samplesOnDisplayText
-            // 
-            this.samplesOnDisplayText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.samplesOnDisplayText.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.samplesOnDisplayText.Location = new System.Drawing.Point(105, 38);
-            this.samplesOnDisplayText.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.samplesOnDisplayText.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.samplesOnDisplayText.Name = "samplesOnDisplayText";
-            this.samplesOnDisplayText.Size = new System.Drawing.Size(89, 20);
-            this.samplesOnDisplayText.TabIndex = 6;
-            this.samplesOnDisplayText.Value = new decimal(new int[] {
-            600,
-            0,
-            0,
-            0});
-            this.samplesOnDisplayText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // label21
             // 
@@ -1022,6 +940,103 @@
             0,
             65536});
             this.XYAveragesText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
+            // 
+            // MemorySizeText
+            // 
+            this.MemorySizeText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MemorySizeText.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.MemorySizeText.Location = new System.Drawing.Point(97, 3);
+            this.MemorySizeText.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.MemorySizeText.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.MemorySizeText.Name = "MemorySizeText";
+            this.MemorySizeText.Size = new System.Drawing.Size(89, 20);
+            this.MemorySizeText.TabIndex = 4;
+            this.MemorySizeText.Value = new decimal(new int[] {
+            3000000,
+            0,
+            0,
+            0});
+            this.MemorySizeText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            // 
+            // samplesOnDisplayText
+            // 
+            this.samplesOnDisplayText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.samplesOnDisplayText.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.samplesOnDisplayText.Location = new System.Drawing.Point(97, 34);
+            this.samplesOnDisplayText.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.samplesOnDisplayText.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.samplesOnDisplayText.Name = "samplesOnDisplayText";
+            this.samplesOnDisplayText.Size = new System.Drawing.Size(89, 20);
+            this.samplesOnDisplayText.TabIndex = 6;
+            this.samplesOnDisplayText.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.samplesOnDisplayText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            // 
+            // AveragesText
+            // 
+            this.AveragesText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AveragesText.Location = new System.Drawing.Point(97, 65);
+            this.AveragesText.Name = "AveragesText";
+            this.AveragesText.Size = new System.Drawing.Size(89, 20);
+            this.AveragesText.TabIndex = 3;
+            this.AveragesText.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.AveragesText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(3, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(88, 31);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Memory Size";
+            // 
+            // freezeMemoryCheckbox
+            // 
+            this.freezeMemoryCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.freezeMemoryCheckbox.AutoSize = true;
+            this.freezeMemoryCheckbox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.freezeMemoryCheckbox.Location = new System.Drawing.Point(3, 139);
+            this.freezeMemoryCheckbox.Name = "freezeMemoryCheckbox";
+            this.freezeMemoryCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.freezeMemoryCheckbox.Size = new System.Drawing.Size(189, 23);
+            this.freezeMemoryCheckbox.TabIndex = 24;
+            this.freezeMemoryCheckbox.Text = "Freeze memory";
+            this.freezeMemoryCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.freezeMemoryCheckbox.UseVisualStyleBackColor = true;
+            this.freezeMemoryCheckbox.CheckedChanged += new System.EventHandler(this.freezeMemoryCheckbox_CheckedChanged);
             // 
             // button1
             // 
@@ -1186,21 +1201,6 @@
             this.logText.TabIndex = 37;
             this.logText.Text = "Hello";
             // 
-            // freezeMemoryCheckbox
-            // 
-            this.freezeMemoryCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.freezeMemoryCheckbox.AutoSize = true;
-            this.freezeMemoryCheckbox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.freezeMemoryCheckbox.Location = new System.Drawing.Point(3, 139);
-            this.freezeMemoryCheckbox.Name = "freezeMemoryCheckbox";
-            this.freezeMemoryCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.freezeMemoryCheckbox.Size = new System.Drawing.Size(189, 23);
-            this.freezeMemoryCheckbox.TabIndex = 24;
-            this.freezeMemoryCheckbox.Text = "Freeze memory";
-            this.freezeMemoryCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.freezeMemoryCheckbox.UseVisualStyleBackColor = true;
-            this.freezeMemoryCheckbox.CheckedChanged += new System.EventHandler(this.freezeMemoryCheckbox_CheckedChanged);
-            // 
             // SpectrscopyControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1242,10 +1242,10 @@
             this.groupBox5.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XYAveragesText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MemorySizeText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.samplesOnDisplayText)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.XYAveragesText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();

@@ -25,7 +25,7 @@ namespace ChartTest2
         OsciDisplay osciDisplay;
         Memory memory;
 
-        double previousAmplitude, previousOffset;
+        double previousAmplitude, previousOffset; //TODO move to mqtt
 
         Dictionary<NumericUpDown, Action<double>> OnValueDoubleMap;
         Dictionary<NumericUpDown, Action<int>> OnValueIntMap;
@@ -51,7 +51,7 @@ namespace ChartTest2
                 {modAttText, mqtt.sendModulationAttenuation},
                 {demodAttText, mqtt.sendDemodulationAttenuation},
                 {modPhaseText, mqtt.sendPhase},
-                {FGAmplitudeText, mqtt.sendScanAmplitude},
+                {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
                 {XYAveragesText, osciDisplay.setXYSmoothing }
             };
@@ -194,8 +194,10 @@ namespace ChartTest2
 
         private void setScanRange(double min, double max)
         {
-            mqtt.sendScanAmplitude((max - min) / 2);
-            mqtt.sendScanOffset((min + max) / 2, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+            previousAmplitude = (max - min) / 2;
+            mqtt.sendScanAmplitude(previousAmplitude);
+            previousOffset = (min + max) / 2;
+            mqtt.sendScanOffset(previousOffset, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
         }
 
         private void chartXY_DoubleClick(object sender, EventArgs e)
@@ -243,9 +245,6 @@ namespace ChartTest2
             max = osciDisplay.GetADCMaxNoUpdate();
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
-
-            previousOffset = (chartTimeseries.ChartAreas[0].AxisY.Maximum + chartTimeseries.ChartAreas[0].AxisY.Minimum) / 2;
-            previousAmplitude = (chartTimeseries.ChartAreas[0].AxisY.Maximum - chartTimeseries.ChartAreas[0].AxisY.Minimum) / 2;
 
             lockMode = true;
 
