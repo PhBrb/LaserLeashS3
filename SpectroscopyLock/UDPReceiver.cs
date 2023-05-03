@@ -71,7 +71,7 @@ namespace ChartTest2
                                 skipped += (uint)skip * 22;
                                 Console.WriteLine("NetworkSkip: " + (float)skipped / (sequenceNumber - firstSequenceNumber));
                             }
-                        } catch (System.Net.Sockets.SocketException e)
+                        } catch (System.Net.Sockets.SocketException)
                         {
                             SpectrscopyControlForm.WriteLine("Timeout receiving streamed data");
                         }

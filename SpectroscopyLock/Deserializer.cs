@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 namespace ChartTest2
 {
     public static class Deserializer

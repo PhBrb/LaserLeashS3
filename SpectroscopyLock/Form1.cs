@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,8 +7,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using MQTTnet.Samples.Client;
-using System.Runtime.InteropServices.ComTypes;
-using System.Xml.Linq;
 
 namespace ChartTest2
 {
@@ -136,7 +134,7 @@ namespace ChartTest2
                 try
                 {
                     chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
-                } catch (System.ComponentModel.InvalidAsynchronousStateException e)
+                } catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
                     Console.WriteLine("Idk how to fix this...");
                 }
@@ -162,7 +160,7 @@ namespace ChartTest2
                 try
                 {
                     chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
-                } catch (System.ComponentModel.InvalidAsynchronousStateException e)
+                } catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
                     Console.WriteLine("Idk how to fix this...");
                 }
