@@ -87,7 +87,8 @@ namespace MQTTnet.Samples.Client
 
         public void sendPID(double offset, string iir, double ymin, double ymax)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0", $"{{\"ba\":{iir},\"y_min\":{(int)(ymin*3200)},\"y_max\":{(int)(ymax * 3200)},\"y_offset\":{(int)(3200*offset)}}}");
+            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0",
+                $"{{\"ba\":{iir},\"y_min\":{UnitConvert.YVToMU(ymin)},\"y_max\":{UnitConvert.YVToMU(ymax)},\"y_offset\":{UnitConvert.YVToMU(offset)}}}");
         }
 
 
@@ -127,7 +128,8 @@ namespace MQTTnet.Samples.Client
 
         public void sendStreamTarget(string ip, string port)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/stream_target",  $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replay . wiht ,
+            send($"dt/sinara/dual-iir/{ID}/settings/stream_target",
+                $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replay . wiht ,
         }
 
         public void setStabilizerID(string id)

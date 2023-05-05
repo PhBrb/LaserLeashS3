@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 
 namespace ChartTest2
@@ -19,12 +20,23 @@ namespace ChartTest2
         double[] dacData = new double[600];
         double[] adcDataSorted = new double[600];
         double[] dacDataSorted = new double[600];
+        public double[] timeData = new double[600];
 
         int newestSampleToDisplay = 0;
 
         public OsciDisplay(Memory memory)
         {
             this.memory = memory;
+            UpdateTimeData();
+        }
+
+        private void UpdateTimeData()
+        {
+            for (int i = 0; i < pointsOnDisplay; i++)
+            {
+                ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
+                timeData[i] = -UnitConvert.SampleToTime((pointsOnDisplay - i) * (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay + newestSampleToDisplay);
+            }
         }
 
         public (double[], double[]) GetTimeSeries()
@@ -56,6 +68,7 @@ namespace ChartTest2
 
             oldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
             newestSampleToDisplay = Math.Max(newestSampleToDisplay, iNewCenter - iRange);
+            UpdateTimeData();
         }
 
         public void ZoomOut() {
@@ -64,6 +77,7 @@ namespace ChartTest2
 
             oldestSampleToDisplay = Math.Min(memory.getSize(),iCenter + iRange);
             newestSampleToDisplay = Math.Max(0, iCenter - iRange);
+            UpdateTimeData();
         }
 
         public void setAverages(int count)
@@ -133,6 +147,7 @@ namespace ChartTest2
             dacData = new double[size];
             adcDataSorted = new double[size];
             dacDataSorted = new double[size];
+            UpdateTimeData();
         }
 
         public void setXYSmoothing(double value)

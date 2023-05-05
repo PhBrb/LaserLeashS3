@@ -101,7 +101,6 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartXY.ChartAreas[0].AxisX.LabelStyle.Format = "0.000";
             chartXY.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
-            chartTimeseries.ChartAreas[0].AxisX.LabelStyle.Format = "{0:#}";
             chartTimeseries.ChartAreas[0].AxisY.LabelStyle.Format = "0.0000";
             chartTimeseries.ChartAreas[0].AxisY2.LabelStyle.Format = "0.0000";
             chartTimeseries.ChartAreas[0].AxisY.IsStartedFromZero = false;
@@ -171,8 +170,8 @@ namespace ChartTest2
                 double[] dataDac, dataAdc;
                 (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
 
-                seriesOutput.Points.DataBindY(dataDac);
-                seriesDemod.Points.DataBindY(dataAdc);
+                seriesOutput.Points.DataBindXY(osciDisplay.timeData, dataDac);
+                seriesDemod.Points.DataBindXY(osciDisplay.timeData, dataAdc);
 
                 chartTimeseries.Update();
             }

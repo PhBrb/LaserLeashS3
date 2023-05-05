@@ -47,7 +47,7 @@ namespace ChartTest2
         /// <returns></returns>
         void UDPListener()
         {
-            new Thread(new ThreadStart(() =>
+            Thread thread = new Thread(new ThreadStart(() =>
             {
                 using (var udpClient = new UdpClient(1883))
                 {
@@ -77,7 +77,9 @@ namespace ChartTest2
                         }
                     }
                 }
-            })).Start();
+            }));
+            thread.Priority = ThreadPriority.Highest;
+            thread.Start();
         }
     }
 }

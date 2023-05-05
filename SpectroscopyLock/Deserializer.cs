@@ -70,12 +70,12 @@ namespace ChartTest2
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
                     iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize;
-                    memory.ADCEnqueue(BitConverter.ToInt16(rawData, iPos)  / ((1 << 16) / (4.096f * 5))); //TODO: is this correct? The python script uses the DAC conversion factor also for the ADC, and ignores the also existing factor for ADC
+                    memory.ADCEnqueue(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)));
                 }
                 for (int iFloat = 0; iFloat < batchSize; iFloat++)
                 {
                     iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 2 * batchSize * 2;
-                    memory.DACEnqueue((BitConverter.ToInt16(rawData, iPos) ^ (unchecked((short)0x8000)))  / ((1 << 16) / (4.096f * 5)));
+                    memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)));
                 }
 
                 //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData); //save data to a file for debuging purpose
