@@ -75,6 +75,11 @@ namespace MQTTnet.Samples.Client
             send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/amplitude", amplitude);
         }
 
+        public void sendScanSymmetry(double symmetry)
+        {
+            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/symmetry", symmetry);
+        }
+
         public void sendScanOffset(double offset, double ymin, double ymax)
         {
             sendPID(offset, "[0.0,0.0,0.0,-0.0,-0.0]", ymin, ymax);

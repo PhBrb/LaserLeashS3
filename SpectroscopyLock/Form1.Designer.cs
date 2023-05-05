@@ -914,7 +914,7 @@
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(88, 31);
             this.label21.TabIndex = 7;
-            this.label21.Text = "XY Averages";
+            this.label21.Text = "XY Smoothing [0:1]";
             // 
             // XYAveragesText
             // 

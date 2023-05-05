@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -392,6 +392,7 @@ namespace ChartTest2
             mqtt.sendScanAmplitude((max-min)/2);
             mqtt.sendScanOffset((max+min)/2, min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
+            mqtt.sendScanSymmetry(0);
         }
 
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
