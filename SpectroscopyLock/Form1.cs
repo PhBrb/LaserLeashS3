@@ -470,6 +470,25 @@ namespace ChartTest2
             stopped = true;
         }
 
+        private void YminText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (YminText.Value >= YmaxText.Value)
+            {
+                e.Cancel = true;
+                WriteLine("Reduce minimum");
+            }
+        }
+
+        private void YmaxText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (YminText.Value >= YmaxText.Value)
+            {
+                e.Cancel = true;
+                WriteLine("Increase maximum");
+            }
+        }
+    
+
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             memory.freeze = ((CheckBox)sender).Checked;

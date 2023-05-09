@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -146,18 +146,18 @@
             // 
             // chartXY
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea5);
+            chartArea13.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea13);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chartXY.Legends.Add(legend5);
+            legend13.Name = "Legend1";
+            this.chartXY.Legends.Add(legend13);
             this.chartXY.Location = new System.Drawing.Point(3, 427);
             this.chartXY.Name = "chartXY";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartXY.Series.Add(series5);
+            series13.ChartArea = "ChartArea1";
+            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series13.Legend = "Legend1";
+            series13.Name = "Series1";
+            this.chartXY.Series.Add(series13);
             this.chartXY.Size = new System.Drawing.Size(1110, 171);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -209,18 +209,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea6);
+            chartArea14.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea14);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend6);
+            legend14.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend14);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 250);
             this.chartTimeseries.Name = "chartTimeseries";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chartTimeseries.Series.Add(series6);
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series14.Legend = "Legend1";
+            series14.Name = "Series1";
+            this.chartTimeseries.Series.Add(series14);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 171);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -815,17 +815,40 @@
             // 
             // YminText
             // 
+            this.YminText.DecimalPlaces = 1;
             this.YminText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.YminText.Location = new System.Drawing.Point(3, 111);
+            this.YminText.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.YminText.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
             this.YminText.Name = "YminText";
             this.YminText.Size = new System.Drawing.Size(53, 20);
             this.YminText.TabIndex = 10;
             this.YminText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.YminText.Validating += new System.ComponentModel.CancelEventHandler(this.YminText_Validating);
             // 
             // YmaxText
             // 
+            this.YmaxText.DecimalPlaces = 1;
             this.YmaxText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.YmaxText.Location = new System.Drawing.Point(62, 111);
+            this.YmaxText.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.YmaxText.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
             this.YmaxText.Name = "YmaxText";
             this.YmaxText.Size = new System.Drawing.Size(53, 20);
             this.YmaxText.TabIndex = 8;
@@ -835,6 +858,7 @@
             0,
             0});
             this.YmaxText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.YmaxText.Validating += new System.ComponentModel.CancelEventHandler(this.YmaxText_Validating);
             // 
             // SamplerateText
             // 
