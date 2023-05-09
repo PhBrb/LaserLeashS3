@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using MQTTnet.Samples.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChartTest2
 {
@@ -51,7 +52,7 @@ namespace ChartTest2
                 {modPhaseText, mqtt.sendPhase},
                 {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
-                {XYAveragesText, osciDisplay.setXYSmoothing }
+                {XYSmoothing, osciDisplay.setXYSmoothing }
             };
             OnValueIntMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
@@ -92,7 +93,7 @@ namespace ChartTest2
             chartTimeseries.Titles.Clear();
             chartXY.ChartAreas[0].AxisX.Title = "Voltage output";
             chartXY.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
-            chartTimeseries.ChartAreas[0].AxisX.Title = "Time (Samples)";
+            chartTimeseries.ChartAreas[0].AxisX.Title = "Time (s)";
             chartTimeseries.ChartAreas[0].AxisY2.Title = "Demodulation Voltage";
             chartTimeseries.ChartAreas[0].AxisY.Title = "Voltage output";
             chartXY.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
@@ -123,6 +124,34 @@ namespace ChartTest2
             LockLineAnnotation.LineWidth = 1;
             LockLineAnnotation.X = 1;
             chartXY.Annotations.Add(LockLineAnnotation);
+
+
+            SetNumericTooltip(modAmpText);
+            SetNumericTooltip(modAttText);
+            SetNumericTooltip(modFreqText);
+            SetNumericTooltip(modPhaseText);
+            SetNumericTooltip(demodAmpText);
+            SetNumericTooltip(demodAttText);
+            SetNumericTooltip(demodFreqText);
+            SetNumericTooltip(KpText);
+            SetNumericTooltip(KiText);
+            SetNumericTooltip(KdText);
+            SetNumericTooltip(YminText);
+            SetNumericTooltip(YmaxText);
+            SetNumericTooltip(SamplerateText);
+            SetNumericTooltip(StreamTargetPortInput);
+            SetNumericTooltip(MemorySizeText);
+            SetNumericTooltip(samplesOnDisplayText);
+            SetNumericTooltip(AveragesText);
+            SetNumericTooltip(XYSmoothing, "Implemented as a low pass");
+            SetNumericTooltip(FGFrequencyText);
+            SetNumericTooltip(FGAmplitudeText);
+        }
+
+        private void SetNumericTooltip(NumericUpDown input, string additionalInfo = "")
+        {
+            additionalInfo = additionalInfo != "" ? "\n" + additionalInfo : "";
+            toolTip1.SetToolTip(input, $"Step: {input.Increment} Min: {input.Minimum} Max: {input.Maximum}" + additionalInfo);
         }
 
 
