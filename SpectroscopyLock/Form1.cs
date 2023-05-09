@@ -52,11 +52,17 @@ namespace ChartTest2
                 {modPhaseText, mqtt.sendPhase},
                 {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
+                {MemorySizeText, (duration) =>  {
+                                                    int oldestSample = UnitConvert.TimeToSample(duration);
+                                                    osciDisplay.oldestSampleToDisplay = Math.Min(oldestSample, osciDisplay.oldestSampleToDisplay);
+                                                    memory.setSize(oldestSample);
+                                                }
+                },
                 {XYSmoothing, osciDisplay.setXYSmoothing }
             };
             OnValueIntMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
-                {MemorySizeText, (size) => {osciDisplay.oldestSampleToDisplay = Math.Min(size, osciDisplay.oldestSampleToDisplay); memory.setSize(size);} },
+
                 {samplesOnDisplayText, osciDisplay.setSize },
             };
 
@@ -140,7 +146,7 @@ namespace ChartTest2
             SetNumericTooltip(YmaxText);
             SetNumericTooltip(SamplerateText);
             SetNumericTooltip(StreamTargetPortInput);
-            SetNumericTooltip(MemorySizeText);
+            SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second");
             SetNumericTooltip(samplesOnDisplayText);
             SetNumericTooltip(AveragesText);
             SetNumericTooltip(XYSmoothing, "Implemented as a low pass");

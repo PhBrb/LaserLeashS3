@@ -28,5 +28,9 @@ namespace ChartTest2
         {
             return sampleIndex * SamplePeriod;
         }
+        public static int TimeToSample(double time)
+        {
+            return (int)(time/SamplePeriod);
+        }
     }
 }
