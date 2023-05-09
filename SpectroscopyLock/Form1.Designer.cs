@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
-            this.StreamTargetPortInput = new System.Windows.Forms.TextBox();
             this.InitButton = new System.Windows.Forms.Button();
             this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
             this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -102,6 +101,7 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.logText = new System.Windows.Forms.TextBox();
+            this.StreamTargetPortInput = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.panel6.SuspendLayout();
@@ -139,22 +139,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.FGAmplitudeText)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).BeginInit();
             this.SuspendLayout();
             // 
             // chartXY
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea1);
+            chartArea7.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea7);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartXY.Legends.Add(legend1);
+            legend7.Name = "Legend1";
+            this.chartXY.Legends.Add(legend7);
             this.chartXY.Location = new System.Drawing.Point(3, 427);
             this.chartXY.Name = "chartXY";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartXY.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chartXY.Series.Add(series7);
             this.chartXY.Size = new System.Drawing.Size(1110, 171);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -183,16 +184,6 @@
             this.UnlockButton.UseVisualStyleBackColor = true;
             this.UnlockButton.Click += new System.EventHandler(this.UnlockButton_Click);
             // 
-            // StreamTargetPortInput
-            // 
-            this.StreamTargetPortInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StreamTargetPortInput.Location = new System.Drawing.Point(83, 51);
-            this.StreamTargetPortInput.Name = "StreamTargetPortInput";
-            this.StreamTargetPortInput.Size = new System.Drawing.Size(107, 20);
-            this.StreamTargetPortInput.TabIndex = 9;
-            this.StreamTargetPortInput.Text = "1883";
-            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
-            // 
             // InitButton
             // 
             this.InitButton.Dock = System.Windows.Forms.DockStyle.Left;
@@ -216,18 +207,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            chartArea8.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea8);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend2);
+            legend8.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend8);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 250);
             this.chartTimeseries.Name = "chartTimeseries";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartTimeseries.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chartTimeseries.Series.Add(series8);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 171);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -551,9 +542,9 @@
             this.tableLayoutPanel7.Controls.Add(this.label20, 0, 3);
             this.tableLayoutPanel7.Controls.Add(this.label5, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.label6, 0, 2);
-            this.tableLayoutPanel7.Controls.Add(this.StreamTargetPortInput, 1, 2);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetIPInput, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.maskedTextBox1, 1, 4);
+            this.tableLayoutPanel7.Controls.Add(this.StreamTargetPortInput, 1, 2);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
@@ -1201,6 +1192,25 @@
             this.logText.TabIndex = 37;
             this.logText.Text = "Hello";
             // 
+            // StreamTargetPortInput
+            // 
+            this.StreamTargetPortInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.StreamTargetPortInput.Location = new System.Drawing.Point(83, 51);
+            this.StreamTargetPortInput.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.StreamTargetPortInput.Name = "StreamTargetPortInput";
+            this.StreamTargetPortInput.Size = new System.Drawing.Size(107, 20);
+            this.StreamTargetPortInput.TabIndex = 22;
+            this.StreamTargetPortInput.Value = new decimal(new int[] {
+            1883,
+            0,
+            0,
+            0});
+            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
+            // 
             // SpectrscopyControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1254,6 +1264,7 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1263,7 +1274,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartXY;
         private System.Windows.Forms.Button LockButton;
         private System.Windows.Forms.Button UnlockButton;
-        private System.Windows.Forms.TextBox StreamTargetPortInput;
         private System.Windows.Forms.Button InitButton;
         private System.Windows.Forms.TextBox StreamTargetIPInput;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
@@ -1328,6 +1338,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.NumericUpDown XYAveragesText;
         private System.Windows.Forms.CheckBox freezeMemoryCheckbox;
+        private System.Windows.Forms.NumericUpDown StreamTargetPortInput;
     }
 }
 
