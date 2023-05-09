@@ -428,6 +428,7 @@ namespace ChartTest2
             mqtt.sendScanOffset((max+min)/2, min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
             mqtt.sendScanSymmetry(0);
+            lockMode = false;
         }
 
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
