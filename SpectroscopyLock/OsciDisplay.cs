@@ -32,6 +32,7 @@ namespace ChartTest2
 
         private void UpdateTimeData()
         {
+            timeData = new double[pointsOnDisplay];
             for (int i = 0; i < pointsOnDisplay; i++)
             {
                 ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
