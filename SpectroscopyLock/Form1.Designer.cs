@@ -831,8 +831,8 @@
             this.YminText.Name = "YminText";
             this.YminText.Size = new System.Drawing.Size(53, 20);
             this.YminText.TabIndex = 10;
-            this.YminText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             this.YminText.Validating += new System.ComponentModel.CancelEventHandler(this.YminText_Validating);
+            this.YminText.Validated += new System.EventHandler(this.PID_ValueChanged);
             // 
             // YmaxText
             // 
@@ -857,8 +857,8 @@
             0,
             0,
             0});
-            this.YmaxText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
             this.YmaxText.Validating += new System.ComponentModel.CancelEventHandler(this.YmaxText_Validating);
+            this.YmaxText.Validated += new System.EventHandler(this.PID_ValueChanged);
             // 
             // SamplerateText
             // 
