@@ -11,7 +11,7 @@ namespace ChartTest2
     public class OsciDisplay
     {
         Memory memory;
-        int averages = 5;
+        int averages = 5; //TODO these values should be ignored and set to what is in the forms on startup
         double XYSmoothing = 0.3;
         public int oldestSampleToDisplay = 1000000;
 
@@ -85,7 +85,7 @@ namespace ChartTest2
         {
             if (count < 0)
                 throw new ArgumentException("must be positive");
-            if (count > oldestSampleToDisplay / pointsOnDisplay)
+            if (count > oldestSampleToDisplay / pointsOnDisplay) //TODO this does not take newestSampleToDisplay into account
                 throw new ArgumentException("not enough data for averages");
             averages = count;
         }
@@ -154,6 +154,11 @@ namespace ChartTest2
         public void setXYSmoothing(double value)
         {
             XYSmoothing= value;
+        }
+
+        public int getAverages()
+        {
+            return averages;
         }
     }
 }

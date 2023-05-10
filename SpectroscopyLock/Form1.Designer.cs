@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -146,18 +146,18 @@
             // 
             // chartXY
             // 
-            chartArea13.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea13);
+            chartArea1.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea1);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend13.Name = "Legend1";
-            this.chartXY.Legends.Add(legend13);
+            legend1.Name = "Legend1";
+            this.chartXY.Legends.Add(legend1);
             this.chartXY.Location = new System.Drawing.Point(3, 427);
             this.chartXY.Name = "chartXY";
-            series13.ChartArea = "ChartArea1";
-            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series13.Legend = "Legend1";
-            series13.Name = "Series1";
-            this.chartXY.Series.Add(series13);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartXY.Series.Add(series1);
             this.chartXY.Size = new System.Drawing.Size(1110, 171);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -209,18 +209,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea14.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea14);
+            chartArea2.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea2);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend14.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend14);
+            legend2.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend2);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 250);
             this.chartTimeseries.Name = "chartTimeseries";
-            series14.ChartArea = "ChartArea1";
-            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series14.Legend = "Legend1";
-            series14.Name = "Series1";
-            this.chartTimeseries.Series.Add(series14);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartTimeseries.Series.Add(series2);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 171);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -1005,7 +1005,8 @@
             0,
             0,
             0});
-            this.MemorySizeText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
+            this.MemorySizeText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.MemorySizeText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // samplesOnDisplayText
             // 
@@ -1034,7 +1035,8 @@
             0,
             0,
             0});
-            this.samplesOnDisplayText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            this.samplesOnDisplayText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.samplesOnDisplayText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // AveragesText
             // 
@@ -1048,7 +1050,8 @@
             0,
             0,
             0});
-            this.AveragesText.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            this.AveragesText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.AveragesText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // label15
             // 

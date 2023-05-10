@@ -8,6 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using MQTTnet.Samples.Client;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Net.Configuration;
 
 namespace ChartTest2
 {
@@ -146,7 +147,7 @@ namespace ChartTest2
             SetNumericTooltip(YmaxText);
             SetNumericTooltip(SamplerateText);
             SetNumericTooltip(StreamTargetPortInput);
-            SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second");
+            SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second\nClears memory when changed");
             SetNumericTooltip(samplesOnDisplayText);
             SetNumericTooltip(AveragesText);
             SetNumericTooltip(XYSmoothing, "Implemented as a low pass");
@@ -487,7 +488,33 @@ namespace ChartTest2
                 WriteLine("Increase maximum");
             }
         }
-    
+
+        private void Memory_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //TODO this does not take newestSampleToDisplay into account
+            //TODO the validity check should be in the memory/display class
+            if (decimal.ToDouble(samplesOnDisplayText.Value) * (1 + decimal.ToDouble(AveragesText.Value)) > UnitConvert.TimeToSample(decimal.ToDouble(MemorySizeText.Value))) //if there are less samples in the memory than are needed for the display
+            {
+                e.Cancel = true;
+                string msg = "Memory size has to be <= display resolution * (averages +1)";
+                if (sender == MemorySizeText)
+                {
+                    msg = "Can't reduce memory size. Too high display resolution or too much averaging." + msg;
+                }
+                else
+                if (sender == AveragesText)
+                {
+                    msg = "Can't increase averaging. Too high display resolution or memory too small." + msg;
+                }
+                else
+                if (sender == samplesOnDisplayText)
+                {
+                    msg = "Can't increase display resolution. Too much averaging or memory too small." + msg;
+                }
+                WriteLine(msg);
+            }
+        }
+
 
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)
         {
