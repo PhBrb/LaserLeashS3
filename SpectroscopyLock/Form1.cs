@@ -25,7 +25,7 @@ namespace ChartTest2
         OsciDisplay osciDisplay;
         Memory memory;
 
-        double previousAmplitude, previousOffset; //TODO move to mqtt
+        double previousAmplitude, previousOffset;
 
         Dictionary<NumericUpDown, Action<double>> OnValueDoubleMap;
         Dictionary<NumericUpDown, Action<int>> OnValueIntMap;
