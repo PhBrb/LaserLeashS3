@@ -282,7 +282,7 @@ namespace ChartTest2
             lockMode = true;
 
             mqtt.sendScanAmplitude(0);
-            Thread.Sleep(100); //TODO instead read back the value und wait until it changed?
+            Thread.Sleep(100); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
             mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             Thread.Sleep(100);
 
