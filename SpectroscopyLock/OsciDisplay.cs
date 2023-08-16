@@ -47,11 +47,11 @@ namespace ChartTest2
             int iOffset = newestSampleToDisplay;
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                adcData[pointsOnDisplay - i - 1] = memory.GetADCSum(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                adcData[pointsOnDisplay - i - 1] = memory.GetADCSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                dacData[pointsOnDisplay - i - 1] = memory.GetDACSum(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                dacData[pointsOnDisplay - i - 1] = memory.GetDACSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
 
             return (adcData, dacData);

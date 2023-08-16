@@ -70,14 +70,14 @@ namespace ChartTest2
             dac.Enqueue(value);
         }
 
-        public double GetADCSum(int previous, int size)
+        public double GetADCSumFromPast(int offset, int size)
         {
-            return adc.GetADCSum(previous, size);
+            return adc.GetADCSumFromPast(offset, size);
         }
 
-        public double GetDACSum(int previous, int size)
+        public double GetDACSumFromPast(int offset, int size)
         {
-            return dac.GetADCSum(previous, size);
+            return dac.GetADCSumFromPast(offset, size);
         }
 
         internal int getSize()

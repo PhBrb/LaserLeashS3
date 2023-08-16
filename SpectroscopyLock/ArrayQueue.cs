@@ -39,13 +39,24 @@ namespace ChartTest2
             return array[lastWrittenPosition];
         }
 
-        public double GetADCSum(int previous, int sumSize)
+        /// <summary>
+        /// Returns the sum of a chunk, which is offset before the newest data 
+        /// </summary>
+        /// <param name="offset">Offset from newest datapoint, must be negative</param>
+        /// <param name="sumSize">Number of samples</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public double GetADCSumFromPast(int offset, int sumSize)
         {
-            if (previous >= 0)
+            if (offset >= 0)
                 throw new ArgumentException("previous must be negative");
-            if (previous + sumSize > 0)
-                throw new ArgumentException("previous + outArray size must be <= 0"); //TODO this only catches if you request too much new data, it needs also to be caught if you request too old data
-            int start = mod(lastWrittenPosition + previous, size);
+            if (sumSize <= 0)
+                throw new ArgumentException("sum must be positive");
+            if (offset + sumSize > 0)
+                throw new ArgumentException("previous + outArray size must be <= 0");
+            if (offset >= size - 1)
+                throw new ArgumentException("requested too old data");
+            int start = mod(lastWrittenPosition + offset, size);
             double sum = 0;
             for (int i = 0; i < sumSize; i++)
             {
