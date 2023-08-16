@@ -12,6 +12,8 @@ namespace ChartTest2
 {
     internal static class Program
     {
+
+        static bool formReady = false;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -31,6 +33,7 @@ namespace ChartTest2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SpectrscopyControlForm form = new SpectrscopyControlForm(memory, osciDisplay, mqtt);
+            form.Shown += new System.EventHandler(Form1_Shown);
 
             //transfer data from udp to osci memory
             new Thread(new ThreadStart(() =>
@@ -46,7 +49,9 @@ namespace ChartTest2
             //refresh osci display
             new Thread(new ThreadStart(() =>
             {
-                Thread.Sleep(1000);//TODO https://stackoverflow.com/questions/18675771/wait-until-form-is-finished-loading , also do samplesOnDisplayText.Value = osciDisplay.getSize(); there 
+                while(!formReady)
+                    Thread.Sleep(10);
+                
                 while (!form.stopped)
                 {
                     form.OnNewData();
@@ -55,6 +60,11 @@ namespace ChartTest2
             })).Start();
 
             Application.Run(form);
+        }
+
+        static void Form1_Shown(object sender, EventArgs e)
+        {
+            formReady = true;
         }
     }
 }

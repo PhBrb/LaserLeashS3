@@ -238,7 +238,6 @@ namespace ChartTest2
             if (lockMode)
                 return;
 
-
             var me = e as MouseEventArgs;
 
             if (me.Button == MouseButtons.Left)
@@ -267,7 +266,6 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
-
             //keep previous range
             double min, max;
             min = osciDisplay.GetDACMinNoUpdate();
@@ -350,7 +348,6 @@ namespace ChartTest2
             }
             if (a[0] != 1)
                 throw new Exception();
-
 
             for (int i = 0; i < 3; i++)
             {
