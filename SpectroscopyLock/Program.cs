@@ -40,8 +40,7 @@ namespace ChartTest2
             {
                 while (!form.stopped)
                 {
-                    if (udpReceiver.Size > 0)
-                        udpReceiver.TransferData(memory);
+                    udpReceiver.TransferData(memory);
                 }
                 udpReceiver.stop = true;
             })).Start();
