@@ -74,7 +74,7 @@ namespace ChartTest2
         /// <param name="osciData"></param>
         public void TransferData(Memory osciData)
         {
-            ReuseBuffer.Frame frame = buffer.getBuffer();
+            ReuseBuffer.Frame frame = buffer.getFrame();
             Deserializer.Deserialize(frame.data, osciData);
         }
     }

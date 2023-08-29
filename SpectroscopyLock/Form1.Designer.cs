@@ -205,7 +205,7 @@
             this.StreamTargetIPInput.Size = new System.Drawing.Size(107, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
-            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
+            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
             // 
             // chartTimeseries
             // 
@@ -640,7 +640,7 @@
             0,
             0,
             0});
-            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetPortInput_TextChanged);
+            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
             // 
             // PID
             // 

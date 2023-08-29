@@ -5,8 +5,9 @@ using MQTTnet.Client;
 using MQTTnet.Server;
 using System.Text;
 using ChartTest2;
+using MQTTnet;
 
-namespace MQTTnet.Samples.Client
+namespace ChartTest2
 {
 
     public class MQTTPublisher

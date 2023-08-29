@@ -16,8 +16,8 @@ namespace ChartTest2
                 throw new ArgumentException("too few datapoints");
             }
 
-            adc = new ArrayQueue(size);
-            dac = new ArrayQueue(size);
+            adc = new ArrayQueue(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
+            dac = new ArrayQueue(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
         }
 
         public void setSize(int size)

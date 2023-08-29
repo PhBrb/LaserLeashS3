@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using MQTTnet.Samples.Client;
 
 namespace ChartTest2
 {
@@ -64,6 +63,7 @@ namespace ChartTest2
         static void Form1_Shown(object sender, EventArgs e)
         {
             formReady = true;
+            ((SpectrscopyControlForm) sender).LoadSettings();
         }
     }
 }

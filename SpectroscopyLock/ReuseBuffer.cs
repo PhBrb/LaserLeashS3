@@ -38,6 +38,7 @@ namespace ChartTest2
             int next = (writingTo + 1) % size;
             while (next == readingFrom)
             {//TODO this is just burning cpu resources on the check
+                Console.WriteLine("buffer full");
             }
             writingTo = next;
             return frames[next];

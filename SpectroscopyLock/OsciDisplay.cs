@@ -11,18 +11,18 @@ namespace ChartTest2
     public class OsciDisplay
     {
         Memory memory;
-        int averages = 5; //TODO these values should be ignored and set to what is in the forms on startup
-        double XYSmoothing = 0.3;
-        public int oldestSampleToDisplay = 1000000;
+        int averages = Properties.Settings.Default.Averages;
+        double XYSmoothing = Properties.Settings.Default.XYSmoothing;
 
-        int pointsOnDisplay = 600;
-        double[] adcData = new double[600];
-        double[] dacData = new double[600];
-        double[] adcDataSorted = new double[600];
-        double[] dacDataSorted = new double[600];
-        public double[] timeData = new double[600];
+        int pointsOnDisplay = Properties.Settings.Default.DisplayResolution;
+        double[] adcData = new double[Properties.Settings.Default.DisplayResolution];
+        double[] dacData = new double[Properties.Settings.Default.DisplayResolution];
+        double[] adcDataSorted = new double[Properties.Settings.Default.DisplayResolution];
+        double[] dacDataSorted = new double[Properties.Settings.Default.DisplayResolution];
+        public double[] timeData = new double[Properties.Settings.Default.DisplayResolution];
 
         int newestSampleToDisplay = 0;
+        public int oldestSampleToDisplay = UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize);
 
         public OsciDisplay(Memory memory)
         {

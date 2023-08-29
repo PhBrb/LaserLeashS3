@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
-using MQTTnet.Samples.Client;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Net.Configuration;
+using ChartTest2.Properties;
 
 namespace ChartTest2
 {
@@ -27,8 +27,6 @@ namespace ChartTest2
 
         double previousAmplitude, previousOffset;
 
-        Dictionary<NumericUpDown, Action<double>> OnValueDoubleMap;
-        Dictionary<NumericUpDown, Action<int>> OnValueIntMap;
 
         public static SpectrscopyControlForm form;
 
@@ -43,29 +41,7 @@ namespace ChartTest2
             this.osciDisplay = osciDisplay;
             this.memory = memory;
 
-            OnValueDoubleMap = new Dictionary<NumericUpDown, Action<double>>(){
-                {modFreqText, mqtt.sendModulationFrequencyMHz},
-                {demodFreqText, mqtt.sendDemodulationFrequencyMHz},
-                {demodAmpText, mqtt.sendDemodulationAmplitude},
-                {modAmpText, mqtt.sendModulationAmplitude},
-                {modAttText, mqtt.sendModulationAttenuation},
-                {demodAttText, mqtt.sendDemodulationAttenuation},
-                {modPhaseText, mqtt.sendPhase},
-                {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
-                {FGFrequencyText, mqtt.sendScanFrequency},
-                {MemorySizeText, (duration) =>  {
-                                                    int oldestSample = UnitConvert.TimeToSample(duration);
-                                                    osciDisplay.oldestSampleToDisplay = Math.Min(oldestSample, osciDisplay.oldestSampleToDisplay);
-                                                    memory.setSize(oldestSample);
-                                                }
-                },
-                {XYSmoothing, osciDisplay.setXYSmoothing }
-            };
-            OnValueIntMap = new Dictionary<NumericUpDown, Action<int>>(){
-                {AveragesText, osciDisplay.setAverages},
-
-                {samplesOnDisplayText, osciDisplay.setSize },
-            };
+            InitSettings();
 
             SpectrscopyControlForm.form = this;
         }
@@ -182,7 +158,7 @@ namespace ChartTest2
                     osciDisplay.GetTimeSeries();
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
                     if (xData.Length > 0)
-                        seriesXY.Points.DataBindXY(xData, yData);
+                        seriesXY.Points.DataBindXY(xData, yData); //TODO fix nullreferenceexception
                     chartXY.Update();
                 }
             }
@@ -392,25 +368,6 @@ namespace ChartTest2
             }
         }
 
-        private void StreamTargetPortInput_TextChanged(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
-            }
-        }
-
-        private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            MaskedTextBox tbSource = ((MaskedTextBox)sender);
-            if (e.KeyCode == Keys.Enter && tbSource.MaskCompleted)
-            {
-                string txt = tbSource.Text;
-                mqtt.setStabilizerID(txt);
-                WriteLine("Target ID set to " + txt);
-            }
-        }
-
         private void InitButton_Click(object sender, EventArgs e)
         {
             mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
@@ -427,26 +384,6 @@ namespace ChartTest2
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
             mqtt.sendScanSymmetry(0);
             lockMode = false;
-        }
-
-        private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
-        {
-            decimal dec = ((NumericUpDown)sender).Value;
-            OnValueDoubleMap[(NumericUpDown)sender].Invoke(Decimal.ToDouble(dec));
-        }
-
-        private void NumberFieldInt_ValueChanged(object sender, EventArgs e)
-        {
-            decimal dec = ((NumericUpDown)sender).Value;
-            OnValueIntMap[(NumericUpDown)sender].Invoke(Decimal.ToInt32(dec));
-        }
-
-        private void PID_ValueChanged(object sender, EventArgs e)
-        {
-            if (!lockMode)
-                return;
-            List<double> iirParameters = CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
-            mqtt.sendPID(0, iirParameters.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
         }
 
         public static void WriteLine(string message)
@@ -511,7 +448,6 @@ namespace ChartTest2
                 WriteLine(msg);
             }
         }
-
 
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)
         {
