@@ -74,11 +74,11 @@ namespace ChartTest2
             chartTimeseries.ResetAutoValues();
             chartXY.Titles.Clear();
             chartTimeseries.Titles.Clear();
-            chartXY.ChartAreas[0].AxisX.Title = "Voltage output";
-            chartXY.ChartAreas[0].AxisY.Title = "Demodulation Voltage";
+            chartXY.ChartAreas[0].AxisX.Title = "Output Voltage";
+            chartXY.ChartAreas[0].AxisY.Title = "Demodulated Voltage";
             chartTimeseries.ChartAreas[0].AxisX.Title = "Time (s)";
-            chartTimeseries.ChartAreas[0].AxisY2.Title = "Demodulation Voltage";
-            chartTimeseries.ChartAreas[0].AxisY.Title = "Voltage output";
+            chartTimeseries.ChartAreas[0].AxisY2.Title = "Demodulated Voltage";
+            chartTimeseries.ChartAreas[0].AxisY.Title = "Output Voltage";
             chartXY.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
             chartXY.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
             chartTimeseries.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;

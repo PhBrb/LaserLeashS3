@@ -1248,7 +1248,7 @@
             this.ClientSize = new System.Drawing.Size(1116, 668);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Name = "SpectrscopyControlForm";
-            this.Text = "Form1";
+            this.Text = "Spectroscopy Lock";
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).EndInit();
             this.panel6.ResumeLayout(false);
