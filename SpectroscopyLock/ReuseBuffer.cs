@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartTest2
 {
@@ -33,22 +29,29 @@ namespace ChartTest2
             this.size = size;
         }
 
-        public Frame getBuffer()
+        /// <summary>
+        /// Returns the buffer that should be written to next. Blocks until buffer is available.
+        /// </summary>
+        /// <returns></returns>
+        public Frame getNextBuffer()
         {
             int next = (writingTo + 1) % size;
             while (next == readingFrom)
-            {//TODO this is just burning cpu resources on the check
-                Console.WriteLine("buffer full");
+            {//TODO is SpinWait appropriate here?
             }
             writingTo = next;
             return frames[next];
         }
 
-        public Frame getFrame()
+        /// <summary>
+        /// Returns the next oldest received data. Blocks until data is available.
+        /// </summary>
+        /// <returns></returns>
+        public Frame getNextFrame()
         {
             int next = (readingFrom + 1) % size;
             while (next == writingTo)
-            {
+            {//TODO is SpinWait appropriate here?
             }
             readingFrom = next;
             Frame ret = frames[next];

@@ -16,7 +16,7 @@ namespace ChartTest2
         /// </summary>
         public bool stop = false;
 
-        ReuseBuffer buffer = new ReuseBuffer(20);
+        ReuseBuffer buffer = new ReuseBuffer(500); //randomly chosen buffer size
 
         /// <summary>
         /// Starts a continuously running thread that receives and buffers data
@@ -44,7 +44,7 @@ namespace ChartTest2
                     {
                         try
                         {
-                            ReuseBuffer.Frame frame = buffer.getBuffer(); 
+                            ReuseBuffer.Frame frame = buffer.getNextBuffer(); 
                             udpClient.Client.Receive(frame.data);
 
                             frame.calcMetadata();
@@ -74,7 +74,7 @@ namespace ChartTest2
         /// <param name="osciData"></param>
         public void TransferData(Memory osciData)
         {
-            ReuseBuffer.Frame frame = buffer.getFrame();
+            ReuseBuffer.Frame frame = buffer.getNextFrame();
             Deserializer.Deserialize(frame.data, osciData);
         }
     }
