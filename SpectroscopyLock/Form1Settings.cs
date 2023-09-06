@@ -140,7 +140,7 @@ namespace ChartTest2
             Properties.Settings.Default.yMax = yMax;
             Properties.Settings.Default.Save();
 
-            List<double> iirParameters = CalculateIIR(p, i, d, sampleRate);
+            List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, sampleRate);
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);
         }
     }
