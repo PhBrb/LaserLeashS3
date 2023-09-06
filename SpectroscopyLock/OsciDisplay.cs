@@ -99,8 +99,6 @@ namespace ChartTest2
         {
             if (count < 0)
                 throw new ArgumentException("must be positive");
-            if (count > oldestSampleToDisplay / pointsOnDisplay) //TODO this does not take newestSampleToDisplay into account
-                throw new ArgumentException("not enough data for averages");
             averages = count;
         }
 
