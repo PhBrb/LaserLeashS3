@@ -126,15 +126,17 @@ namespace ChartTest2
             SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second\nClears memory when changed");
             SetNumericTooltip(samplesOnDisplayText);
             SetNumericTooltip(AveragesText);
-            SetNumericTooltip(XYSmoothing, "Implemented as a low pass");
+            SetNumericTooltip(XYSmoothing, "Implemented as a low pass filter");
             SetNumericTooltip(FGFrequencyText);
             SetNumericTooltip(FGAmplitudeText);
+
+            toolTip1.SetToolTip(InitButton, "Sets Stream Target, Amplitude, Attenuation, Frequency, Phase, Scan Amplitude, Scan Frequency, Scan Offset, Scan Symmetry and goes into Unlock mode");
         }
 
         private void SetNumericTooltip(NumericUpDown input, string additionalInfo = "")
         {
             additionalInfo = additionalInfo != "" ? "\n" + additionalInfo : "";
-            toolTip1.SetToolTip(input, $"Step: {input.Increment} Min: {input.Minimum} Max: {input.Maximum}" + additionalInfo);
+            toolTip1.SetToolTip(input, $"Min: {input.Minimum} Max: {input.Maximum} Step: {input.Increment} " + additionalInfo);
         }
 
 

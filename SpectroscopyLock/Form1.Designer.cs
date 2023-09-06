@@ -895,7 +895,7 @@
             this.groupBox5.Size = new System.Drawing.Size(195, 165);
             this.groupBox5.TabIndex = 37;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Memory";
+            this.groupBox5.Text = "Oscilloscope";
             // 
             // tableLayoutPanel3
             // 
