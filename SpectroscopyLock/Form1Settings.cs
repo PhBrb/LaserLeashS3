@@ -31,6 +31,7 @@ namespace ChartTest2
                                                     int oldestSample = UnitConvert.TimeToSample(duration);
                                                     osciDisplay.oldestSampleToDisplay = Math.Min(oldestSample, osciDisplay.oldestSampleToDisplay);
                                                     memory.setSize(oldestSample);
+                                                    osciDisplay.ZoomOut();
                                                 }},
                 {XYSmoothing, osciDisplay.setXYSmoothing }
             };
