@@ -1005,7 +1005,7 @@
             0,
             0,
             0});
-            this.MemorySizeText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.MemorySizeText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.MemorySizeText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // samplesOnDisplayText
@@ -1035,7 +1035,7 @@
             0,
             0,
             0});
-            this.samplesOnDisplayText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.samplesOnDisplayText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.samplesOnDisplayText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // AveragesText
@@ -1050,7 +1050,7 @@
             0,
             0,
             0});
-            this.AveragesText.Validating += new System.ComponentModel.CancelEventHandler(this.Memory_Validating);
+            this.AveragesText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.AveragesText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // label15

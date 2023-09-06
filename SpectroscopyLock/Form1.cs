@@ -357,9 +357,7 @@ namespace ChartTest2
                 var xMin = xAxis.ScaleView.ViewMinimum;
                 var xMax = xAxis.ScaleView.ViewMaximum;
                 double clickPos = chartTimeseries.ChartAreas[0].AxisX.PixelPositionToValue(me.X);
-                //Console.WriteLine($"click pos {clickPos}");
                 double zoomCenterRelativeNewestToOld = 1 - (clickPos - xMin) / (xMax - xMin);
-                //Console.WriteLine($"zoom center {zoomCenterRelativeNewestToOld}");
 
                 osciDisplay.ZoomIn(zoomCenterRelativeNewestToOld);
             } else if(me.Button == MouseButtons.Right)
@@ -423,14 +421,17 @@ namespace ChartTest2
             }
         }
 
-        private void Memory_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        /// <summary>
+        /// Checks if the display is requiring more datapoints than available
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ValidateMemorySize(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //TODO this does not take newestSampleToDisplay into account
-            //TODO the validity check should be in the memory/display class
-            if (decimal.ToDouble(samplesOnDisplayText.Value) * (1 + decimal.ToDouble(AveragesText.Value)) > UnitConvert.TimeToSample(decimal.ToDouble(MemorySizeText.Value))) //if there are less samples in the memory than are needed for the display
+            if(!OsciDisplay.enoughSamples(decimal.ToInt32(samplesOnDisplayText.Value), decimal.ToInt32(AveragesText.Value), osciDisplay.oldestSampleToDisplay, osciDisplay.newestSampleToDisplay))
             {
                 e.Cancel = true;
-                string msg = "Memory size has to be <= display resolution * (averages +1)";
+                string msg = "Available memory has to be >= display resolution * (averages +1)";
                 if (sender == MemorySizeText)
                 {
                     msg = "Can't reduce memory size. Too high display resolution or too much averaging." + msg;
@@ -438,12 +439,12 @@ namespace ChartTest2
                 else
                 if (sender == AveragesText)
                 {
-                    msg = "Can't increase averaging. Too high display resolution or memory too small." + msg;
+                    msg = "Can't increase averaging. Too high display resolution, memory too small or zoomed in too far." + msg;
                 }
                 else
                 if (sender == samplesOnDisplayText)
                 {
-                    msg = "Can't increase display resolution. Too much averaging or memory too small." + msg;
+                    msg = "Can't increase display resolution. Too much averaging or memory too small, or zoomed in too far." + msg;
                 }
                 WriteLine(msg);
             }

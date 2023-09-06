@@ -21,7 +21,7 @@ namespace ChartTest2
         double[] dacDataSorted = new double[Properties.Settings.Default.DisplayResolution];
         public double[] timeData = new double[Properties.Settings.Default.DisplayResolution];
 
-        int newestSampleToDisplay = 0;
+        public int newestSampleToDisplay = 0;
         public int oldestSampleToDisplay = UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize);
 
         public OsciDisplay(Memory memory)
@@ -67,8 +67,22 @@ namespace ChartTest2
             int iRange = (int)(0.7*(oldestSampleToDisplay - newestSampleToDisplay) / 2);
             int iNewCenter = iCenter - iRange + (int)(2*iRange*position);
 
-            oldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
-            newestSampleToDisplay = Math.Max(newestSampleToDisplay, iNewCenter - iRange);
+            int tmpOldestSampleToDisplay = Math.Min(oldestSampleToDisplay, iNewCenter + iRange);
+            int tmpNewestSampleToDisplay = Math.Max(newestSampleToDisplay, iNewCenter - iRange);
+            if(enoughSamples(pointsOnDisplay, averages, tmpOldestSampleToDisplay, tmpNewestSampleToDisplay))
+            {
+                newestSampleToDisplay = tmpNewestSampleToDisplay;
+                oldestSampleToDisplay = tmpOldestSampleToDisplay;
+            }
+            else
+            {
+                string msg = "Can't zoom in further. Too high display resolution or too much averaging. Available memory has to be >= display resolution * (averages +1)";
+                SpectrscopyControlForm.WriteLine(msg);
+
+                //zoom in as far as possible
+                newestSampleToDisplay = Math.Max(0, iNewCenter - (pointsOnDisplay * (averages + 1)) / 2);
+                oldestSampleToDisplay = newestSampleToDisplay + pointsOnDisplay * (averages + 1);
+            }
             UpdateTimeData();
         }
 
@@ -159,6 +173,19 @@ namespace ChartTest2
         public int getAverages()
         {
             return averages;
+        }
+
+        /// <summary>
+        /// Checks if there is enough data available to be displayed
+        /// </summary>
+        /// <param name="displayResolution"></param>
+        /// <param name="averages"></param>
+        /// <param name="oldestData"></param>
+        /// <param name="newestData"></param>
+        /// <returns></returns>
+        public static bool enoughSamples(int displayResolution, int averages, int oldestData, int newestData)
+        {
+            return displayResolution * (averages + 1) <= oldestData - newestData + 1;
         }
     }
 }
