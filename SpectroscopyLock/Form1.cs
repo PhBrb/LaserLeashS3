@@ -140,6 +140,10 @@ namespace ChartTest2
 
         public void OnNewDataXY()
         {
+            if (stopped)
+            {
+                return;
+            }
             if (chartXY.InvokeRequired)
             {
                 try
@@ -153,12 +157,12 @@ namespace ChartTest2
             }
             else
             {
-                if (!lockMode && !stopped)
+                if (!lockMode)
                 {
                     osciDisplay.GetTimeSeries();
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
                     if (xData.Length > 0)
-                        seriesXY.Points.DataBindXY(xData, yData); //TODO fix nullreferenceexception
+                        seriesXY.Points.DataBindXY(xData, yData);
                     chartXY.Update();
                 }
             }
@@ -166,6 +170,10 @@ namespace ChartTest2
 
         public void OnNewDataTimeSeries()
         {
+            if (stopped)
+            {
+                return;
+            }
             if (chartTimeseries.InvokeRequired)
             {
                 try
@@ -175,9 +183,9 @@ namespace ChartTest2
                 {
                     Console.WriteLine("Idk how to fix this...");
                 }
-            return;
+                return;
             }
-            else if(!stopped)
+            else 
             {
                 double[] dataDac, dataAdc;
                 (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
@@ -333,7 +341,7 @@ namespace ChartTest2
             }
         }
 
-        private void SpectrscopyControlForm_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnFormClosing(System.Windows.Forms.FormClosingEventArgs e)
         {
             stopped = true;
         }
