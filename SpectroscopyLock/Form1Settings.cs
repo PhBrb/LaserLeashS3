@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ChartTest2
 {
@@ -59,7 +61,9 @@ namespace ChartTest2
             //Where to store changed int values
             OnValueIntSaveMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, (value) => Properties.Settings.Default.Averages = value},
-                {samplesOnDisplayText, (value) => Properties.Settings.Default.DisplayResolution = value}
+                {samplesOnDisplayText, (value) => Properties.Settings.Default.DisplayResolution = value},
+                {ChannelInput, (value) => Properties.Settings.Default.Channel = value },
+                {StreamTargetPortInput, (value) => Properties.Settings.Default.Port = value }
             };
         }
 
@@ -80,25 +84,30 @@ namespace ChartTest2
         }
 
 
-        private void StreamTargetInput_TextChanged(object sender, KeyEventArgs e)
+        private void IPTarget_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)//Separate function to only aplly if enter was pressed
+            var regex = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";//https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
+            var match = Regex.Match(StreamTargetIPInput.Text, regex);
+            if (match.Success)
             {
                 Properties.Settings.Default.IP = StreamTargetIPInput.Text;
-                Properties.Settings.Default.Port = (int)StreamTargetPortInput.Value;
                 Properties.Settings.Default.Save();
-                mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
+            } else
+            {
+                WriteLine("Bad Target IP format");
             }
         }
 
         private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
         {
             MaskedTextBox tbSource = (MaskedTextBox)sender;
-            if (e.KeyCode == Keys.Enter && tbSource.MaskCompleted)
+            if (tbSource.MaskCompleted)
             {
-                string txt = tbSource.Text;
-                mqtt.setStabilizerID(txt);
-                WriteLine("Target ID set to " + txt);
+                Properties.Settings.Default.ID = StabilizerIDInput.Text;
+                Properties.Settings.Default.Save();
+            } else
+            {
+                WriteLine("Bad Stabilizer ID format");
             }
         }
 
@@ -118,14 +127,12 @@ namespace ChartTest2
             AveragesText.Value = Properties.Settings.Default.Averages;
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
             StreamTargetIPInput.Text = Properties.Settings.Default.IP;
-            StreamTargetPortInput.Text = Properties.Settings.Default.Port.ToString();
+            StreamTargetPortInput.Value = Properties.Settings.Default.Port;
+            ChannelInput.Value = Properties.Settings.Default.Channel;
         }
 
         private void PID_ValueChanged(object sender, EventArgs e)
         {
-            if (!lockMode)
-                return;
-
             double p = Decimal.ToDouble(KpText.Value),
                 i = Decimal.ToDouble(KiText.Value),
                 d = Decimal.ToDouble(KdText.Value),
@@ -140,6 +147,9 @@ namespace ChartTest2
             Properties.Settings.Default.yMin = yMin;
             Properties.Settings.Default.yMax = yMax;
             Properties.Settings.Default.Save();
+
+            if (!lockMode)
+                return;
 
             List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, sampleRate);
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);

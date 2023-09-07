@@ -65,8 +65,10 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.StabilizerIDInput = new System.Windows.Forms.MaskedTextBox();
             this.StreamTargetPortInput = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
+            this.ChannelInput = new System.Windows.Forms.NumericUpDown();
             this.PID = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
@@ -123,6 +125,7 @@
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChannelInput)).BeginInit();
             this.PID.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.KiText)).BeginInit();
@@ -206,7 +209,7 @@
             this.StreamTargetIPInput.Size = new System.Drawing.Size(107, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
-            this.StreamTargetIPInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
+            this.StreamTargetIPInput.TextChanged += new System.EventHandler(this.IPTarget_TextChanged);
             // 
             // chartTimeseries
             // 
@@ -546,8 +549,10 @@
             this.tableLayoutPanel7.Controls.Add(this.label5, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.label6, 0, 2);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetIPInput, 1, 1);
-            this.tableLayoutPanel7.Controls.Add(this.maskedTextBox1, 1, 4);
+            this.tableLayoutPanel7.Controls.Add(this.StabilizerIDInput, 1, 4);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetPortInput, 1, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label22, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.ChannelInput, 1, 5);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
@@ -613,16 +618,16 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Port";
             // 
-            // maskedTextBox1
+            // StabilizerIDInput
             // 
-            this.maskedTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maskedTextBox1.Location = new System.Drawing.Point(83, 99);
-            this.maskedTextBox1.Mask = "AA-AA-AA-AA-AA-AA";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(107, 20);
-            this.maskedTextBox1.TabIndex = 21;
-            this.maskedTextBox1.Text = "049162d2602f";
-            this.maskedTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
+            this.StabilizerIDInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.StabilizerIDInput.Location = new System.Drawing.Point(83, 99);
+            this.StabilizerIDInput.Mask = "AA-AA-AA-AA-AA-AA";
+            this.StabilizerIDInput.Name = "StabilizerIDInput";
+            this.StabilizerIDInput.Size = new System.Drawing.Size(107, 20);
+            this.StabilizerIDInput.TabIndex = 21;
+            this.StabilizerIDInput.Text = "049162d2602f";
+            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
             // StreamTargetPortInput
             // 
@@ -641,7 +646,31 @@
             0,
             0,
             0});
-            this.StreamTargetPortInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamTargetInput_TextChanged);
+            this.StreamTargetPortInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 120);
+            this.label22.Name = "label22";
+            this.label22.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label22.Size = new System.Drawing.Size(46, 17);
+            this.label22.TabIndex = 23;
+            this.label22.Text = "Channel";
+            // 
+            // ChannelInput
+            // 
+            this.ChannelInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChannelInput.Location = new System.Drawing.Point(83, 123);
+            this.ChannelInput.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ChannelInput.Name = "ChannelInput";
+            this.ChannelInput.Size = new System.Drawing.Size(107, 20);
+            this.ChannelInput.TabIndex = 24;
+            this.ChannelInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // PID
             // 
@@ -1283,6 +1312,7 @@
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChannelInput)).EndInit();
             this.PID.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -1341,7 +1371,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.MaskedTextBox StabilizerIDInput;
         private System.Windows.Forms.GroupBox PID;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label8;
@@ -1384,6 +1414,8 @@
         private System.Windows.Forms.NumericUpDown StreamTargetPortInput;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button SaveMemoryButton;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown ChannelInput;
     }
 }
 

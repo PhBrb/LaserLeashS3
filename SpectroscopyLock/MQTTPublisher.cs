@@ -1,10 +1,6 @@
-﻿using System.Threading.Tasks;
 using System.Threading;
-using System;
 using MQTTnet.Client;
-using MQTTnet.Server;
 using System.Text;
-using ChartTest2;
 using MQTTnet;
 
 namespace ChartTest2
@@ -14,7 +10,8 @@ namespace ChartTest2
     {
 
         IMqttClient mqttClient;
-        string ID = "04-91-62-d2-60-2f";
+        string ID { get => Properties.Settings.Default.ID; }
+        int Channel { get => Properties.Settings.Default.Channel; }
 
         public MQTTPublisher()
         {
@@ -73,12 +70,12 @@ namespace ChartTest2
 
         public void sendScanAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/amplitude", amplitude);
         }
 
         public void sendScanSymmetry(double symmetry)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/symmetry", symmetry);
+            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/symmetry", symmetry);
         }
 
         public void sendScanOffset(double offset, double ymin, double ymax)
@@ -88,59 +85,53 @@ namespace ChartTest2
 
         public void sendScanFrequency(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/frequency", frequency);
+            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/frequency", frequency);
         }
 
         public void sendPID(double offset, string iir, double ymin, double ymax)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/0/0",
+            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/{Channel}/0",
                 $"{{\"ba\":{iir},\"y_min\":{UnitConvert.YVToMU(ymin)},\"y_max\":{UnitConvert.YVToMU(ymax)},\"y_offset\":{UnitConvert.YVToMU(offset)}}}");
         }
 
-
         public void sendPhase(double phase)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/dds/phase_offset", phase);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/phase_offset", phase);
         }
 
         public void sendModulationAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/dds/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/amplitude", amplitude);
         }
 
         public void sendDemodulationAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/dds/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/dds/amplitude", amplitude);
         }
 
         public void sendModulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/dds/frequency", frequency*1000000);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/frequency", frequency*1000000);
         }
         public void sendDemodulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/dds/frequency", frequency*1000000);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/dds/frequency", frequency*1000000);
         }
 
         public void sendModulationAttenuation(double attenuation)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/0/attenuation", attenuation);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/attenuation", attenuation);
         }
 
         public void sendDemodulationAttenuation(double attenuation)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/0/attenuation", attenuation);
+            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/attenuation", attenuation);
         }
 
         public void sendStreamTarget(string ip, string port)
         {
             send($"dt/sinara/dual-iir/{ID}/settings/stream_target",
                 $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replay . wiht ,
-        }
-
-        public void setStabilizerID(string id)
-        {
-            ID = id;
         }
     }
 }
