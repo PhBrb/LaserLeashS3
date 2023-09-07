@@ -39,7 +39,7 @@ namespace ChartTest2
             {
                 while (!form.stopped)
                 {
-                    udpReceiver.TransferData(memory);
+                    udpReceiver.TransferData(memory);//TODO thread safety
                 }
                 udpReceiver.stop = true;
             })).Start();

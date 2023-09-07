@@ -34,11 +34,6 @@ namespace ChartTest2
             array[lastWrittenPosition] = value;
         }
 
-        public double GetLast()
-        {
-            return array[lastWrittenPosition];
-        }
-
         /// <summary>
         /// Returns the sum of a chunk, which is offset before the newest data 
         /// </summary>
@@ -60,14 +55,29 @@ namespace ChartTest2
             double sum = 0;
             for (int i = 0; i < sumSize; i++)
             {
-                sum += array[mod(start + i, size)];
+                sum += get(start + i);
             }
             return sum;
+        }
+
+        public double get(int offset)
+        {
+            return array[mod(offset, size)];
         }
 
         internal int getSize()
         {
             return size;
+        }
+
+        public double[] getArray(int start, int stop)
+        {
+            double[] cutArray = new double[stop - start];
+            for(int i = start; i < cutArray.Length; i++) 
+            {
+                cutArray[i] = get(start + i);//TODO thread safety
+            }
+            return cutArray;
         }
     }
 }

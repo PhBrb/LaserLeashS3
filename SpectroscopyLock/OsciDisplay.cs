@@ -45,7 +45,7 @@ namespace ChartTest2
             int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
             int samplesToUse = averages + 1;
             int iOffset = newestSampleToDisplay;
-            for (int i = 0; i < pointsOnDisplay; i++)
+            for (int i = 0; i < pointsOnDisplay; i++)//TODO thread safety
             {
                 adcData[pointsOnDisplay - i - 1] = memory.GetADCSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
             }
@@ -166,11 +166,6 @@ namespace ChartTest2
         public void setXYSmoothing(double value)
         {
             XYSmoothing= value;
-        }
-
-        public int getAverages()
-        {
-            return averages;
         }
 
         /// <summary>

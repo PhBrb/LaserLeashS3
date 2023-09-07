@@ -9,6 +9,8 @@ using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Net.Configuration;
 using ChartTest2.Properties;
+using System.IO;
+using System.Globalization;
 
 namespace ChartTest2
 {
@@ -131,6 +133,7 @@ namespace ChartTest2
             SetNumericTooltip(FGAmplitudeText);
 
             toolTip1.SetToolTip(InitButton, "Sets Stream Target, Amplitude, Attenuation, Frequency, Phase, Scan Amplitude, Scan Frequency, Scan Offset, Scan Symmetry and goes into Unlock mode");
+            toolTip1.SetToolTip(SaveMemoryButton, "Saves the raw data of the current viewing range to a file.");
         }
 
         private void SetNumericTooltip(NumericUpDown input, string additionalInfo = "")
@@ -331,6 +334,8 @@ namespace ChartTest2
 
         public static void WriteLine(string message)
         {
+            if (form.stopped)
+                return;
             if (form.logText.InvokeRequired)
             {
                 form.logText.Invoke(new SafeCallDelegateStr(SpectrscopyControlForm.WriteLine), new object[] {message});
@@ -338,8 +343,7 @@ namespace ChartTest2
             }
             else
             {
-                if(!form.stopped)
-                    form.logText.AppendText("\r\n" + message);
+                form.logText.AppendText("\r\n" + message);
             }
         }
 
@@ -392,6 +396,32 @@ namespace ChartTest2
                     msg = "Can't increase display resolution. Too much averaging or memory too small, or zoomed in too far." + msg;
                 }
                 WriteLine(msg);
+            }
+        }
+
+        private void SaveMemoryButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.Title = "Save Memory";
+            saveFileDialog1.CheckPathExists = true;
+            saveFileDialog1.Filter = "All files (*.*)|*.*";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName))
+                {
+                    double[] dac = memory.getDACArray(osciDisplay.newestSampleToDisplay, osciDisplay.oldestSampleToDisplay);
+                    double[] adc = memory.getADCArray(osciDisplay.newestSampleToDisplay, osciDisplay.oldestSampleToDisplay);
+
+                    NumberFormatInfo nfi = new NumberFormatInfo();
+                    nfi.NumberDecimalSeparator = ".";
+
+                    file.Write("DAC [V],ADC [V]\n");
+                    for (int i = 0; i < dac.Length; i++)
+                    {
+                        file.Write(dac[i].ToString(nfi) + "," + adc[i].ToString(nfi) + "\n");
+                    }
+                }
             }
         }
 

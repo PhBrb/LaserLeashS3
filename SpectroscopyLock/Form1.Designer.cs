@@ -92,6 +92,7 @@
             this.AveragesText = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.freezeMemoryCheckbox = new System.Windows.Forms.CheckBox();
+            this.SaveMemoryButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -889,6 +890,7 @@
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel3);
             this.groupBox5.Controls.Add(this.freezeMemoryCheckbox);
+            this.groupBox5.Controls.Add(this.SaveMemoryButton);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(710, 3);
             this.groupBox5.Name = "groupBox5";
@@ -919,16 +921,16 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.25253F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.74747F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.74747F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(189, 123);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(189, 100);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Location = new System.Drawing.Point(3, 62);
+            this.label14.Location = new System.Drawing.Point(3, 50);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(88, 30);
+            this.label14.Size = new System.Drawing.Size(88, 24);
             this.label14.TabIndex = 0;
             this.label14.Text = "Averages";
             // 
@@ -936,9 +938,9 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Location = new System.Drawing.Point(3, 31);
+            this.label16.Location = new System.Drawing.Point(3, 25);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(88, 31);
+            this.label16.Size = new System.Drawing.Size(88, 25);
             this.label16.TabIndex = 5;
             this.label16.Text = "Display resolution";
             // 
@@ -946,9 +948,9 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label21.Location = new System.Drawing.Point(3, 92);
+            this.label21.Location = new System.Drawing.Point(3, 74);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(88, 31);
+            this.label21.Size = new System.Drawing.Size(88, 26);
             this.label21.TabIndex = 7;
             this.label21.Text = "XY Smoothing [0:1]";
             // 
@@ -961,7 +963,7 @@
             0,
             0,
             65536});
-            this.XYSmoothing.Location = new System.Drawing.Point(97, 95);
+            this.XYSmoothing.Location = new System.Drawing.Point(97, 77);
             this.XYSmoothing.Maximum = new decimal(new int[] {
             1,
             0,
@@ -1016,7 +1018,7 @@
             0,
             0,
             0});
-            this.samplesOnDisplayText.Location = new System.Drawing.Point(97, 34);
+            this.samplesOnDisplayText.Location = new System.Drawing.Point(97, 28);
             this.samplesOnDisplayText.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -1041,7 +1043,7 @@
             // AveragesText
             // 
             this.AveragesText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AveragesText.Location = new System.Drawing.Point(97, 65);
+            this.AveragesText.Location = new System.Drawing.Point(97, 53);
             this.AveragesText.Name = "AveragesText";
             this.AveragesText.Size = new System.Drawing.Size(89, 20);
             this.AveragesText.TabIndex = 3;
@@ -1059,7 +1061,7 @@
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Location = new System.Drawing.Point(3, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(88, 31);
+            this.label15.Size = new System.Drawing.Size(88, 25);
             this.label15.TabIndex = 1;
             this.label15.Text = "Memory Size [s]";
             // 
@@ -1068,7 +1070,7 @@
             this.freezeMemoryCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.freezeMemoryCheckbox.AutoSize = true;
             this.freezeMemoryCheckbox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.freezeMemoryCheckbox.Location = new System.Drawing.Point(3, 139);
+            this.freezeMemoryCheckbox.Location = new System.Drawing.Point(3, 116);
             this.freezeMemoryCheckbox.Name = "freezeMemoryCheckbox";
             this.freezeMemoryCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.freezeMemoryCheckbox.Size = new System.Drawing.Size(189, 23);
@@ -1077,6 +1079,18 @@
             this.freezeMemoryCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.freezeMemoryCheckbox.UseVisualStyleBackColor = true;
             this.freezeMemoryCheckbox.CheckedChanged += new System.EventHandler(this.freezeMemoryCheckbox_CheckedChanged);
+            // 
+            // SaveMemoryButton
+            // 
+            this.SaveMemoryButton.AutoSize = true;
+            this.SaveMemoryButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.SaveMemoryButton.Location = new System.Drawing.Point(3, 139);
+            this.SaveMemoryButton.Name = "SaveMemoryButton";
+            this.SaveMemoryButton.Size = new System.Drawing.Size(189, 23);
+            this.SaveMemoryButton.TabIndex = 26;
+            this.SaveMemoryButton.Text = "Save Memory";
+            this.SaveMemoryButton.UseVisualStyleBackColor = true;
+            this.SaveMemoryButton.Click += new System.EventHandler(this.SaveMemoryButton_Click);
             // 
             // button1
             // 
@@ -1369,6 +1383,7 @@
         private System.Windows.Forms.CheckBox freezeMemoryCheckbox;
         private System.Windows.Forms.NumericUpDown StreamTargetPortInput;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button SaveMemoryButton;
     }
 }
 

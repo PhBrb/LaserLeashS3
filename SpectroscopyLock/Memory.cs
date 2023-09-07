@@ -84,5 +84,14 @@ namespace ChartTest2
         {
             return adc.getSize();
         }
+
+        public double[] getDACArray(int start, int stop)
+        {
+            return dac.getArray(start, stop);
+        }
+        public double[] getADCArray(int start, int stop)
+        {
+            return adc.getArray(start, stop);
+        }
     }
 }
