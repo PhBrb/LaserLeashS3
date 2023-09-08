@@ -41,6 +41,8 @@ namespace ChartTest2
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
                 {samplesOnDisplayText, osciDisplay.setSize },
+                {ChannelInput,  (value) => { } },
+                {StreamTargetPortInput, (value) => {} }
             };
 
             //Where to store changed doulbe values
