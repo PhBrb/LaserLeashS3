@@ -52,7 +52,7 @@ namespace ChartTest2
                 
                 while (!form.stopped)
                 {
-                    form.OnNewData();
+                    form.RefreshData();
                     Thread.Sleep(100);
                 }
             })).Start();

@@ -26,12 +26,6 @@ namespace ChartTest2
             dac = new ArrayQueue(size);
         }
 
-        public void Clear()
-        {
-            adc.Clear();
-            dac.Clear();
-        }
-
         public void ADCSkip(int skip)
         {
             if (freeze)
@@ -89,6 +83,7 @@ namespace ChartTest2
         {
             return dac.getArray(start, stop);
         }
+
         public double[] getADCArray(int start, int stop)
         {
             return adc.getArray(start, stop);

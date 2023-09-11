@@ -95,6 +95,13 @@ namespace ChartTest2
             UpdateTimeData();
         }
 
+        public void ZoomReset()
+        {
+            oldestSampleToDisplay = memory.getSize();
+            newestSampleToDisplay = 0;
+            UpdateTimeData();
+        }
+
         public void setAverages(int count)
         {
             if (count < 0)

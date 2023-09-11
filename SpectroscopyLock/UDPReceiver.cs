@@ -23,14 +23,14 @@ namespace ChartTest2
         /// </summary>
         public UDPReceiver()
         {
-            UDPListener();
+            Receive();
         }
 
         /// <summary>
         /// Starts continuously running thread that writes received data into the buffer
         /// </summary>
         /// <returns></returns>
-        void UDPListener()
+        void Receive()
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {

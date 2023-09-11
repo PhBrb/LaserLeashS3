@@ -202,7 +202,7 @@ namespace ChartTest2
             }
         }
 
-        public void OnNewData()
+        public void RefreshData()
         {
             OnNewDataTimeSeries();
             OnNewDataXY();

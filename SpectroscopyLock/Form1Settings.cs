@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ChartTest2
 {
@@ -33,14 +32,14 @@ namespace ChartTest2
                                                     int oldestSample = UnitConvert.TimeToSample(duration);
                                                     osciDisplay.oldestSampleToDisplay = Math.Min(oldestSample, osciDisplay.oldestSampleToDisplay);
                                                     memory.setSize(oldestSample);
-                                                    osciDisplay.ZoomOut();
+                                                    osciDisplay.ZoomReset();
                                                 }},
                 {XYSmoothing, osciDisplay.setXYSmoothing }
             };
             //Actions to perform when int inputs are changed
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
-                {samplesOnDisplayText, osciDisplay.setSize },
+                {samplesOnDisplayText, osciDisplay.setSize},
                 {ChannelInput,  (value) => { } },
                 {StreamTargetPortInput, (value) => {} }
             };

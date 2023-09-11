@@ -18,7 +18,6 @@ namespace ChartTest2
             var mqttFactory = new MqttFactory();
             mqttClient = mqttFactory.CreateMqttClient();
 
-
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
         }

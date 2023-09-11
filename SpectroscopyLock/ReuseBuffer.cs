@@ -19,6 +19,7 @@ namespace ChartTest2
         int writingTo = 1;
         int readingFrom = 0;
         int size;
+
         public ReuseBuffer(int size) 
         {
             frames = new Frame[size];
