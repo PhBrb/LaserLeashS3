@@ -4,10 +4,10 @@ namespace ChartTest2
 {
     public class ArrayQueue
     {
-        private double[] array;
+        private readonly double[] array;
 
         private int lastWrittenPosition = 0;
-        private int size = 0;
+        private readonly int size;
 
         public ArrayQueue(int size)
         {
@@ -16,16 +16,12 @@ namespace ChartTest2
         }
 
         /// <summary>
-        /// mod(-4,3) = 2
+        /// Makes % of negative numbers return positive numbers, matching python style array indexing (array[mod(-2,size)] -> second last element)
+        /// Exanple: mod(-1,3) = 2
         /// </summary>
         private static int mod(int x, int m)
         {
             return (x % m + m) % m;
-        }
-
-        public void Clear()
-        {
-            array = new double[size];
         }
 
         public void Enqueue(double value)
@@ -70,12 +66,18 @@ namespace ChartTest2
             return size;
         }
 
-        public double[] getArray(int start, int stop)
+        /// <summary>
+        /// Returns an array with the first value being <see cref="startOffset"/> indexes old.
+        /// </summary>
+        /// <param name="start">Offset from newest datapoint, must be negative. Fisrt value in the returned array.</param>
+        /// <param name="stop">Offset from newest datapoint, must be negative. Last value in the returned array.</param>
+        /// <returns></returns>
+        public double[] getArray(int startOffset, int stopOffset)
         {
-            double[] cutArray = new double[stop - start];
-            for(int i = start; i < cutArray.Length; i++) 
+            double[] cutArray = new double[-stopOffset + startOffset];
+            for(int i = 0; i < cutArray.Length; i++) 
             {
-                cutArray[i] = get(start + i);//TODO thread safety
+                cutArray[i] = get(lastWrittenPosition + startOffset - i);
             }
             return cutArray;
         }

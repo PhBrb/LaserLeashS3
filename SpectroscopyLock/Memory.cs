@@ -8,6 +8,7 @@ namespace ChartTest2
         private ArrayQueue dac;
         public uint lastSequenceNumber;
         public bool freeze = false;
+        public object locker = new object();
 
         public Memory(int size)
         {
@@ -22,15 +23,17 @@ namespace ChartTest2
 
         public void setSize(int size)
         {
-            adc = new ArrayQueue(size);
-            dac = new ArrayQueue(size);
+            lock (locker)
+            {
+                adc = new ArrayQueue(size);
+                dac = new ArrayQueue(size);
+            }
         }
 
         public void ADCSkip(int skip)
         {
             if (freeze)
                 return;
-
             for (int i = 0; i < skip; i++)
             {
                 adc.Enqueue(double.NaN);
@@ -41,7 +44,6 @@ namespace ChartTest2
         {
             if (freeze)
                 return;
-
             adc.Enqueue(value);
         }
 
@@ -60,7 +62,6 @@ namespace ChartTest2
         {
             if (freeze)
                 return;
-
             dac.Enqueue(value);
         }
 
@@ -81,12 +82,12 @@ namespace ChartTest2
 
         public double[] getDACArray(int start, int stop)
         {
-            return dac.getArray(start, stop);
+            return dac.getArray(-start, -stop);
         }
 
         public double[] getADCArray(int start, int stop)
         {
-            return adc.getArray(start, stop);
+            return adc.getArray(-start, -stop);
         }
     }
 }

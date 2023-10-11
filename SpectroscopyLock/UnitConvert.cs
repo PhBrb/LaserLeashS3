@@ -23,7 +23,7 @@ namespace ChartTest2
 
         public static double ADCMuToV(int mu)
         {
-            return   mu / DACLSBPerVolt; //TODO is this correct? in stream.py the same value is used for both DAC and ADC, ADCVoltsPerLSB is defined but not used
+            return   mu / DACLSBPerVolt;
         }
 
         public static double SampleToTime(int sampleIndex)

@@ -204,6 +204,8 @@ namespace ChartTest2
 
         public void RefreshData()
         {
+            osciDisplay.UpdateParameters();
+
             OnNewDataTimeSeries();
             OnNewDataXY();
         }

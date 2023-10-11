@@ -71,11 +71,12 @@ namespace ChartTest2
         /// Transfers data from the buffer to bigger memory and converts from machine units to floats
         /// </summary>
         /// <param name="d"></param>
-        /// <param name="osciData"></param>
-        public void TransferData(Memory osciData)
+        /// <param name="memory"></param>
+        public void TransferData(Memory memory)
         {
             ReuseBuffer.Frame frame = buffer.getNextFrame();
-            Deserializer.Deserialize(frame.data, osciData);
+            lock(memory)
+                Deserializer.Deserialize(frame.data, memory);
         }
     }
 }

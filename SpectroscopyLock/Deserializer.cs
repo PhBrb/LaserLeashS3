@@ -40,8 +40,11 @@ namespace ChartTest2
             int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1; //not perfectly accurate, will be wrong once, when sequenceNumber has an overflow
             if(skip > 0 && skip < 1000) //skip only of no overflow and if not too much to skip (eg at start)
             {
-                memory.ADCSkip(skip*22*8);//22 batches per frame, 8 numbers per batch
-                memory.DACSkip(skip*22*8);
+                lock (memory.locker) //prevent channels from getting a timeshift on memory resize
+                {
+                    memory.ADCSkip(skip * 22 * 8);//22 batches per frame, 8 numbers per batch
+                    memory.DACSkip(skip * 22 * 8);
+                }
                 skipped += (uint)skip * 22;
 
                 Console.WriteLine((float)skipped/(h.sequenceNumber - firstSequenceNumber));
@@ -64,20 +67,21 @@ namespace ChartTest2
             int batchSize = 8;
             int headerSize = 8;
             int iPos = 0;
-            //TODO: if this gets refactored, use a byterunner instead of calculating which byte to read. avoids bugs when calculating the position.
             for (int iBatch = 0; iBatch < 22; iBatch++)//176 2 byte intergers per frame -> with batch size 8 thats 22 batches per frame per channel
             {
-                for (int iFloat = 0; iFloat < batchSize; iFloat++)
+                lock (memory.locker) //prevent channels from getting a timeshift on memory resize
                 {
-                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize;
-                    memory.ADCEnqueue(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)));
+                    for (int iFloat = 0; iFloat < batchSize; iFloat++)
+                    {
+                        iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize;
+                        memory.ADCEnqueue(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)));
+                    }
+                    for (int iFloat = 0; iFloat < batchSize; iFloat++)
+                    {
+                        iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 2 * batchSize * 2;
+                        memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)));
+                    }
                 }
-                for (int iFloat = 0; iFloat < batchSize; iFloat++)
-                {
-                    iPos = iBatch * batchSize * 2 * 4 + iFloat * 2 + headerSize + 2 * batchSize * 2;
-                    memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)));
-                }
-
                 //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData); //save data to a file for debuging purpose
             }
             if (BitConverter.ToUInt32(rawData, 4) != h.sequenceNumber)

@@ -29,9 +29,7 @@ namespace ChartTest2
                 {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
                 {MemorySizeText, (duration) =>  {
-                                                    int oldestSample = UnitConvert.TimeToSample(duration);
-                                                    osciDisplay.oldestSampleToDisplay = Math.Min(oldestSample, osciDisplay.oldestSampleToDisplay);
-                                                    memory.setSize(oldestSample);
+                                                    memory.setSize(UnitConvert.TimeToSample(duration));
                                                     osciDisplay.ZoomReset();
                                                 }},
                 {XYSmoothing, osciDisplay.setXYSmoothing }
