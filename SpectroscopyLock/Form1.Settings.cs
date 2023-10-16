@@ -167,5 +167,17 @@ namespace ChartTest2
             List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, sampleRate);
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);
         }
+
+
+        /// <summary>
+        /// Workaround to trigger validation of NumericUpDowns
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Unused, needed by ValueChanged event</param>
+        private void Refocus(object sender, EventArgs e)
+        {
+            this.ActiveControl = null;
+            ((NumericUpDown)sender).Focus();
+        }
     }
 }

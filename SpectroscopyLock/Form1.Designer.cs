@@ -1036,6 +1036,7 @@
             0,
             0,
             0});
+            this.MemorySizeText.ValueChanged += new System.EventHandler(this.Refocus);
             this.MemorySizeText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.MemorySizeText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
@@ -1066,6 +1067,7 @@
             0,
             0,
             0});
+            this.samplesOnDisplayText.ValueChanged += new System.EventHandler(this.Refocus);
             this.samplesOnDisplayText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.samplesOnDisplayText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
@@ -1081,6 +1083,7 @@
             0,
             0,
             0});
+            this.AveragesText.ValueChanged += new System.EventHandler(this.Refocus);
             this.AveragesText.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateMemorySize);
             this.AveragesText.Validated += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
