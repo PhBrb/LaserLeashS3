@@ -20,7 +20,7 @@ namespace ChartTest2
             Memory memory = new Memory(1000000); //5 000 000 is roughly 7s
             OsciDisplay osciDisplay = new OsciDisplay(memory);
             
-            MQTTPublisher mqtt = new MQTTPublisher();
+            MQTTPublisher mqtt = new MQTTPublisher(Properties.Settings.Default.MQTTServer, 1883);
             mqtt.connect();
 
 

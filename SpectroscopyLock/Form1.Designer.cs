@@ -60,15 +60,15 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.MQTTServer = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.StabilizerIDInput = new System.Windows.Forms.MaskedTextBox();
             this.StreamTargetPortInput = new System.Windows.Forms.NumericUpDown();
-            this.label22 = new System.Windows.Forms.Label();
+            this.StabilizerIDInput = new System.Windows.Forms.MaskedTextBox();
             this.ChannelInput = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.PID = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
@@ -204,9 +204,9 @@
             // StreamTargetIPInput
             // 
             this.StreamTargetIPInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StreamTargetIPInput.Location = new System.Drawing.Point(83, 27);
+            this.StreamTargetIPInput.Location = new System.Drawing.Point(3, 51);
             this.StreamTargetIPInput.Name = "StreamTargetIPInput";
-            this.StreamTargetIPInput.Size = new System.Drawing.Size(107, 20);
+            this.StreamTargetIPInput.Size = new System.Drawing.Size(84, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
             this.StreamTargetIPInput.TextChanged += new System.EventHandler(this.IPTarget_TextChanged);
@@ -541,18 +541,18 @@
             // tableLayoutPanel7
             // 
             this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.66667F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.33333F));
-            this.tableLayoutPanel7.Controls.Add(this.label7, 0, 4);
-            this.tableLayoutPanel7.Controls.Add(this.label19, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label20, 0, 3);
-            this.tableLayoutPanel7.Controls.Add(this.label5, 0, 1);
-            this.tableLayoutPanel7.Controls.Add(this.label6, 0, 2);
-            this.tableLayoutPanel7.Controls.Add(this.StreamTargetIPInput, 1, 1);
-            this.tableLayoutPanel7.Controls.Add(this.StabilizerIDInput, 1, 4);
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.63213F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.36787F));
+            this.tableLayoutPanel7.Controls.Add(this.MQTTServer, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label19, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.StreamTargetIPInput, 0, 2);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetPortInput, 1, 2);
-            this.tableLayoutPanel7.Controls.Add(this.label22, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.StabilizerIDInput, 1, 4);
             this.tableLayoutPanel7.Controls.Add(this.ChannelInput, 1, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label20, 0, 3);
+            this.tableLayoutPanel7.Controls.Add(this.label7, 0, 4);
+            this.tableLayoutPanel7.Controls.Add(this.label22, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
@@ -564,29 +564,73 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(193, 146);
             this.tableLayoutPanel7.TabIndex = 18;
             // 
-            // label7
+            // MQTTServer
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 96);
-            this.label7.Name = "label7";
-            this.label7.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label7.Size = new System.Drawing.Size(18, 17);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "ID";
+            this.MQTTServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MQTTServer.Location = new System.Drawing.Point(93, 3);
+            this.MQTTServer.Name = "MQTTServer";
+            this.MQTTServer.Size = new System.Drawing.Size(97, 20);
+            this.MQTTServer.TabIndex = 26;
+            this.MQTTServer.Text = "192.168.1.229";
+            this.MQTTServer.TextChanged += new System.EventHandler(this.MQTTServer_TextChanged);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.tableLayoutPanel7.SetColumnSpan(this.label19, 2);
-            this.label19.Location = new System.Drawing.Point(3, 0);
+            this.label19.Location = new System.Drawing.Point(3, 24);
             this.label19.Name = "label19";
             this.label19.Padding = new System.Windows.Forms.Padding(0, 11, 0, 0);
             this.label19.Size = new System.Drawing.Size(116, 24);
             this.label19.TabIndex = 7;
             this.label19.Text = "Stream Target (this PC)";
+            // 
+            // StreamTargetPortInput
+            // 
+            this.StreamTargetPortInput.Location = new System.Drawing.Point(93, 51);
+            this.StreamTargetPortInput.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.StreamTargetPortInput.Name = "StreamTargetPortInput";
+            this.StreamTargetPortInput.Size = new System.Drawing.Size(97, 20);
+            this.StreamTargetPortInput.TabIndex = 22;
+            this.StreamTargetPortInput.Value = new decimal(new int[] {
+            1883,
+            0,
+            0,
+            0});
+            this.StreamTargetPortInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            // 
+            // StabilizerIDInput
+            // 
+            this.StabilizerIDInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.StabilizerIDInput.Location = new System.Drawing.Point(93, 99);
+            this.StabilizerIDInput.Mask = "AA-AA-AA-AA-AA-AA";
+            this.StabilizerIDInput.Name = "StabilizerIDInput";
+            this.StabilizerIDInput.Size = new System.Drawing.Size(97, 20);
+            this.StabilizerIDInput.TabIndex = 21;
+            this.StabilizerIDInput.Text = "049162d2602f";
+            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
+            // 
+            // ChannelInput
+            // 
+            this.ChannelInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChannelInput.Location = new System.Drawing.Point(93, 123);
+            this.ChannelInput.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ChannelInput.Name = "ChannelInput";
+            this.ChannelInput.Size = new System.Drawing.Size(97, 20);
+            this.ChannelInput.TabIndex = 24;
+            this.ChannelInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
             // 
             // label20
             // 
@@ -598,55 +642,15 @@
             this.label20.TabIndex = 8;
             this.label20.Text = "Stabilizer";
             // 
-            // label5
+            // label7
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 24);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(17, 21);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "IP";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 48);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(26, 21);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Port";
-            // 
-            // StabilizerIDInput
-            // 
-            this.StabilizerIDInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StabilizerIDInput.Location = new System.Drawing.Point(83, 99);
-            this.StabilizerIDInput.Mask = "AA-AA-AA-AA-AA-AA";
-            this.StabilizerIDInput.Name = "StabilizerIDInput";
-            this.StabilizerIDInput.Size = new System.Drawing.Size(107, 20);
-            this.StabilizerIDInput.TabIndex = 21;
-            this.StabilizerIDInput.Text = "049162d2602f";
-            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
-            // 
-            // StreamTargetPortInput
-            // 
-            this.StreamTargetPortInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StreamTargetPortInput.Location = new System.Drawing.Point(83, 51);
-            this.StreamTargetPortInput.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.StreamTargetPortInput.Name = "StreamTargetPortInput";
-            this.StreamTargetPortInput.Size = new System.Drawing.Size(107, 20);
-            this.StreamTargetPortInput.TabIndex = 22;
-            this.StreamTargetPortInput.Value = new decimal(new int[] {
-            1883,
-            0,
-            0,
-            0});
-            this.StreamTargetPortInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 96);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label7.Size = new System.Drawing.Size(18, 17);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "ID";
             // 
             // label22
             // 
@@ -658,19 +662,15 @@
             this.label22.TabIndex = 23;
             this.label22.Text = "Channel";
             // 
-            // ChannelInput
+            // label5
             // 
-            this.ChannelInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ChannelInput.Location = new System.Drawing.Point(83, 123);
-            this.ChannelInput.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ChannelInput.Name = "ChannelInput";
-            this.ChannelInput.Size = new System.Drawing.Size(107, 20);
-            this.ChannelInput.TabIndex = 24;
-            this.ChannelInput.ValueChanged += new System.EventHandler(this.NumberFieldInt_ValueChanged);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label5.Size = new System.Drawing.Size(72, 17);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "MQTT Server";
             // 
             // PID
             // 
@@ -1368,8 +1368,6 @@
         private System.Windows.Forms.NumericUpDown demodAmpText;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.MaskedTextBox StabilizerIDInput;
         private System.Windows.Forms.GroupBox PID;
@@ -1416,6 +1414,8 @@
         private System.Windows.Forms.Button SaveMemoryButton;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.NumericUpDown ChannelInput;
+        private System.Windows.Forms.TextBox MQTTServer;
+        private System.Windows.Forms.Label label5;
     }
 }
 

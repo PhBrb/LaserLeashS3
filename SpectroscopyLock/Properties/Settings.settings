@@ -42,7 +42,7 @@
       <Value Profile="(Default)">0.0001</Value>
     </Setting>
     <Setting Name="IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.229</Value>
+      <Value Profile="(Default)">192.168.1.2</Value>
     </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1883</Value>
@@ -64,6 +64,9 @@
     </Setting>
     <Setting Name="Channel" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MQTTServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

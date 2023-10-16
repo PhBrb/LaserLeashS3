@@ -34,7 +34,7 @@ namespace ChartTest2
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                using (var udpClient = new UdpClient(1883))
+                using (var udpClient = new UdpClient(Properties.Settings.Default.Port))
                 {
                     udpClient.Client.ReceiveTimeout = 5000;
                     IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
@@ -63,7 +63,6 @@ namespace ChartTest2
                     }
                 }
             }));
-            //thread.Priority = ThreadPriority.Highest;// this needs more checking, there is no point in increasing this if its just burning recources, that could be used elsewhere
             thread.Start();
         }
 

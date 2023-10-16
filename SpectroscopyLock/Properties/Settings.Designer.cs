@@ -12,7 +12,7 @@ namespace ChartTest2.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -181,7 +181,7 @@ namespace ChartTest2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.229")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.2")]
         public string IP {
             get {
                 return ((string)(this["IP"]));
@@ -272,6 +272,18 @@ namespace ChartTest2.Properties {
             }
             set {
                 this["Channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.1")]
+        public string MQTTServer {
+            get {
+                return ((string)(this["MQTTServer"]));
+            }
+            set {
+                this["MQTTServer"] = value;
             }
         }
     }

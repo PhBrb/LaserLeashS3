@@ -131,6 +131,7 @@ namespace ChartTest2
             SetNumericTooltip(XYSmoothing, "Implemented as a low pass filter");
             SetNumericTooltip(FGFrequencyText);
             SetNumericTooltip(FGAmplitudeText);
+            SetNumericTooltip(ChannelInput);
 
             toolTip1.SetToolTip(InitButton, "Sets Stream Target, Amplitude, Attenuation, Frequency, Phase, Scan Amplitude, Scan Frequency, Scan Offset, Scan Symmetry and goes into Unlock mode");
             toolTip1.SetToolTip(SaveMemoryButton, "Saves the raw data of the current viewing range to a file.");

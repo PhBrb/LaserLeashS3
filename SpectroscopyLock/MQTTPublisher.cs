@@ -13,10 +13,13 @@ namespace ChartTest2
         string ID { get => Properties.Settings.Default.ID; }
         int Channel { get => Properties.Settings.Default.Channel; }
 
-        public MQTTPublisher()
+        public MQTTPublisher(string server, int port)
         {
-            var mqttFactory = new MqttFactory();
-            mqttClient = mqttFactory.CreateMqttClient();
+            MqttClientOptionsBuilder optionsBuilder = new MqttClientOptionsBuilder()
+                                     .WithTcpServer(server, port);
+            MqttClientOptions options = optionsBuilder.Build();
+            mqttClient = new MqttFactory().CreateMqttClient();
+            mqttClient.ConnectAsync(options);
 
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");

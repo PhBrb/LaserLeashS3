@@ -39,7 +39,7 @@ namespace ChartTest2
                 {AveragesText, osciDisplay.setAverages},
                 {samplesOnDisplayText, osciDisplay.setSize},
                 {ChannelInput,  (value) => { } },
-                {StreamTargetPortInput, (value) => {} }
+                {StreamTargetPortInput, (value) => {mqtt.sendStreamTarget(Properties.Settings.Default.IP, value.ToString()); } }
             };
 
             //Where to store changed doulbe values
@@ -82,16 +82,30 @@ namespace ChartTest2
             OnValueIntChangeMap[(NumericUpDown)sender].Invoke(Decimal.ToInt32(dec));
         }
 
-
+        private const string IPRegEx = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";//https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
         private void IPTarget_TextChanged(object sender, EventArgs e)
         {
-            var regex = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";//https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
-            var match = Regex.Match(StreamTargetIPInput.Text, regex);
+            Match match = Regex.Match(StreamTargetIPInput.Text, IPRegEx);
             if (match.Success)
             {
                 Properties.Settings.Default.IP = StreamTargetIPInput.Text;
                 Properties.Settings.Default.Save();
             } else
+            {
+                WriteLine("Bad Target IP format");
+            }
+        }
+
+        private void MQTTServer_TextChanged(object sender, EventArgs e)
+        {
+            var match = Regex.Match(MQTTServer.Text, IPRegEx);
+            if (match.Success || MQTTServer.Text == "localhost")
+            {
+                Properties.Settings.Default.MQTTServer = MQTTServer.Text;
+                Properties.Settings.Default.Save();
+                mqtt = new MQTTPublisher(MQTTServer.Text, 1883);
+            }
+            else
             {
                 WriteLine("Bad Target IP format");
             }
