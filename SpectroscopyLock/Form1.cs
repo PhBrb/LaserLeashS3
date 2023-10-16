@@ -380,7 +380,12 @@ namespace ChartTest2
         /// <param name="e"></param>
         private void ValidateMemorySize(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(!OsciDisplay.enoughSamples(decimal.ToInt32(samplesOnDisplayText.Value), decimal.ToInt32(AveragesText.Value), osciDisplay.oldestSampleToDisplay, osciDisplay.newestSampleToDisplay))
+            int samplesOnDisplay = decimal.ToInt32(samplesOnDisplayText.Value);
+            int averages = decimal.ToInt32(AveragesText.Value);
+            int samples = sender == MemorySizeText ?//memory size change triggers zooming out
+                UnitConvert.TimeToSample(Decimal.ToDouble(MemorySizeText.Value)):
+                osciDisplay.oldestSampleToDisplay - osciDisplay.newestSampleToDisplay + 1;
+            if (!OsciDisplay.enoughSamples(samplesOnDisplay, averages, samples))
             {
                 e.Cancel = true;
                 string msg = "Available memory has to be >= display resolution * (averages +1)";

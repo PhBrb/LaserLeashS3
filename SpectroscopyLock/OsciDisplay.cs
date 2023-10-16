@@ -242,12 +242,23 @@ namespace ChartTest2
         /// </summary>
         /// <param name="displayResolution"></param>
         /// <param name="averages"></param>
+        /// <param name="memorySize"></param>
+        /// <returns></returns>
+        public static bool enoughSamples(int displayResolution, int averages, int memorySize)
+        {
+            return displayResolution * (averages + 1) <= memorySize;
+        }
+        /// <summary>
+        /// Checks if there is enough data available to be displayed
+        /// </summary>
+        /// <param name="displayResolution"></param>
+        /// <param name="averages"></param>
         /// <param name="oldestData"></param>
         /// <param name="newestData"></param>
         /// <returns></returns>
         public static bool enoughSamples(int displayResolution, int averages, int oldestData, int newestData)
         {
-            return displayResolution * (averages + 1) <= oldestData - newestData + 1;
+            return enoughSamples(displayResolution, averages, oldestData - newestData + 1);
         }
     }
 }
