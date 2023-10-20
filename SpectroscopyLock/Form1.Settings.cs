@@ -39,7 +39,10 @@ namespace ChartTest2
                 {AveragesText, osciDisplay.setAverages},
                 {samplesOnDisplayText, osciDisplay.setSize},
                 {ChannelInput,  (value) => { } },
-                {StreamTargetPortInput, (value) => {mqtt.sendStreamTarget(Properties.Settings.Default.IP, value.ToString()); } }
+                {StreamTargetPortInput, (value) => {
+                                                        mqtt.sendStreamTarget(Properties.Settings.Default.StreamIP, value.ToString());
+                                                        Program.udpReceiver.port = value;
+                                                   }}
             };
 
             //Where to store changed doulbe values
@@ -62,7 +65,7 @@ namespace ChartTest2
                 {AveragesText, (value) => Properties.Settings.Default.Averages = value},
                 {samplesOnDisplayText, (value) => Properties.Settings.Default.DisplayResolution = value},
                 {ChannelInput, (value) => Properties.Settings.Default.Channel = value },
-                {StreamTargetPortInput, (value) => Properties.Settings.Default.Port = value }
+                {StreamTargetPortInput, (value) => Properties.Settings.Default.StreamPort = value }
             };
         }
 
@@ -83,16 +86,19 @@ namespace ChartTest2
         }
 
         private const string IPRegEx = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";//https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
-        private void IPTarget_TextChanged(object sender, EventArgs e)
+        private void StreamTargetIP_TextChanged(object sender, EventArgs e)
         {
             Match match = Regex.Match(StreamTargetIPInput.Text, IPRegEx);
             if (match.Success)
             {
-                Properties.Settings.Default.IP = StreamTargetIPInput.Text;
+                Properties.Settings.Default.StreamIP = StreamTargetIPInput.Text;
                 Properties.Settings.Default.Save();
+                mqtt.sendStreamTarget(StreamTargetIPInput.Text, Properties.Settings.Default.StreamPort.ToString());
+                StreamTargetIPInput.ForeColor = System.Drawing.SystemColors.WindowText;
             } else
             {
                 WriteLine("Bad Target IP format");
+                StreamTargetIPInput.ForeColor = System.Drawing.Color.Red;
             }
         }
 
@@ -103,11 +109,14 @@ namespace ChartTest2
             {
                 Properties.Settings.Default.MQTTServer = MQTTServer.Text;
                 Properties.Settings.Default.Save();
-                mqtt = new MQTTPublisher(MQTTServer.Text, 1883);
+                mqtt.disconnect();
+                mqtt = new MQTTPublisher(MQTTServer.Text, Properties.Settings.Default.MQTTPort);
+                MQTTServer.ForeColor = System.Drawing.SystemColors.WindowText;
             }
             else
             {
                 WriteLine("Bad Target IP format");
+                MQTTServer.ForeColor = System.Drawing.Color.Red;
             }
         }
 
@@ -116,7 +125,7 @@ namespace ChartTest2
             MaskedTextBox tbSource = (MaskedTextBox)sender;
             if (tbSource.MaskCompleted)
             {
-                Properties.Settings.Default.ID = StabilizerIDInput.Text;
+                Properties.Settings.Default.StabilizerID = StabilizerIDInput.Text;
                 Properties.Settings.Default.Save();
             } else
             {
@@ -133,15 +142,26 @@ namespace ChartTest2
             modAttText.Value = (decimal)Properties.Settings.Default.ModAtt;
             demodAttText.Value = (decimal)Properties.Settings.Default.DemodAtt;
             modPhaseText.Value = (decimal)Properties.Settings.Default.Phase;
+
+            KpText.Value = (decimal)Properties.Settings.Default.P;
+            KiText.Value = (decimal)Properties.Settings.Default.I;
+            KdText.Value = (decimal)Properties.Settings.Default.D;
+            YminText.Value = (decimal)Properties.Settings.Default.yMin;
+            YmaxText.Value = (decimal)Properties.Settings.Default.yMax;
+            SamplerateText.Value = (decimal)Properties.Settings.Default.SampleRate;
+
+            MQTTServer.Text = Properties.Settings.Default.MQTTServer;
+            StreamTargetIPInput.Text = Properties.Settings.Default.StreamIP;
+            StreamTargetPortInput.Value = Properties.Settings.Default.StreamPort;
+            StabilizerIDInput.Text = Properties.Settings.Default.StabilizerID;
+            ChannelInput.Value = Properties.Settings.Default.Channel;
+
             //FGAmplitudeText.Value = ;//TODO properly implement function generator
             //FGFrequencyText.Value = ;
             MemorySizeText.Value = (decimal)Properties.Settings.Default.MemorySize;
             XYSmoothing.Value = (decimal)Properties.Settings.Default.XYSmoothing;
             AveragesText.Value = Properties.Settings.Default.Averages;
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
-            StreamTargetIPInput.Text = Properties.Settings.Default.IP;
-            StreamTargetPortInput.Value = Properties.Settings.Default.Port;
-            ChannelInput.Value = Properties.Settings.Default.Channel;
         }
 
         private void PID_ValueChanged(object sender, EventArgs e)

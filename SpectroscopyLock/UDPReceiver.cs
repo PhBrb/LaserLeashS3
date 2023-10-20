@@ -14,7 +14,9 @@ namespace ChartTest2
         /// <summary>
         /// Stops the thread
         /// </summary>
-        public bool stop = false;
+        private bool stop = false;
+        private Thread thread;
+        public int port;
 
         ReuseBuffer buffer = new ReuseBuffer(500); //randomly chosen buffer size
 
@@ -23,47 +25,78 @@ namespace ChartTest2
         /// </summary>
         public UDPReceiver()
         {
-            Receive();
-        }
-
-        /// <summary>
-        /// Starts continuously running thread that writes received data into the buffer
-        /// </summary>
-        /// <returns></returns>
-        void Receive()
-        {
-            Thread thread = new Thread(new ThreadStart(() =>
+            port = Properties.Settings.Default.StreamPort;
+            thread = new Thread(new ThreadStart(() =>
             {
-                using (var udpClient = new UdpClient(Properties.Settings.Default.Port))
+                UdpClient udpClient = null;
+                uint lastSequenceNumber = 0;
+                uint skipped = 0;
+                while (!stop)
                 {
-                    udpClient.Client.ReceiveTimeout = 5000;
-                    IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                    uint lastSequenceNumber = 0;
-                    uint skipped = 0;
-                    while (!stop)
+                    if (udpClient == null || ((IPEndPoint)udpClient.Client.LocalEndPoint).Port != port)
                     {
                         try
                         {
-                            ReuseBuffer.Frame frame = buffer.getNextBuffer(); 
-                            udpClient.Client.Receive(frame.data);
-
-                            frame.calcMetadata();
-
-                            int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / 22 - 1;
-                            lastSequenceNumber= frame.sequenceNumber;
-                            if (skip > 0 && skip < 1000)
+                            if (udpClient != null)
                             {
-                                skipped += (uint)skip * 22;
+                                udpClient.Close();
+                                udpClient.Dispose();
                             }
-                        } 
-                        catch (SocketException)
+                            udpClient = new UdpClient(port);
+                            udpClient.Client.ReceiveTimeout = 5000;
+                            SpectrscopyControlForm.WriteLine("Started UDP listener");
+                        }
+                        catch
                         {
-                            SpectrscopyControlForm.WriteLine("Timeout receiving streamed data");
+                            SpectrscopyControlForm.WriteLine("Could not start UDP listener");
+                            Thread.Sleep(2000);
+                            continue;
                         }
                     }
+
+                    try
+                    {
+                        ReuseBuffer.Frame frame = buffer.getNextBuffer();
+                        udpClient.Client.Receive(frame.data);
+
+                        frame.calcMetadata();
+
+                        int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / 22 - 1;
+                        lastSequenceNumber = frame.sequenceNumber;
+                        if (skip > 0 && skip < 1000)
+                        {
+                            skipped += (uint)skip * 22;
+                        }
+                    }
+                    catch (SocketException)
+                    {
+                        SpectrscopyControlForm.WriteLine("Timeout receiving streamed data");
+                    }
+                }
+                if (udpClient != null)
+                {
+                    udpClient.Close();
+                    udpClient.Dispose();
                 }
             }));
+        }
+
+        /// <summary>
+        /// Starts a continuously running thread that writes received data into the buffer
+        /// </summary>
+        /// <returns></returns>
+        public void Start()
+        {
+            stop = false;
             thread.Start();
+        }
+
+        /// <summary>
+        /// Request the thread to stop. Continues before thread has stopped.
+        /// </summary>
+        public void Stop()
+        {
+            stop = true;
         }
 
         /// <summary>
@@ -71,7 +104,7 @@ namespace ChartTest2
         /// </summary>
         /// <param name="d"></param>
         /// <param name="memory"></param>
-        public void TransferData(Memory memory)
+        public void DeserializeTo(Memory memory)
         {
             ReuseBuffer.Frame frame = buffer.getNextFrame();
             lock(memory)

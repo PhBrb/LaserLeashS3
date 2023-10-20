@@ -182,36 +182,36 @@ namespace ChartTest2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.2")]
-        public string IP {
+        public string StreamIP {
             get {
-                return ((string)(this["IP"]));
+                return ((string)(this["StreamIP"]));
             }
             set {
-                this["IP"] = value;
+                this["StreamIP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1883")]
-        public int Port {
+        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        public int StreamPort {
             get {
-                return ((int)(this["Port"]));
+                return ((int)(this["StreamPort"]));
             }
             set {
-                this["Port"] = value;
+                this["StreamPort"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("04-91-62-d2-60-2f")]
-        public string ID {
+        public string StabilizerID {
             get {
-                return ((string)(this["ID"]));
+                return ((string)(this["StabilizerID"]));
             }
             set {
-                this["ID"] = value;
+                this["StabilizerID"] = value;
             }
         }
         
@@ -284,6 +284,18 @@ namespace ChartTest2.Properties {
             }
             set {
                 this["MQTTServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        public int MQTTPort {
+            get {
+                return ((int)(this["MQTTPort"]));
+            }
+            set {
+                this["MQTTPort"] = value;
             }
         }
     }

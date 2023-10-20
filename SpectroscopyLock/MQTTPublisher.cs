@@ -10,28 +10,27 @@ namespace ChartTest2
     {
 
         IMqttClient mqttClient;
-        string ID { get => Properties.Settings.Default.ID; }
+        string ID { get => Properties.Settings.Default.StabilizerID; }
         int Channel { get => Properties.Settings.Default.Channel; }
 
         public MQTTPublisher(string server, int port)
         {
-            MqttClientOptionsBuilder optionsBuilder = new MqttClientOptionsBuilder()
-                                     .WithTcpServer(server, port);
-            MqttClientOptions options = optionsBuilder.Build();
+            MqttClientOptions options = new MqttClientOptionsBuilder()
+                                     .WithTcpServer(server, port).Build();
             mqttClient = new MqttFactory().CreateMqttClient();
-            mqttClient.ConnectAsync(options);
+            mqttClient.ConnectAsync(options, CancellationToken.None);
 
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
         }
 
-        public void connect()
+        public void disconnect()
         {
-            var mqttClientOptions = new MqttClientOptionsBuilder()
-                .WithTcpServer("localhost")
-                .Build();
-
-            mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+            if (mqttClient.IsConnected)
+            {
+                mqttClient.DisconnectAsync();
+            }
+            mqttClient.Dispose();
         }
 
         private void send(string path, double value)

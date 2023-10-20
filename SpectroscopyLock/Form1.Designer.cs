@@ -209,7 +209,7 @@
             this.StreamTargetIPInput.Size = new System.Drawing.Size(84, 20);
             this.StreamTargetIPInput.TabIndex = 19;
             this.StreamTargetIPInput.Text = "192.168.1.229";
-            this.StreamTargetIPInput.TextChanged += new System.EventHandler(this.IPTarget_TextChanged);
+            this.StreamTargetIPInput.TextChanged += new System.EventHandler(this.StreamTargetIP_TextChanged);
             // 
             // chartTimeseries
             // 

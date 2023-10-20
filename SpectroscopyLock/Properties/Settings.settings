@@ -41,13 +41,13 @@
     <Setting Name="SampleRate" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.0001</Value>
     </Setting>
-    <Setting Name="IP" Type="System.String" Scope="User">
+    <Setting Name="StreamIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.2</Value>
     </Setting>
-    <Setting Name="Port" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1883</Value>
+    <Setting Name="StreamPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
     </Setting>
-    <Setting Name="ID" Type="System.String" Scope="User">
+    <Setting Name="StabilizerID" Type="System.String" Scope="User">
       <Value Profile="(Default)">04-91-62-d2-60-2f</Value>
     </Setting>
     <Setting Name="MemorySize" Type="System.Double" Scope="User">
@@ -67,6 +67,9 @@
     </Setting>
     <Setting Name="MQTTServer" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.1</Value>
+    </Setting>
+    <Setting Name="MQTTPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

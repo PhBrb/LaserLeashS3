@@ -7,6 +7,10 @@ namespace ChartTest2
     internal static class Program
     {
 
+        public static UDPReceiver udpReceiver;
+        static Thread deserializerThread;
+        static Thread displayRefreshThread;
+
         static bool formReady = false;
         /// <summary>
         /// The main entry point for the application.
@@ -16,31 +20,41 @@ namespace ChartTest2
         {
 
             //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
-            UDPReceiver udpReceiver = new UDPReceiver();
+            udpReceiver = new UDPReceiver();
             Memory memory = new Memory(1000000); //5 000 000 is roughly 7s
             OsciDisplay osciDisplay = new OsciDisplay(memory);
-            
-            MQTTPublisher mqtt = new MQTTPublisher(Properties.Settings.Default.MQTTServer, 1883);
-            mqtt.connect();
 
+            MQTTPublisher mqttPublisher = new MQTTPublisher(Properties.Settings.Default.MQTTServer, Properties.Settings.Default.MQTTPort);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SpectrscopyControlForm form = new SpectrscopyControlForm(memory, osciDisplay, mqtt);
+            SpectrscopyControlForm form = new SpectrscopyControlForm(memory, osciDisplay, mqttPublisher);
             form.Shown += new System.EventHandler(Form1_Shown);
 
-            //transfer data from udp to osci memory
+            //delay starting the UDP thread, as it accesses the form
             new Thread(new ThreadStart(() =>
             {
+                while (!formReady)
+                    Thread.Sleep(10);
+                udpReceiver.Start();
+            })).Start();
+            
+            //Transfer data from UDP to memory
+            deserializerThread = new Thread(new ThreadStart(() =>
+            {
+                while (!formReady)
+                    Thread.Sleep(10);
+
                 while (!form.stopped)
                 {
-                    udpReceiver.TransferData(memory);
+                    udpReceiver.DeserializeTo(memory);
                 }
-                udpReceiver.stop = true;
-            })).Start();
+                udpReceiver.Stop();
+            }));
+            deserializerThread.Start();
 
-            //refresh osci display
-            new Thread(new ThreadStart(() =>
+            //Refresh the dislayed data
+            displayRefreshThread = new Thread(new ThreadStart(() =>
             {
                 while(!formReady)
                     Thread.Sleep(10);
@@ -50,7 +64,8 @@ namespace ChartTest2
                     form.RefreshData();
                     Thread.Sleep(100);
                 }
-            })).Start();
+            }));
+            displayRefreshThread.Start();
 
             Application.Run(form);
         }
