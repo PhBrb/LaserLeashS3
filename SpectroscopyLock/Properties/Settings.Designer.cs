@@ -289,7 +289,7 @@ namespace ChartTest2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1883")]
         public int MQTTPort {
             get {
                 return ((int)(this["MQTTPort"]));
