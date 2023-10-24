@@ -746,7 +746,7 @@
             0,
             0,
             65536});
-            this.KiText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.KiText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // label11
             // 
@@ -781,7 +781,7 @@
             0,
             0,
             0});
-            this.KpText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.KpText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // label9
             // 
@@ -821,7 +821,7 @@
             this.KdText.Name = "KdText";
             this.KdText.Size = new System.Drawing.Size(65, 20);
             this.KdText.TabIndex = 7;
-            this.KdText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.KdText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // label10
             // 
@@ -862,7 +862,7 @@
             this.YminText.Size = new System.Drawing.Size(53, 20);
             this.YminText.TabIndex = 10;
             this.YminText.Validating += new System.ComponentModel.CancelEventHandler(this.YminText_Validating);
-            this.YminText.Validated += new System.EventHandler(this.PID_ValueChanged);
+            this.YminText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // YmaxText
             // 
@@ -888,7 +888,7 @@
             0,
             0});
             this.YmaxText.Validating += new System.ComponentModel.CancelEventHandler(this.YmaxText_Validating);
-            this.YmaxText.Validated += new System.EventHandler(this.PID_ValueChanged);
+            this.YmaxText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // SamplerateText
             // 
@@ -913,7 +913,7 @@
             0,
             0,
             262144});
-            this.SamplerateText.ValueChanged += new System.EventHandler(this.PID_ValueChanged);
+            this.SamplerateText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // groupBox5
             // 

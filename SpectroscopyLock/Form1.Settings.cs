@@ -32,7 +32,13 @@ namespace ChartTest2
                                                     memory.setSize(UnitConvert.TimeToSample(duration));
                                                     osciDisplay.ZoomReset();
                                                 }},
-                {XYSmoothing, osciDisplay.setXYSmoothing }
+                {XYSmoothing, osciDisplay.setXYSmoothing },
+                {KpText, PID_ValueChanged},
+                {KiText, PID_ValueChanged},
+                {KdText, PID_ValueChanged},
+                {YminText, PID_ValueChanged},
+                {YmaxText, PID_ValueChanged},
+                {SamplerateText, PID_ValueChanged}
             };
             //Actions to perform when int inputs are changed
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
@@ -58,7 +64,13 @@ namespace ChartTest2
                 {FGAmplitudeText, (value) => { }}, //TODO properly implement function generator
                 {FGFrequencyText, (value) => { }},
                 {MemorySizeText, (value) => Properties.Settings.Default.MemorySize = value},
-                {XYSmoothing, (value) => Properties.Settings.Default.XYSmoothing = value }
+                {XYSmoothing, (value) => Properties.Settings.Default.XYSmoothing = value },
+                {KpText,  (value) => Properties.Settings.Default.P = value},
+                {KiText,  (value) => Properties.Settings.Default.I = value},
+                {KdText,  (value) => Properties.Settings.Default.D = value},
+                {YminText,  (value) => Properties.Settings.Default.yMin = value},
+                {YmaxText,  (value) => Properties.Settings.Default.yMax = value},
+                {SamplerateText,  (value) => Properties.Settings.Default.SampleRate = value}
             };
             //Where to store changed int values
             OnValueIntSaveMap = new Dictionary<NumericUpDown, Action<int>>(){
@@ -164,7 +176,7 @@ namespace ChartTest2
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
         }
 
-        private void PID_ValueChanged(object sender, EventArgs e)
+        private void PID_ValueChanged(double dummy)
         {
             double p = Decimal.ToDouble(KpText.Value);
             double i = Decimal.ToDouble(KiText.Value);
@@ -172,17 +184,6 @@ namespace ChartTest2
             double sampleRate = Decimal.ToDouble(SamplerateText.Value);
             double yMin = Decimal.ToDouble(YminText.Value);
             double yMax = Decimal.ToDouble(YmaxText.Value);
-
-            Properties.Settings.Default.P = p;
-            Properties.Settings.Default.I = i;
-            Properties.Settings.Default.D = d;
-            Properties.Settings.Default.SampleRate = sampleRate;
-            Properties.Settings.Default.yMin = yMin;
-            Properties.Settings.Default.yMax = yMax;
-            Properties.Settings.Default.Save();
-
-            if (!lockMode)
-                return;
 
             List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, sampleRate);
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);
