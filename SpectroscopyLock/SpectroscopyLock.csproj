@@ -78,7 +78,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReuseBuffer.cs" />
-    <Compile Include="Form1.Settings.cs">
+    <Compile Include="Form1.TextInput.cs">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>

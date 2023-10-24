@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace ChartTest2
 {
     /// <summary>
-    /// Contains logic for loading, saving and forwarding changed values. Generic actions are collected in a map, custom logic is handled individually.
+    /// Contains logic handling user input; loading, saving and forwarding changed values. Generic actions are collected in a map, more complex logic is handled individually.
     /// </summary>
     partial class SpectrscopyControlForm
     {
@@ -189,7 +189,6 @@ namespace ChartTest2
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);
         }
 
-
         /// <summary>
         /// Workaround to trigger validation of NumericUpDowns
         /// </summary>
@@ -199,6 +198,58 @@ namespace ChartTest2
         {
             this.ActiveControl = null;
             ((NumericUpDown)sender).Focus();
+        }
+
+        private void YminText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (YminText.Value >= YmaxText.Value)
+            {
+                e.Cancel = true;
+                WriteLine("Reduce minimum");
+            }
+        }
+
+        private void YmaxText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (YminText.Value >= YmaxText.Value)
+            {
+                e.Cancel = true;
+                WriteLine("Increase maximum");
+            }
+        }
+
+        /// <summary>
+        /// Checks if the display is requiring more datapoints than available
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ValidateMemorySize(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            int samplesOnDisplay = decimal.ToInt32(samplesOnDisplayText.Value);
+            int averages = decimal.ToInt32(AveragesText.Value);
+            int samples = sender == MemorySizeText ?//memory size change triggers zooming out
+                UnitConvert.TimeToSample(Decimal.ToDouble(MemorySizeText.Value)) :
+                osciDisplay.oldestSampleToDisplay - osciDisplay.newestSampleToDisplay + 1;
+            if (!OsciDisplay.enoughSamples(samplesOnDisplay, averages, samples))
+            {
+                e.Cancel = true;
+                string msg = "Available memory has to be >= display resolution * (averages +1)";
+                if (sender == MemorySizeText)
+                {
+                    msg = "Can't reduce memory size. Too high display resolution or too much averaging." + msg;
+                }
+                else
+                if (sender == AveragesText)
+                {
+                    msg = "Can't increase averaging. Too high display resolution, memory too small or zoomed in too far." + msg;
+                }
+                else
+                if (sender == samplesOnDisplayText)
+                {
+                    msg = "Can't increase display resolution. Too much averaging or memory too small, or zoomed in too far." + msg;
+                }
+                WriteLine(msg);
+            }
         }
     }
 }

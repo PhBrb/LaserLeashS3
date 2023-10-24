@@ -48,7 +48,6 @@ namespace ChartTest2
             SpectrscopyControlForm.form = this;
         }
 
-
         public void InitGraph()
         {
             // create a series for each line
@@ -110,7 +109,6 @@ namespace ChartTest2
             LockLineAnnotation.X = 1;
             chartXY.Annotations.Add(LockLineAnnotation);
 
-
             SetNumericTooltip(modAmpText);
             SetNumericTooltip(modAttText);
             SetNumericTooltip(modFreqText);
@@ -142,7 +140,6 @@ namespace ChartTest2
             additionalInfo = additionalInfo != "" ? "\n" + additionalInfo : "";
             toolTip1.SetToolTip(input, $"Min: {input.Minimum} Max: {input.Maximum} Step: {input.Increment} " + additionalInfo);
         }
-
 
         public void OnNewDataXY()
         {
@@ -285,7 +282,6 @@ namespace ChartTest2
             });
         }
 
-
         private void UnlockButton_Click(object sender, EventArgs e)
         {
             setScanRange(previousOffset - previousAmplitude, previousOffset + previousAmplitude);
@@ -300,7 +296,6 @@ namespace ChartTest2
 
         private void chartTimeseries_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
             var me = e as MouseEventArgs;
             if (me.Button == MouseButtons.Left)
             {
@@ -357,58 +352,6 @@ namespace ChartTest2
         protected override void OnFormClosing(System.Windows.Forms.FormClosingEventArgs e)
         {
             stopped = true;
-        }
-
-        private void YminText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (YminText.Value >= YmaxText.Value)
-            {
-                e.Cancel = true;
-                WriteLine("Reduce minimum");
-            }
-        }
-
-        private void YmaxText_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (YminText.Value >= YmaxText.Value)
-            {
-                e.Cancel = true;
-                WriteLine("Increase maximum");
-            }
-        }
-
-        /// <summary>
-        /// Checks if the display is requiring more datapoints than available
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ValidateMemorySize(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            int samplesOnDisplay = decimal.ToInt32(samplesOnDisplayText.Value);
-            int averages = decimal.ToInt32(AveragesText.Value);
-            int samples = sender == MemorySizeText ?//memory size change triggers zooming out
-                UnitConvert.TimeToSample(Decimal.ToDouble(MemorySizeText.Value)):
-                osciDisplay.oldestSampleToDisplay - osciDisplay.newestSampleToDisplay + 1;
-            if (!OsciDisplay.enoughSamples(samplesOnDisplay, averages, samples))
-            {
-                e.Cancel = true;
-                string msg = "Available memory has to be >= display resolution * (averages +1)";
-                if (sender == MemorySizeText)
-                {
-                    msg = "Can't reduce memory size. Too high display resolution or too much averaging." + msg;
-                }
-                else
-                if (sender == AveragesText)
-                {
-                    msg = "Can't increase averaging. Too high display resolution, memory too small or zoomed in too far." + msg;
-                }
-                else
-                if (sender == samplesOnDisplayText)
-                {
-                    msg = "Can't increase display resolution. Too much averaging or memory too small, or zoomed in too far." + msg;
-                }
-                WriteLine(msg);
-            }
         }
 
         private void SaveMemoryButton_Click(object sender, EventArgs e)
