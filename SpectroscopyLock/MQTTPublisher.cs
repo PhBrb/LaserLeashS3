@@ -95,6 +95,16 @@ namespace ChartTest2
                 $"{{\"ba\":{iir},\"y_min\":{UnitConvert.YVToMU(ymin)},\"y_max\":{UnitConvert.YVToMU(ymax)},\"y_offset\":{UnitConvert.YVToMU(offset)}}}");
         }
 
+        public void sendSignal()
+        {
+            /*var applicationMessage = new MqttApplicationMessageBuilder()
+                    .WithTopic($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/signal")
+                    .WithPayload($"\"Triangle\"")
+                    .Build();
+            mqttClient.PublishAsync(applicationMessage, CancellationToken.None);*/
+            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/signal", $"\"Triangle\"");
+        }
+
         public void sendPhase(double phase)
         {
             send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/phase_offset", phase);

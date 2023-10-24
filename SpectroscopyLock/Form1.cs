@@ -332,11 +332,14 @@ namespace ChartTest2
             mqtt.sendScanOffset((max+min)/2, min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
             mqtt.sendScanSymmetry(0);
+            mqtt.sendSignal();
             lockMode = false;
         }
 
         public static void WriteLine(string message)
         {
+            if (form == null)
+                return;
             if (form.stopped)
                 return;
             if (form.logText.InvokeRequired)
