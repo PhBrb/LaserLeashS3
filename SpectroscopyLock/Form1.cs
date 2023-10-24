@@ -349,7 +349,8 @@ namespace ChartTest2
             }
             else
             {
-                form.logText.AppendText("\r\n" + message);
+                form.logText.AppendText(Environment.NewLine);
+                form.logText.AppendText(message);
             }
         }
 

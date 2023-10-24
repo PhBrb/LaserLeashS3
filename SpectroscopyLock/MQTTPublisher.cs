@@ -19,6 +19,7 @@ namespace ChartTest2
                                      .WithTcpServer(server, port).Build();
             mqttClient = new MqttFactory().CreateMqttClient();
             mqttClient.ConnectAsync(options, CancellationToken.None);
+            SpectrscopyControlForm.WriteLine("Starting MQTT client");
 
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
@@ -43,7 +44,7 @@ namespace ChartTest2
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                SpectrscopyControlForm.WriteLine($"Sent  double {value:0.####} to {path}");
+                SpectrscopyControlForm.WriteLine($"Sent double {value:0.####} to {path}");
             } else
             {
                 SpectrscopyControlForm.WriteLine("MQTT client not connected");
@@ -142,7 +143,7 @@ namespace ChartTest2
         public void sendStreamTarget(string ip, string port)
         {
             send($"dt/sinara/dual-iir/{ID}/settings/stream_target",
-                $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replay . wiht ,
+                $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replace . with ,
         }
     }
 }

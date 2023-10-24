@@ -166,12 +166,12 @@ namespace ChartTest2
 
         private void PID_ValueChanged(object sender, EventArgs e)
         {
-            double p = Decimal.ToDouble(KpText.Value),
-                i = Decimal.ToDouble(KiText.Value),
-                d = Decimal.ToDouble(KdText.Value),
-                sampleRate = Decimal.ToDouble(SamplerateText.Value),
-                yMin = Decimal.ToDouble(YminText.Value),
-                yMax = Decimal.ToDouble(YmaxText.Value);
+            double p = Decimal.ToDouble(KpText.Value);
+            double i = Decimal.ToDouble(KiText.Value);
+            double d = Decimal.ToDouble(KdText.Value);
+            double sampleRate = Decimal.ToDouble(SamplerateText.Value);
+            double yMin = Decimal.ToDouble(YminText.Value);
+            double yMax = Decimal.ToDouble(YmaxText.Value);
 
             Properties.Settings.Default.P = p;
             Properties.Settings.Default.I = i;
