@@ -165,7 +165,8 @@ namespace ChartTest2
             {
                 try
                 {
-                    chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
+                    if (!(chartXY.Disposing | chartXY.IsDisposed))
+                        chartXY.Invoke(new SafeCallDelegate(OnNewDataXY), new object[] { });
                 } catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
                     Console.WriteLine("Idk how to fix this...");
@@ -198,7 +199,8 @@ namespace ChartTest2
             {
                 try
                 {
-                    chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
+                    if(!(chartTimeseries.Disposing | chartTimeseries.IsDisposed))
+                        chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
                 } catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
                     Console.WriteLine("Idk how to fix this...");
