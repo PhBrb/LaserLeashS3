@@ -19,6 +19,7 @@ namespace ChartTest2
         Series seriesXY;
         Series seriesOutput;
         Series seriesDemod;
+        Series seriesZeroDemod;
         private delegate void SafeCallDelegate();
         private delegate void SafeCallDelegateStr(string s);
         VerticalLineAnnotation LockLineAnnotation;
@@ -57,6 +58,11 @@ namespace ChartTest2
             seriesOutput.ChartType = SeriesChartType.Line;
             seriesDemod = new Series("Demodulated (right)");
             seriesDemod.ChartType = SeriesChartType.Line;
+            seriesZeroDemod = new Series("Zero Line");
+            seriesZeroDemod.IsVisibleInLegend = false;
+            seriesZeroDemod.ChartType = SeriesChartType.Line;
+            seriesZeroDemod.Color = Color.Gray;
+            seriesZeroDemod.BorderDashStyle = ChartDashStyle.Dash;
 
 
             // add each series to the chart
@@ -64,6 +70,7 @@ namespace ChartTest2
             chartXY.Series.Add(seriesXY);
             chartTimeseries.Series.Clear();
             chartTimeseries.Series.Add(seriesOutput);
+            chartTimeseries.Series.Add(seriesZeroDemod);
             chartTimeseries.Series.Add(seriesDemod);
 
             chartXY.Series[0].YAxisType = AxisType.Primary;
@@ -195,6 +202,7 @@ namespace ChartTest2
 
                 seriesOutput.Points.DataBindXY(osciDisplay.timeData, dataDac);
                 seriesDemod.Points.DataBindXY(osciDisplay.timeData, dataAdc);
+                seriesZeroDemod.Points.DataBindXY(new double[] { osciDisplay.timeData[0], osciDisplay.timeData[osciDisplay.timeData.Length - 1] }, new double[] { 0, 0 });
 
                 chartTimeseries.Update();
             }
