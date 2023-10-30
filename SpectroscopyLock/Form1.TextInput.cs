@@ -83,6 +83,8 @@ namespace ChartTest2
 
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)
         {
+            if (!receiveEvents)
+                return;
             decimal dec = ((NumericUpDown)sender).Value;
             OnValueDoubleSaveMap[(NumericUpDown)sender].Invoke(Decimal.ToDouble(dec));
             Properties.Settings.Default.Save();
@@ -91,6 +93,8 @@ namespace ChartTest2
 
         private void NumberFieldInt_ValueChanged(object sender, EventArgs e)
         {
+            if (!receiveEvents)
+                return;
             decimal dec = ((NumericUpDown)sender).Value;
             OnValueIntSaveMap[(NumericUpDown)sender].Invoke(Decimal.ToInt32(dec));
             Properties.Settings.Default.Save();
@@ -100,6 +104,8 @@ namespace ChartTest2
         private const string IPRegEx = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";//https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
         private void StreamTargetIP_TextChanged(object sender, EventArgs e)
         {
+            if (!receiveEvents)
+                return;
             Match match = Regex.Match(StreamTargetIPInput.Text, IPRegEx);
             if (match.Success)
             {
@@ -116,6 +122,8 @@ namespace ChartTest2
 
         private void MQTTServer_TextChanged(object sender, EventArgs e)
         {
+            if (!receiveEvents)
+                return;
             var match = Regex.Match(MQTTServer.Text, IPRegEx);
             if (match.Success || MQTTServer.Text == "localhost")
             {
@@ -134,6 +142,8 @@ namespace ChartTest2
 
         private void StabilizerIDInput_KeyDown(object sender, KeyEventArgs e)
         {
+            if (!receiveEvents)
+                return;
             MaskedTextBox tbSource = (MaskedTextBox)sender;
             if (tbSource.MaskCompleted)
             {
@@ -174,11 +184,13 @@ namespace ChartTest2
             XYSmoothing.Value = (decimal)Properties.Settings.Default.XYSmoothing;
             AveragesText.Value = Properties.Settings.Default.Averages;
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
+
+            receiveEvents = true;
         }
 
         private void PID_ValueChanged(double dummy)
         {
-            if (!lockMode)
+            if (!(lockMode & receiveEvents))
                 return;
             double p = Decimal.ToDouble(KpText.Value);
             double i = Decimal.ToDouble(KiText.Value);
