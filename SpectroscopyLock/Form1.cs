@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace ChartTest2
 {
-    public partial class SpectrscopyControlForm : Form
+    public partial class SpectroscopyControlForm : Form
     {
         Series seriesXY;
         Series seriesOutput;
@@ -30,11 +30,11 @@ namespace ChartTest2
         double previousAmplitude, previousOffset;
 
 
-        public static SpectrscopyControlForm form;
+        public static SpectroscopyControlForm form;
 
         public bool stopped { get; private set; }
 
-        public SpectrscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
+        public SpectroscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
         {
             stopped = false;
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace ChartTest2
 
             InitSettings();
 
-            SpectrscopyControlForm.form = this;
+            SpectroscopyControlForm.form = this;
         }
 
         public void InitGraph()
@@ -339,7 +339,7 @@ namespace ChartTest2
                 return;
             if (form.logText.InvokeRequired)
             {
-                form.logText.Invoke(new SafeCallDelegateStr(SpectrscopyControlForm.WriteLine), new object[] {message});
+                form.logText.Invoke(new SafeCallDelegateStr(SpectroscopyControlForm.WriteLine), new object[] {message});
                 return;
             }
             else

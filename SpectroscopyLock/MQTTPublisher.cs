@@ -19,7 +19,7 @@ namespace ChartTest2
                                      .WithTcpServer(server, port).Build();
             mqttClient = new MqttFactory().CreateMqttClient();
             mqttClient.ConnectAsync(options, CancellationToken.None);
-            SpectrscopyControlForm.WriteLine("Starting MQTT client");
+            SpectroscopyControlForm.WriteLine("Starting MQTT client");
 
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
@@ -44,10 +44,10 @@ namespace ChartTest2
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                SpectrscopyControlForm.WriteLine($"Sent double {value:0.####} to {path}");
+                SpectroscopyControlForm.WriteLine($"Sent double {value:0.####} to {path}");
             } else
             {
-                SpectrscopyControlForm.WriteLine("MQTT client not connected");
+                SpectroscopyControlForm.WriteLine("MQTT client not connected");
             }
         }
 
@@ -61,11 +61,11 @@ namespace ChartTest2
                     .Build();
 
                 mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
-                SpectrscopyControlForm.WriteLine($"Sent string {value} to {path}");
+                SpectroscopyControlForm.WriteLine($"Sent string {value} to {path}");
             }
             else
             {
-                SpectrscopyControlForm.WriteLine("MQTT client not connected");
+                SpectroscopyControlForm.WriteLine("MQTT client not connected");
             }
         }
 

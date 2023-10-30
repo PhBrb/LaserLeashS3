@@ -8,7 +8,7 @@ namespace ChartTest2
     /// <summary>
     /// Contains logic handling user input; loading, saving and forwarding changed values. Generic actions are collected in a map, more complex logic is handled individually.
     /// </summary>
-    partial class SpectrscopyControlForm
+    partial class SpectroscopyControlForm
     {
         Dictionary<NumericUpDown, Action<double>> OnValueDoubleChangeMap;
         Dictionary<NumericUpDown, Action<double>> OnValueDoubleSaveMap;

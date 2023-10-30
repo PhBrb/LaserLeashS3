@@ -31,7 +31,7 @@ namespace ChartTest2
                 return;
             if (h.sequenceNumber < memory.lastSequenceNumber)
             {
-                SpectrscopyControlForm.WriteLine("Received data out of order");
+                SpectroscopyControlForm.WriteLine("Received data out of order");
                 return;
             }
             if (firstSequenceNumber == 0)

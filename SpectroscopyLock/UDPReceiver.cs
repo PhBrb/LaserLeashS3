@@ -44,11 +44,11 @@ namespace ChartTest2
                             }
                             udpClient = new UdpClient(port);
                             udpClient.Client.ReceiveTimeout = 5000;
-                            SpectrscopyControlForm.WriteLine("Started UDP listener");
+                            SpectroscopyControlForm.WriteLine("Started UDP listener");
                         }
                         catch
                         {
-                            SpectrscopyControlForm.WriteLine("Could not start UDP listener");
+                            SpectroscopyControlForm.WriteLine("Could not start UDP listener");
                             Thread.Sleep(2000);
                             continue;
                         }
@@ -70,7 +70,7 @@ namespace ChartTest2
                     }
                     catch (SocketException)
                     {
-                        SpectrscopyControlForm.WriteLine("Timeout receiving streamed data");
+                        SpectroscopyControlForm.WriteLine("Timeout receiving streamed data");
                     }
                 }
                 if (udpClient != null)

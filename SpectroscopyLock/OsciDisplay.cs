@@ -120,7 +120,7 @@ namespace ChartTest2
             else
             {
                 string msg = "Can't zoom in further. Too high display resolution or too much averaging. Available memory has to be >= display resolution * (averages +1)";
-                SpectrscopyControlForm.WriteLine(msg);
+                SpectroscopyControlForm.WriteLine(msg);
 
                 //zoom in as far as possible
                 newestSampleToDisplay = Math.Max(0, iNewCenter - (pointsOnDisplay * (averages + 1)) / 2);

@@ -1,6 +1,6 @@
 ﻿namespace ChartTest2
 {
-    partial class SpectrscopyControlForm
+    partial class SpectroscopyControlForm
     {
         /// <summary>
         /// Required designer variable.

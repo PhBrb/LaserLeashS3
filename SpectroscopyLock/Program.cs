@@ -28,7 +28,7 @@ namespace ChartTest2
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SpectrscopyControlForm form = new SpectrscopyControlForm(memory, osciDisplay, mqttPublisher);
+            SpectroscopyControlForm form = new SpectroscopyControlForm(memory, osciDisplay, mqttPublisher);
             form.Shown += new System.EventHandler(Form1_Shown);
 
             //delay starting the UDP thread, as it accesses the form
@@ -73,7 +73,7 @@ namespace ChartTest2
         static void Form1_Shown(object sender, EventArgs e)
         {
             formReady = true;
-            ((SpectrscopyControlForm) sender).LoadSettings();
+            ((SpectroscopyControlForm) sender).LoadSettings();
         }
     }
 }
