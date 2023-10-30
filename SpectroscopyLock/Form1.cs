@@ -24,6 +24,7 @@ namespace ChartTest2
         private delegate void SafeCallDelegate();
         private delegate void SafeCallDelegateStr(string s);
         VerticalLineAnnotation LockLineAnnotation;
+        VerticalLineAnnotation xyLineAnnotaion;
         MQTTPublisher mqtt;
         bool lockMode = false;
         OsciDisplay osciDisplay;
@@ -122,6 +123,17 @@ namespace ChartTest2
             LockLineAnnotation.LineWidth = 1;
             LockLineAnnotation.X = 1;
             chartXY.Annotations.Add(LockLineAnnotation);
+            //vertical output voltage line
+            xyLineAnnotaion = new VerticalLineAnnotation();
+            xyLineAnnotaion.AxisX = CA.AxisX;
+            xyLineAnnotaion.AllowMoving = true;
+            xyLineAnnotaion.IsInfinitive = true;
+            xyLineAnnotaion.ClipToChartArea = CA.Name;
+            xyLineAnnotaion.Name = "Output";
+            xyLineAnnotaion.LineColor = Color.Gray;
+            xyLineAnnotaion.LineWidth = 1;
+            xyLineAnnotaion.X = 2;
+            chartXY.Annotations.Add(xyLineAnnotaion);
 
             SetNumericTooltip(modAmpText);
             SetNumericTooltip(modAttText);
@@ -199,7 +211,7 @@ namespace ChartTest2
             {
                 try
                 {
-                    if(!(chartTimeseries.Disposing | chartTimeseries.IsDisposed))
+                    if (!(chartTimeseries.Disposing | chartTimeseries.IsDisposed))
                         chartTimeseries.Invoke(new SafeCallDelegate(OnNewDataTimeSeries), new object[] { });
                 } catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
@@ -210,11 +222,14 @@ namespace ChartTest2
             else 
             {
                 double[] dataDac, dataAdc;
-                (dataAdc, dataDac) = osciDisplay.GetTimeSeries();
+                double newestValue;
+                (dataAdc, dataDac, newestValue) = osciDisplay.GetTimeSeries();
 
                 seriesOutput.Points.DataBindXY(osciDisplay.timeData, dataDac);
                 seriesDemod.Points.DataBindXY(osciDisplay.timeData, dataAdc);
                 seriesZeroDemod.Points.DataBindXY(new double[] { osciDisplay.timeData[0], osciDisplay.timeData[osciDisplay.timeData.Length - 1] }, new double[] { 0, 0 });
+
+                xyLineAnnotaion.X = newestValue;
 
                 chartTimeseries.Update();
             }

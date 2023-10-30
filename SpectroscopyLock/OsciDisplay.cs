@@ -75,8 +75,9 @@ namespace ChartTest2
             }
         }
 
-        public (double[], double[]) GetTimeSeries()
+        public (double[], double[], double) GetTimeSeries()
         {
+            double newestValue = 0;
             int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
             int samplesToUse = averages + 1;
             int iOffset = newestSampleToDisplay;
@@ -90,9 +91,10 @@ namespace ChartTest2
                 {
                     dacData[pointsOnDisplay - i - 1] = memory.GetDACSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
                 }
+                newestValue = memory.GetDACSumFromPast(-samplesToUse,samplesToUse)/samplesToUse;
             }
 
-            return (adcData, dacData);
+            return (adcData, dacData, newestValue);
         }
 
         public void ZoomIn(double position)
