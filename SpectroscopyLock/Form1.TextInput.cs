@@ -178,6 +178,8 @@ namespace ChartTest2
 
         private void PID_ValueChanged(double dummy)
         {
+            if (!lockMode)
+                return;
             double p = Decimal.ToDouble(KpText.Value);
             double i = Decimal.ToDouble(KiText.Value);
             double d = Decimal.ToDouble(KdText.Value);
