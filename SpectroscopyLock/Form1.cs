@@ -17,6 +17,7 @@ namespace ChartTest2
     public partial class SpectroscopyControlForm : Form
     {
         Series seriesXY;
+        Series seriesZeroXY;
         Series seriesOutput;
         Series seriesDemod;
         Series seriesZeroDemod;
@@ -54,6 +55,11 @@ namespace ChartTest2
             // create a series for each line
             seriesXY = new Series("Channel 0");
             seriesXY.ChartType = SeriesChartType.Line;
+            seriesZeroXY = new Series("Zero Line");
+            seriesZeroXY.IsVisibleInLegend = false;
+            seriesZeroXY.ChartType = SeriesChartType.Line;
+            seriesZeroXY.Color = Color.Gray;
+            seriesZeroXY.BorderDashStyle = ChartDashStyle.Dash;
             seriesOutput = new Series("Output (left)");
             seriesOutput.ChartType = SeriesChartType.Line;
             seriesDemod = new Series("Demodulated (right)");
@@ -68,6 +74,7 @@ namespace ChartTest2
             // add each series to the chart
             chartXY.Series.Clear();
             chartXY.Series.Add(seriesXY);
+            chartXY.Series.Add(seriesZeroXY);
             chartTimeseries.Series.Clear();
             chartTimeseries.Series.Add(seriesOutput);
             chartTimeseries.Series.Add(seriesZeroDemod);
@@ -171,8 +178,11 @@ namespace ChartTest2
                 {
                     osciDisplay.GetTimeSeries();
                     (double[] xData, double[] yData) = osciDisplay.GetXYNoUpdate();
-                    if (xData.Length > 0)
+                    if (xData.Length > 1)
+                    {
                         seriesXY.Points.DataBindXY(xData, yData);
+                        seriesZeroXY.Points.DataBindXY(new double[] { xData[0], xData[xData.Length -1] }, new double[] { 0, 0 });
+                    }
                     chartXY.Update();
                 }
             }
