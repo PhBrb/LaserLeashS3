@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChartTest2
 {
@@ -178,20 +176,35 @@ namespace ChartTest2
             Array.Copy(adcData, adcDataSorted, pointsOnDisplay);
             Array.Copy(dacData, dacDataSorted, pointsOnDisplay);
 
-            Array.Sort(dacDataSorted, adcDataSorted);
+            Array.Sort(dacDataSorted, adcDataSorted); //sort by x axis value to not mess up the graph
             List<double> dacList = dacDataSorted.ToList();
             List<double> adcList = adcDataSorted.ToList();
             
-            for(int i = pointsOnDisplay - 1; i >= 0 ; i--)
+            for(int i = pointsOnDisplay - 1; i >= 0 ; i--) // remove nan
             {
                 if (double.IsNaN(dacDataSorted[i]) || double.IsNaN(adcDataSorted[i]))
                 {
                     adcList.RemoveAt(i);
                     dacList.RemoveAt(i);
                 }
-                else if(i < adcList.Count - 1)
+            }
+            for (int i = pointsOnDisplay - 1; i > 0; i--) // average ADC values if DAC values are the same (multiple datapoints at the same output voltage)
+            {
+                int sumCount = 1;
+                double sum = 0;
+                while (i > 1 && dacList[i] == dacList[i - 1]) //sorted array, relying on equal values being grouped
                 {
-                    adcList[i] = (1-XYSmoothing)*adcList[i] + XYSmoothing* adcList[i + 1];
+                    sumCount += 1;
+                    sum += adcList[i];
+                    adcList.RemoveAt(i);
+                    dacList.RemoveAt(i);
+                    i--;
+                }
+                adcList[i] = (sum + adcList[i]) / sumCount;
+
+                if (i < adcList.Count - 1)
+                {
+                    adcList[i] = (1 - XYSmoothing) * adcList[i] + XYSmoothing * adcList[i + 1]; //apply low pass filter
                 }
             }
             return (dacList.ToArray(), adcList.ToArray());
