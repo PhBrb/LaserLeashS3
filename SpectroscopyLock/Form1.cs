@@ -62,6 +62,7 @@ namespace ChartTest2
             seriesZeroXY.ChartType = SeriesChartType.Line;
             seriesZeroXY.Color = Color.Gray;
             seriesZeroXY.BorderWidth = 2;
+            seriesZeroXY.BorderDashStyle = ChartDashStyle.Dash;
             seriesOutput = new Series("Output (left)");
             seriesOutput.ChartType = SeriesChartType.Line;
             seriesDemod = new Series("Demodulated (right)");
@@ -70,7 +71,8 @@ namespace ChartTest2
             seriesZeroDemod.IsVisibleInLegend = false;
             seriesZeroDemod.ChartType = SeriesChartType.Line;
             seriesZeroDemod.Color = Color.Gray;
-            seriesZeroXY.BorderWidth = 2;
+            seriesZeroDemod.BorderWidth = 2;
+            seriesZeroDemod.BorderDashStyle = ChartDashStyle.Dash;
 
 
             // add each series to the chart
