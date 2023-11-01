@@ -61,7 +61,7 @@ namespace ChartTest2
             seriesZeroXY.IsVisibleInLegend = false;
             seriesZeroXY.ChartType = SeriesChartType.Line;
             seriesZeroXY.Color = Color.Gray;
-            seriesZeroXY.BorderDashStyle = ChartDashStyle.Dash;
+            seriesZeroXY.BorderWidth = 2;
             seriesOutput = new Series("Output (left)");
             seriesOutput.ChartType = SeriesChartType.Line;
             seriesDemod = new Series("Demodulated (right)");
@@ -70,7 +70,7 @@ namespace ChartTest2
             seriesZeroDemod.IsVisibleInLegend = false;
             seriesZeroDemod.ChartType = SeriesChartType.Line;
             seriesZeroDemod.Color = Color.Gray;
-            seriesZeroDemod.BorderDashStyle = ChartDashStyle.Dash;
+            seriesZeroXY.BorderWidth = 2;
 
 
             // add each series to the chart
@@ -79,12 +79,13 @@ namespace ChartTest2
             chartXY.Series.Add(seriesZeroXY);
             chartTimeseries.Series.Clear();
             chartTimeseries.Series.Add(seriesOutput);
-            chartTimeseries.Series.Add(seriesZeroDemod);
             chartTimeseries.Series.Add(seriesDemod);
+            chartTimeseries.Series.Add(seriesZeroDemod);
 
             chartXY.Series[0].YAxisType = AxisType.Primary;
             chartTimeseries.Series[0].YAxisType = AxisType.Primary;
             chartTimeseries.Series[1].YAxisType = AxisType.Secondary;
+            chartTimeseries.Series[2].YAxisType = AxisType.Secondary;
 
             // additional styling
             chartXY.ResetAutoValues();
