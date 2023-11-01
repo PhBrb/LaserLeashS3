@@ -305,19 +305,20 @@ namespace ChartTest2
             chartTimeseries.ChartAreas[0].AxisY2.Maximum = max + 0.3 * (max - min);
             chartTimeseries.ChartAreas[0].AxisY2.Minimum = min - 0.3 * (max - min);
 
-            lockMode = true;
-
-            mqtt.sendScanAmplitude(0);
-            Thread.Sleep(100); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
-            mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
-            Thread.Sleep(100);
-
-            List<double> result = UnitConvert.CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
-
-            Task.Run(() =>
+            Task.Run(() => // do this in a separate thread to be able to update the graph during locking
             {
-                Thread.Sleep(100);
-                mqtt.sendPID(0, result.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+                lockMode = true;
+
+                mqtt.sendScanAmplitude(0);
+                Thread.Sleep(300); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
+                mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
+                Thread.Sleep(300);
+
+                List<double> iirs = UnitConvert.CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
+
+
+                Thread.Sleep(300); //TODO subtract P gain * error for background offset compensation
+                mqtt.sendPID(0, iirs.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             });
         }
 
