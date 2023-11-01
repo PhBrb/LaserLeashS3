@@ -188,7 +188,7 @@ namespace ChartTest2
                     dacList.RemoveAt(i);
                 }
             }
-            for (int i = pointsOnDisplay - 1; i > 0; i--) // average ADC values if DAC values are the same (multiple datapoints at the same output voltage)
+            for (int i = adcList.Count - 1; i > 0; i--) // average ADC values if DAC values are the same (multiple datapoints at the same output voltage)
             {
                 int sumCount = 1;
                 double sum = 0;
