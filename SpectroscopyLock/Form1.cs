@@ -366,7 +366,7 @@ namespace ChartTest2
             mqtt.sendScanAmplitude((max-min)/2);
             mqtt.sendScanOffset((max+min)/2, min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
-            mqtt.sendScanSymmetry(0);
+            mqtt.sendScanSymmetry(1);
             mqtt.sendSignal();
             lockMode = false;
         }
