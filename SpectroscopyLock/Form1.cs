@@ -294,7 +294,7 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
-            //keep previous range
+            //keep previous range for timeseries
             double min, max;
             min = osciDisplay.GetDACMinNoUpdate();
             max = osciDisplay.GetDACMaxNoUpdate();
@@ -379,7 +379,7 @@ namespace ChartTest2
                 return;
             if (form.logText.InvokeRequired)
             {
-                form.logText.Invoke(new SafeCallDelegateStr(SpectroscopyControlForm.WriteLine), new object[] {message});
+                form.logText.BeginInvoke(new SafeCallDelegateStr(SpectroscopyControlForm.WriteLine), new object[] { message }); //asynchronous required to avoid deadlock on memory when called from deserializer with updating the froms data
                 return;
             }
             else
