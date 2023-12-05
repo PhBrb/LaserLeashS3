@@ -313,11 +313,7 @@ namespace ChartTest2
                 Thread.Sleep(300); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
                 mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
                 Thread.Sleep(300);
-
                 List<double> iirs = UnitConvert.CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
-
-
-                Thread.Sleep(300); //TODO subtract P gain * error for background offset compensation
                 mqtt.sendPID(0, iirs.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             });
         }
@@ -367,6 +363,7 @@ namespace ChartTest2
             mqtt.sendScanOffset((max+min)/2, min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
             mqtt.sendScanSymmetry(1);
+            radioButton1.Checked = true;
             mqtt.sendSignal();
             lockMode = false;
         }
@@ -418,6 +415,16 @@ namespace ChartTest2
                     }
                 }
             }
+        }
+
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(!receiveEvents)
+                return;
+            if (radioButton1.Checked)
+                mqtt.sendScanSymmetry(1);
+            if (radioButton2.Checked)
+                mqtt.sendScanSymmetry(0.5);
         }
 
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)

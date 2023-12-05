@@ -97,12 +97,17 @@
             this.SaveMemoryButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.FGFrequencyText = new System.Windows.Forms.NumericUpDown();
             this.FGAmplitudeText = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.logText = new System.Windows.Forms.TextBox();
@@ -144,6 +149,8 @@
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FGFrequencyText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FGAmplitudeText)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
@@ -706,10 +713,10 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.04348F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.73913F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.73913F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.73913F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(189, 160);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -732,7 +739,7 @@
             0,
             0,
             131072});
-            this.KiText.Location = new System.Drawing.Point(62, 43);
+            this.KiText.Location = new System.Drawing.Point(62, 29);
             this.KiText.Minimum = new decimal(new int[] {
             100,
             0,
@@ -751,7 +758,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 80);
+            this.label11.Location = new System.Drawing.Point(3, 70);
             this.label11.Name = "label11";
             this.label11.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label11.Size = new System.Drawing.Size(31, 17);
@@ -767,7 +774,7 @@
             0,
             0,
             65536});
-            this.KpText.Location = new System.Drawing.Point(3, 43);
+            this.KpText.Location = new System.Drawing.Point(3, 29);
             this.KpText.Minimum = new decimal(new int[] {
             100,
             0,
@@ -796,7 +803,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(62, 80);
+            this.label12.Location = new System.Drawing.Point(62, 70);
             this.label12.Name = "label12";
             this.label12.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label12.Size = new System.Drawing.Size(34, 17);
@@ -812,7 +819,7 @@
             0,
             0,
             131072});
-            this.KdText.Location = new System.Drawing.Point(121, 43);
+            this.KdText.Location = new System.Drawing.Point(121, 29);
             this.KdText.Minimum = new decimal(new int[] {
             100,
             0,
@@ -836,7 +843,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(121, 80);
+            this.label13.Location = new System.Drawing.Point(121, 70);
             this.label13.Name = "label13";
             this.label13.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label13.Size = new System.Drawing.Size(45, 30);
@@ -847,7 +854,7 @@
             // 
             this.YminText.DecimalPlaces = 1;
             this.YminText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.YminText.Location = new System.Drawing.Point(3, 123);
+            this.YminText.Location = new System.Drawing.Point(3, 117);
             this.YminText.Maximum = new decimal(new int[] {
             10,
             0,
@@ -873,7 +880,7 @@
             // 
             this.YmaxText.DecimalPlaces = 1;
             this.YmaxText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.YmaxText.Location = new System.Drawing.Point(62, 123);
+            this.YmaxText.Location = new System.Drawing.Point(62, 117);
             this.YmaxText.Maximum = new decimal(new int[] {
             10,
             0,
@@ -904,7 +911,7 @@
             0,
             0,
             262144});
-            this.SamplerateText.Location = new System.Drawing.Point(121, 123);
+            this.SamplerateText.Location = new System.Drawing.Point(121, 117);
             this.SamplerateText.Maximum = new decimal(new int[] {
             10,
             0,
@@ -1142,8 +1149,8 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.tableLayoutPanel4);
+            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.button1);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(911, 3);
@@ -1153,51 +1160,45 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Function Generator";
             // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(3, 130);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(190, 23);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "Toggle";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.5F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
             this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label18, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.FGFrequencyText, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.FGAmplitudeText, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.label6, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.panel1, 1, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(190, 137);
+            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(190, 114);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label17.Location = new System.Drawing.Point(3, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(79, 13);
+            this.label17.Size = new System.Drawing.Size(65, 37);
             this.label17.TabIndex = 0;
             this.label17.Text = "Frequency [Hz]";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 68);
+            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label18.Location = new System.Drawing.Point(3, 37);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(56, 26);
+            this.label18.Size = new System.Drawing.Size(65, 38);
             this.label18.TabIndex = 1;
             this.label18.Text = "Amplitude [Vpeak]";
             // 
@@ -1210,9 +1211,9 @@
             0,
             0,
             65536});
-            this.FGFrequencyText.Location = new System.Drawing.Point(98, 3);
+            this.FGFrequencyText.Location = new System.Drawing.Point(74, 3);
             this.FGFrequencyText.Name = "FGFrequencyText";
-            this.FGFrequencyText.Size = new System.Drawing.Size(89, 20);
+            this.FGFrequencyText.Size = new System.Drawing.Size(113, 20);
             this.FGFrequencyText.TabIndex = 2;
             this.FGFrequencyText.Value = new decimal(new int[] {
             1,
@@ -1231,16 +1232,85 @@
             0,
             0,
             65536});
-            this.FGAmplitudeText.Location = new System.Drawing.Point(98, 71);
+            this.FGAmplitudeText.Location = new System.Drawing.Point(74, 40);
             this.FGAmplitudeText.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.FGAmplitudeText.Name = "FGAmplitudeText";
-            this.FGAmplitudeText.Size = new System.Drawing.Size(89, 20);
+            this.FGAmplitudeText.Size = new System.Drawing.Size(113, 20);
             this.FGAmplitudeText.TabIndex = 3;
             this.FGAmplitudeText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(3, 75);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 39);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Symmetry";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tableLayoutPanel8);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(74, 78);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(113, 33);
+            this.panel1.TabIndex = 5;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Controls.Add(this.radioButton1, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.radioButton2, 1, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(113, 33);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(3, 3);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(31, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(40, 3);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(40, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "0.5";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(3, 130);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(190, 23);
+            this.button2.TabIndex = 25;
+            this.button2.Text = "Toggle";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel5
             // 
@@ -1348,6 +1418,9 @@
             this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FGFrequencyText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FGAmplitudeText)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
@@ -1429,6 +1502,11 @@
         private System.Windows.Forms.NumericUpDown ChannelInput;
         private System.Windows.Forms.TextBox MQTTServer;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
 
