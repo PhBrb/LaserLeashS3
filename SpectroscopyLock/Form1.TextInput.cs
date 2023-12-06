@@ -185,6 +185,8 @@ namespace ChartTest2
             AveragesText.Value = Properties.Settings.Default.Averages;
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
 
+            radioButton1.Checked = true;
+
             receiveEvents = true;
         }
 
