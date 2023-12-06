@@ -417,12 +417,17 @@ namespace ChartTest2
             }
         }
 
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if(!receiveEvents)
+            if (!receiveEvents)
                 return;
             if (radioButton1.Checked)
                 mqtt.sendScanSymmetry(1);
+        }
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!receiveEvents)
+                return;
             if (radioButton2.Checked)
                 mqtt.sendScanSymmetry(0.5);
         }
