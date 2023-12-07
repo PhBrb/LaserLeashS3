@@ -66,10 +66,11 @@ namespace ChartTest2
         private void _UpdateTimeData()
         {
             timeData = new double[pointsOnDisplay];
+            int samplesPerPoint = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
             for (int i = 0; i < pointsOnDisplay; i++)
             {
                 ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
-                timeData[i] = -UnitConvert.SampleToTime((pointsOnDisplay - i) * (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay + newestSampleToDisplay);
+                timeData[i] = -UnitConvert.SampleToTime((pointsOnDisplay - i) * samplesPerPoint + newestSampleToDisplay);
             }
         }
 
