@@ -6,7 +6,10 @@ namespace ChartTest2
     {
         private ArrayQueue adc;
         private ArrayQueue dac;
+
         public uint lastSequenceNumber;
+        public int consecutiveTimeJumpsBack;
+        
         public bool freeze = false;
         public object locker = new object();
 
@@ -27,6 +30,17 @@ namespace ChartTest2
             {
                 adc = new ArrayQueue(size);
                 dac = new ArrayQueue(size);
+            }
+        }
+
+        public void clear()
+        {
+            if (freeze)
+                return;
+            lock (locker)
+            {
+                adc = new ArrayQueue(adc.getSize());
+                dac = new ArrayQueue(dac.getSize());
             }
         }
 

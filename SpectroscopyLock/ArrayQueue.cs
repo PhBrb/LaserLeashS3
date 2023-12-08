@@ -16,7 +16,7 @@ namespace ChartTest2
         }
 
         /// <summary>
-        /// Makes % of negative numbers return positive numbers, matching python style array indexing (array[mod(-2,size)] -> second last element)
+        /// Makes modulo of negative numbers return positive numbers, matching python style array indexing (array[mod(-2,size)] -> second last element)
         /// Exanple: mod(-1,3) = 2
         /// </summary>
         private static int mod(int x, int m)
@@ -26,7 +26,7 @@ namespace ChartTest2
 
         public void Enqueue(double value)
         {
-            lastWrittenPosition = (lastWrittenPosition+1) % size;
+            lastWrittenPosition = (lastWrittenPosition + 1) % size;
             array[lastWrittenPosition] = value;
         }
 

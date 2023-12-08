@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+using System.Windows.Forms;
+
 namespace ChartTest2
 {
     public static class Deserializer
@@ -14,13 +17,9 @@ namespace ChartTest2
             public uint sequenceNumber;
         }
 
-        static uint firstSequenceNumber = 0;
-        static uint skipped = 0;
 
         public static void Deserialize(byte[] rawData, Memory memory)
         {
-            //rawData = File.ReadAllBytes(1027017276 + "packet.bytes"); //read data from a file for debuging purpose
-
             header h;
             h.magic = BitConverter.ToUInt16(rawData, 0);
             h.formatId = rawData[2];
@@ -29,29 +28,72 @@ namespace ChartTest2
 
             if (h.sequenceNumber == memory.lastSequenceNumber) //cancel if already processed previously
                 return;
+
+            //handle not monotonically increasing sequenceNumbers
             if (h.sequenceNumber < memory.lastSequenceNumber)
             {
+                memory.consecutiveTimeJumpsBack += 1;
                 SpectroscopyControlForm.WriteLine("Received data out of order");
-                return;
-            }
-            if (firstSequenceNumber == 0)
-                firstSequenceNumber = h.sequenceNumber;
 
-            int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1; //not perfectly accurate, will be wrong once, when sequenceNumber has an overflow
-            if(skip > 0 && skip < 1000) //skip only of no overflow and if not too much to skip (eg at start)
-            {
-                lock (memory.locker) //prevent channels from getting a timeshift on memory resize
+                //if consistent time jump backwards happened eg on sequence number overflow or stabilizer reset
+                if (memory.consecutiveTimeJumpsBack > 10)
                 {
-                    memory.ADCSkip(skip * 22 * 8);//22 batches per frame, 8 numbers per batch
-                    memory.DACSkip(skip * 22 * 8);
+                    SpectroscopyControlForm.WriteLine("Time jump detected, reseting memory.");
+                    memory.clear();
+                    memory.lastSequenceNumber = 0;
                 }
-                skipped += (uint)skip * 22;
+                else
+                {
+                    try
+                    {
+                        //if time jumped back more than the memory size
+                        if (checked((memory.lastSequenceNumber - h.sequenceNumber + 22) * 8) > memory.getSize())
+                        {
+                            SpectroscopyControlForm.WriteLine($"Rejecting data as it is older than the memory size.");
+                            return;
+                        }
+                        else //if jump was small enough so that the data can be inserted
+                        {
+                            uint sampleToJumpTo = (memory.lastSequenceNumber - h.sequenceNumber + 22) * 8;
 
-                Console.WriteLine((float)skipped/(h.sequenceNumber - firstSequenceNumber));
+                            //TODO this requires a bigger rewrite, as jumping back in time was not planned for when the memory data structure was designed
+                            //make the memory not a queue, but just put modulus on the sequence number afterwards add the batch+sample number
+                            //still keep track of the newest sample that was added, as this is needed for the readout of the memory and overwriting old data
+
+
+                        }
+                    }
+                    catch (OverflowException)
+                    {
+                        SpectroscopyControlForm.WriteLine($"Rejecting data as it is older than the memory size.");
+                        return;
+                    }
+                }
+            } else {
+                memory.consecutiveTimeJumpsBack = 0;
+
+                //check if sequenceNumber jumped forwards
+                int skip = (int)(h.sequenceNumber - memory.lastSequenceNumber) / 22 - 1;
+                if (skip > 0)
+                {
+                    double samplesSkipped = h.sequenceNumber * 8.0 - memory.lastSequenceNumber * 8.0; //use double to avoid overflow
+                    if (samplesSkipped > memory.getSize() / 2) //catch huge jumps to avoid lag
+                    {
+                        SpectroscopyControlForm.WriteLine($"A lot of data was not received. Resetting memory");
+                        memory.clear();
+                    }
+                    else
+                    {
+                        lock (memory.locker) //prevent channels from getting a timeshift if memory gets resized at the same time
+                        {
+                            memory.ADCSkip(skip * 22 * 8);//22 batches per frame, 8 numbers per batch
+                            memory.DACSkip(skip * 22 * 8);
+                        }
+                    }
+                }
             }
 
             memory.lastSequenceNumber = h.sequenceNumber;
-
 
             if (h.magic != 0x57B)
                 throw new ArgumentOutOfRangeException("wrong magic number");
@@ -69,7 +111,7 @@ namespace ChartTest2
             int iPos = 0;
             for (int iBatch = 0; iBatch < 22; iBatch++)//176 2 byte intergers per frame -> with batch size 8 thats 22 batches per frame per channel
             {
-                lock (memory.locker) //prevent channels from getting a timeshift on memory resize
+                lock (memory.locker) //prevent channels from getting a timeshift if memory gets resized at the same time
                 {
                     for (int iFloat = 0; iFloat < batchSize; iFloat++)
                     {
@@ -82,7 +124,6 @@ namespace ChartTest2
                         memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)));
                     }
                 }
-                //File.WriteAllBytes(h.sequenceNumber + "packet.bytes", rawData); //save data to a file for debuging purpose
             }
             if (BitConverter.ToUInt32(rawData, 4) != h.sequenceNumber)
                 throw new Exception("converting data wasnt thread safe");
