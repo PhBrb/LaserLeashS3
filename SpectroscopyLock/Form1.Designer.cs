@@ -628,6 +628,7 @@
             // ChannelInput
             // 
             this.ChannelInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChannelInput.Enabled = false;
             this.ChannelInput.Location = new System.Drawing.Point(93, 133);
             this.ChannelInput.Maximum = new decimal(new int[] {
             1,

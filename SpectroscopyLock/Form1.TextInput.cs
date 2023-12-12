@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ChartTest2
@@ -15,6 +16,10 @@ namespace ChartTest2
         Dictionary<NumericUpDown, Action<int>> OnValueIntChangeMap;
         Dictionary<NumericUpDown, Action<int>> OnValueIntSaveMap;
 
+        private int requestedMemorySize;
+        Thread memoryResizeThread;
+        DateTime resizeAt;
+
         private void InitSettings()
         {
             //Actions to perform when double inputs are changed
@@ -28,10 +33,7 @@ namespace ChartTest2
                 {modPhaseText, mqtt.sendPhase},
                 {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
-                {MemorySizeText, (duration) =>  {
-                                                    memory.setSize(UnitConvert.TimeToSample(duration));
-                                                    osciDisplay.ZoomReset();
-                                                }},
+                {MemorySizeText, MemoryResize},
                 {XYSmoothing, osciDisplay.setXYSmoothing },
                 {KpText, PID_ValueChanged},
                 {KiText, PID_ValueChanged},
@@ -79,6 +81,32 @@ namespace ChartTest2
                 {ChannelInput, (value) => Properties.Settings.Default.Channel = value },
                 {StreamTargetPortInput, (value) => Properties.Settings.Default.StreamPort = value }
             };
+        }
+
+        /// <summary>
+        /// Schedules a resize of the memory. The resize is delayed to not stress the GC if the user keeps pressing the resize button.
+        /// </summary>
+        /// <param name="duration"></param>
+        private void MemoryResize(double duration)
+        {
+            requestedMemorySize = UnitConvert.TimeToSample(duration);
+            resizeAt = DateTime.Now.AddMilliseconds(200);
+
+            if (memoryResizeThread == null || !memoryResizeThread.IsAlive)
+            {
+                resizeAt = DateTime.Now.AddMilliseconds(400); //the first time that a NumericUpDown sends an update, the delay between updates is a bit longer 
+                memoryResizeThread = new Thread(new ThreadStart(() =>
+                {
+                    while(resizeAt > DateTime.Now)
+                    {
+                        Thread.Sleep(300);
+                    }
+
+                    memory.setSize(requestedMemorySize);
+                    osciDisplay.ZoomReset();
+                }));
+                memoryResizeThread.Start();
+            }
         }
 
         private void NumberFieldDouble_ValueChanged(object sender, EventArgs e)

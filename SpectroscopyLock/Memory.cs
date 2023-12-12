@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace ChartTest2
 {
     public class Memory
     {
-        private ArrayQueue adc;
-        private ArrayQueue dac;
+        private CyclicArray adc;
+        private CyclicArray dac;
 
         public uint lastSequenceNumber;
         public int consecutiveTimeJumpsBack;
@@ -20,16 +21,16 @@ namespace ChartTest2
                 throw new ArgumentException("too few datapoints");
             }
 
-            adc = new ArrayQueue(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
-            dac = new ArrayQueue(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
+            adc = new CyclicArray(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
+            dac = new CyclicArray(UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize));
         }
 
         public void setSize(int size)
         {
             lock (locker)
             {
-                adc = new ArrayQueue(size);
-                dac = new ArrayQueue(size);
+                adc = new CyclicArray(size);
+                dac = new CyclicArray(size);
             }
         }
 
@@ -39,44 +40,26 @@ namespace ChartTest2
                 return;
             lock (locker)
             {
-                adc = new ArrayQueue(adc.getSize());
-                dac = new ArrayQueue(dac.getSize());
+                long position = adc.newestDataPosition;
+                adc = new CyclicArray(adc.getSize());
+                adc.setPosition(position);
+                dac = new CyclicArray(dac.getSize());
+                dac.setPosition(position);
             }
         }
 
-        public void ADCSkip(int skip)
+        public void ADCEnqueueAt(double value, uint sequence, int batch, int sample)
         {
             if (freeze)
                 return;
-            for (int i = 0; i < skip; i++)
-            {
-                adc.Enqueue(double.NaN);
-            }
+            adc.writeAt(value, sequence, batch, sample);
         }
 
-        public void ADCEnqueue(double value)
+        public void DACEnqueueAt(double value, uint sequence, int batch, int sample)
         {
             if (freeze)
                 return;
-            adc.Enqueue(value);
-        }
-
-        public void DACSkip(int skip)
-        {
-            if (freeze)
-                return;
-
-            for (int i = 0; i < skip; i++)
-            {
-                dac.Enqueue(double.NaN);
-            };
-        }
-
-        public void DACEnqueue(double value)
-        {
-            if (freeze)
-                return;
-            dac.Enqueue(value);
+            dac.writeAt(value, sequence, batch, sample);
         }
 
         public double GetADCSumFromPast(int offset, int size)

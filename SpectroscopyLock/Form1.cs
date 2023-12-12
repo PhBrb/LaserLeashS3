@@ -227,13 +227,29 @@ namespace ChartTest2
             {
                 double[] dataDac, dataAdc;
                 double newestValue;
-                (dataAdc, dataDac, newestValue) = osciDisplay.GetTimeSeries();
+                bool allNaN;
+                (dataAdc, dataDac, newestValue, allNaN) = osciDisplay.GetTimeSeries();
 
                 seriesOutput.Points.DataBindXY(osciDisplay.timeData, dataDac);
                 seriesDemod.Points.DataBindXY(osciDisplay.timeData, dataAdc);
                 seriesZeroDemod.Points.DataBindXY(new double[] { osciDisplay.timeData[0], osciDisplay.timeData[osciDisplay.timeData.Length - 1] }, new double[] { 0, 0 });
 
                 xyLineAnnotaion.X = newestValue;
+
+                if (allNaN) //prevent exception if data is only NaN
+                {
+                    chartTimeseries.ChartAreas[0].AxisY.Minimum = 0;
+                    chartTimeseries.ChartAreas[0].AxisY.Maximum = 1;
+                    chartTimeseries.ChartAreas[0].AxisY2.Minimum = 0;
+                    chartTimeseries.ChartAreas[0].AxisY2.Maximum = 1;
+                } else
+                {
+                    //if there is data, then auto scale
+                    chartTimeseries.ChartAreas[0].AxisY.Minimum = double.NaN;
+                    chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
+                    chartTimeseries.ChartAreas[0].AxisY2.Minimum = double.NaN;
+                    chartTimeseries.ChartAreas[0].AxisY2.Maximum = double.NaN;
+                }
 
                 chartTimeseries.Update();
             }

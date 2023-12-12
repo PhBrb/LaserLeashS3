@@ -1,17 +1,25 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace ChartTest2
 {
-    public class ArrayQueue
+    public class CyclicArray
     {
         private readonly double[] array;
 
-        private int lastWrittenPosition = 0;
+        public long newestDataPosition = 0;
         private readonly int size;
+        private int batchSize = 8;
 
-        public ArrayQueue(int size)
+        private bool fresh = true;
+
+        public CyclicArray(int size)
         {
             array = new double[size];
+            for (int i = 0; i < size; i++)
+            {
+                array[i] = double.NaN;
+            }
             this.size = size;
         }
 
@@ -23,11 +31,38 @@ namespace ChartTest2
         {
             return (x % m + m) % m;
         }
-
-        public void Enqueue(double value)
+        private static int mod(long x, int m)
         {
-            lastWrittenPosition = (lastWrittenPosition + 1) % size;
-            array[lastWrittenPosition] = value;
+            return ((int)(x % m) + m) % m;
+        }
+
+        public void setPosition(long pos)
+        {
+            newestDataPosition = pos;
+        }
+
+        public void writeAt(double value, uint sequence, int batch, int sample)
+        {
+            long positionToWriteTo = (sequence + batch) * batchSize + sample;
+
+            if (fresh) //make using a new array a bit faster
+                newestDataPosition = positionToWriteTo - 1;
+
+            //if positions were skipped
+            long skip = Math.Min(positionToWriteTo - newestDataPosition - 1, size);
+
+            for (int i = 0; i < skip; i++)
+            {
+                array[(newestDataPosition + i) % size] = double.NaN;
+            }
+
+            newestDataPosition = Math.Max(positionToWriteTo, newestDataPosition);
+
+            if (skip == 0 && !double.IsNaN(array[positionToWriteTo % size]))
+                throw new ArgumentException();
+            array[positionToWriteTo%size] = value;
+            array[(positionToWriteTo+1)%size] = double.NaN;
+            fresh = false;
         }
 
         /// <summary>
@@ -47,7 +82,7 @@ namespace ChartTest2
                 throw new ArgumentException("previous + outArray size must be <= 0");
             if (offset >= size - 1)
                 throw new ArgumentException("requested too old data");
-            int start = mod(lastWrittenPosition + offset, size);
+            int start = mod(newestDataPosition + offset, size);
             double sum = 0;
             for (int i = 0; i < sumSize; i++)
             {
@@ -57,6 +92,10 @@ namespace ChartTest2
         }
 
         public double get(int offset)
+        {
+            return array[mod(offset, size)];
+        }
+        public double get(long offset)
         {
             return array[mod(offset, size)];
         }
@@ -77,7 +116,7 @@ namespace ChartTest2
             double[] cutArray = new double[-stopOffset + startOffset];
             for(int i = 0; i < cutArray.Length; i++) 
             {
-                cutArray[i] = get(lastWrittenPosition + startOffset - i);
+                cutArray[i] = get(newestDataPosition + startOffset - i);
             }
             return cutArray;
         }
