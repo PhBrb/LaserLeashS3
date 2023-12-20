@@ -36,8 +36,6 @@ namespace ChartTest2
 
         public void clear()
         {
-            if (freeze)
-                return;
             lock (locker)
             {
                 long position = adc.newestDataPosition;
