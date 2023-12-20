@@ -101,9 +101,11 @@ namespace ChartTest2
                     {
                         Thread.Sleep(300);
                     }
-
-                    memory.setSize(requestedMemorySize);
-                    osciDisplay.ZoomReset();
+                    if (requestedMemorySize != memory.getSize())
+                    {
+                        memory.setSize(requestedMemorySize);
+                        osciDisplay.ZoomReset();
+                    }
                 }));
                 memoryResizeThread.Start();
             }
