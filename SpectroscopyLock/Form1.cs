@@ -447,6 +447,11 @@ namespace ChartTest2
                 mqtt.sendScanSymmetry(0.5);
         }
 
+        private void reconnectButton_Click(object sender, EventArgs e)
+        {
+            mqtt.connect(Properties.Settings.Default.MQTTServer, Properties.Settings.Default.MQTTPort);
+        }
+
         private void freezeMemoryCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             memory.freeze = ((CheckBox)sender).Checked;

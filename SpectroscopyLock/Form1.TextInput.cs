@@ -160,7 +160,7 @@ namespace ChartTest2
                 Properties.Settings.Default.MQTTServer = MQTTServer.Text;
                 Properties.Settings.Default.Save();
                 mqtt.disconnect();
-                mqtt = new MQTTPublisher(MQTTServer.Text, Properties.Settings.Default.MQTTPort);
+                mqtt.connect(MQTTServer.Text, Properties.Settings.Default.MQTTPort);
                 MQTTServer.ForeColor = System.Drawing.SystemColors.WindowText;
             }
             else

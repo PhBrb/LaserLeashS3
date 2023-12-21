@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.Button();
             this.UnlockButton = new System.Windows.Forms.Button();
@@ -112,6 +112,8 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.logText = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.reconnectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.panel6.SuspendLayout();
@@ -153,22 +155,23 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartXY
             // 
-            chartArea7.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea7);
+            chartArea3.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea3);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend7.Name = "Legend1";
-            this.chartXY.Legends.Add(legend7);
+            legend3.Name = "Legend1";
+            this.chartXY.Legends.Add(legend3);
             this.chartXY.Location = new System.Drawing.Point(3, 461);
             this.chartXY.Name = "chartXY";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chartXY.Series.Add(series7);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartXY.Series.Add(series3);
             this.chartXY.Size = new System.Drawing.Size(1110, 185);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -220,18 +223,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea8.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea8);
+            chartArea4.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea4);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend8.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend8);
+            legend4.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend4);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 270);
             this.chartTimeseries.Name = "chartTimeseries";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chartTimeseries.Series.Add(series8);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartTimeseries.Series.Add(series4);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 185);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -548,9 +551,8 @@
             // tableLayoutPanel7
             // 
             this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.63213F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.36787F));
-            this.tableLayoutPanel7.Controls.Add(this.MQTTServer, 1, 0);
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53F));
             this.tableLayoutPanel7.Controls.Add(this.label19, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetIPInput, 0, 2);
             this.tableLayoutPanel7.Controls.Add(this.StreamTargetPortInput, 1, 2);
@@ -560,27 +562,28 @@
             this.tableLayoutPanel7.Controls.Add(this.label7, 0, 4);
             this.tableLayoutPanel7.Controls.Add(this.label22, 0, 5);
             this.tableLayoutPanel7.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.tableLayoutPanel9, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 6;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(193, 160);
             this.tableLayoutPanel7.TabIndex = 18;
             // 
             // MQTTServer
             // 
             this.MQTTServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MQTTServer.Location = new System.Drawing.Point(93, 3);
+            this.MQTTServer.Location = new System.Drawing.Point(0, 0);
+            this.MQTTServer.Margin = new System.Windows.Forms.Padding(0);
             this.MQTTServer.Name = "MQTTServer";
-            this.MQTTServer.Size = new System.Drawing.Size(97, 20);
+            this.MQTTServer.Size = new System.Drawing.Size(93, 20);
             this.MQTTServer.TabIndex = 26;
             this.MQTTServer.Text = "192.168.1.229";
             this.MQTTServer.TextChanged += new System.EventHandler(this.MQTTServer_TextChanged);
@@ -1368,6 +1371,34 @@
             this.logText.TabIndex = 37;
             this.logText.Text = "Hello";
             // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 2;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel9.Controls.Add(this.MQTTServer, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.reconnectButton, 1, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(90, 0);
+            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(103, 26);
+            this.tableLayoutPanel9.TabIndex = 27;
+            // 
+            // reconnectButton
+            // 
+            this.reconnectButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reconnectButton.Location = new System.Drawing.Point(93, 0);
+            this.reconnectButton.Margin = new System.Windows.Forms.Padding(0);
+            this.reconnectButton.Name = "reconnectButton";
+            this.reconnectButton.Size = new System.Drawing.Size(17, 20);
+            this.reconnectButton.TabIndex = 27;
+            this.reconnectButton.Text = "⟲";
+            this.reconnectButton.UseVisualStyleBackColor = true;
+            this.reconnectButton.Click += new System.EventHandler(this.reconnectButton_Click);
+            // 
             // SpectroscopyControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1425,6 +1456,8 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1508,6 +1541,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.Button reconnectButton;
     }
 }
 

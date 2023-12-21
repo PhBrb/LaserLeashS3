@@ -2,6 +2,8 @@ using System.Threading;
 using MQTTnet.Client;
 using System.Text;
 using MQTTnet;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading.Tasks;
 
 namespace ChartTest2
 {
@@ -15,14 +17,20 @@ namespace ChartTest2
 
         public MQTTPublisher(string server, int port)
         {
-            MqttClientOptions options = new MqttClientOptionsBuilder()
-                                     .WithTcpServer(server, port).Build();
-            mqttClient = new MqttFactory().CreateMqttClient();
-            mqttClient.ConnectAsync(options, CancellationToken.None);
-            SpectroscopyControlForm.WriteLine("Starting MQTT client");
+            connect(server, port);
 
             //format with . instead of , as decimal separator
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
+        }
+
+        public void connect(string server, int port)
+        {
+            mqttClient = new MqttFactory().CreateMqttClient();
+            MqttClientOptions options = new MqttClientOptionsBuilder()
+                                     .WithTcpServer(server, port).Build();
+            mqttClient.ConnectAsync(options, CancellationToken.None);
+
+            SpectroscopyControlForm.WriteLine("Starting MQTT client");
         }
 
         public void disconnect()
