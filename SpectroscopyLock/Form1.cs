@@ -310,6 +310,9 @@ namespace ChartTest2
 
         private void LockButton_Click(object sender, EventArgs e)
         {
+            LockButton.Checked = true;
+            UnlockButton.Checked = false;
+
             //keep previous range for timeseries
             double min, max;
             min = osciDisplay.GetDACMinNoUpdate();
@@ -336,6 +339,9 @@ namespace ChartTest2
 
         private void UnlockButton_Click(object sender, EventArgs e)
         {
+            LockButton.Checked = false;
+            UnlockButton.Checked = true;
+
             setScanRange(previousOffset - previousAmplitude, previousOffset + previousAmplitude);
 
             chartTimeseries.ChartAreas[0].AxisY.Maximum = double.NaN;
@@ -366,6 +372,9 @@ namespace ChartTest2
 
         private void InitButton_Click(object sender, EventArgs e)
         {
+            LockButton.Checked = false;
+            UnlockButton.Checked = false;
+
             mqtt.sendStreamTarget(StreamTargetIPInput.Text, StreamTargetPortInput.Text);
             mqtt.sendModulationAmplitude(Decimal.ToDouble(modAmpText.Value));
             mqtt.sendModulationAttenuation(Decimal.ToDouble(modAttText.Value));

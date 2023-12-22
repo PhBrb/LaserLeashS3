@@ -70,7 +70,7 @@ namespace ChartTest2
                     }
                     catch (SocketException)
                     {
-                        SpectroscopyControlForm.WriteLine("Timeout receiving streamed data");
+                        SpectroscopyControlForm.WriteLine("Timeout receiving data stream");
                     }
                 }
                 if (udpClient != null)

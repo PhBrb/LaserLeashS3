@@ -29,19 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.LockButton = new System.Windows.Forms.Button();
-            this.UnlockButton = new System.Windows.Forms.Button();
+            this.LockButton = new System.Windows.Forms.CheckBox();
+            this.UnlockButton = new System.Windows.Forms.CheckBox();
             this.InitButton = new System.Windows.Forms.Button();
             this.StreamTargetIPInput = new System.Windows.Forms.TextBox();
             this.chartTimeseries = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.modAmpText = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.modPhaseText = new System.Windows.Forms.NumericUpDown();
@@ -60,7 +61,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.MQTTServer = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.StreamTargetPortInput = new System.Windows.Forms.NumericUpDown();
             this.StabilizerIDInput = new System.Windows.Forms.MaskedTextBox();
@@ -69,6 +69,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.MQTTServer = new System.Windows.Forms.TextBox();
+            this.reconnectButton = new System.Windows.Forms.Button();
             this.PID = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
@@ -112,11 +115,10 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.logText = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.reconnectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).BeginInit();
             this.panel6.SuspendLayout();
+            this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.modAmpText)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.modPhaseText)).BeginInit();
@@ -133,6 +135,7 @@
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelInput)).BeginInit();
+            this.tableLayoutPanel9.SuspendLayout();
             this.PID.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.KiText)).BeginInit();
@@ -155,23 +158,22 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartXY
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea1);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chartXY.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.chartXY.Legends.Add(legend1);
             this.chartXY.Location = new System.Drawing.Point(3, 461);
             this.chartXY.Name = "chartXY";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartXY.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartXY.Series.Add(series1);
             this.chartXY.Size = new System.Drawing.Size(1110, 185);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -180,32 +182,42 @@
             // 
             // LockButton
             // 
+            this.LockButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.LockButton.AutoCheck = false;
+            this.LockButton.AutoSize = true;
             this.LockButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LockButton.Location = new System.Drawing.Point(0, 0);
+            this.LockButton.Location = new System.Drawing.Point(169, 3);
             this.LockButton.Name = "LockButton";
-            this.LockButton.Size = new System.Drawing.Size(870, 70);
+            this.LockButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.LockButton.Size = new System.Drawing.Size(604, 64);
             this.LockButton.TabIndex = 1;
             this.LockButton.Text = "Lock";
+            this.LockButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.LockButton.UseVisualStyleBackColor = true;
             this.LockButton.Click += new System.EventHandler(this.LockButton_Click);
             // 
             // UnlockButton
             // 
-            this.UnlockButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UnlockButton.Location = new System.Drawing.Point(870, 0);
+            this.UnlockButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.UnlockButton.AutoCheck = false;
+            this.UnlockButton.AutoSize = true;
+            this.UnlockButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UnlockButton.Location = new System.Drawing.Point(779, 3);
             this.UnlockButton.Name = "UnlockButton";
-            this.UnlockButton.Size = new System.Drawing.Size(240, 70);
+            this.UnlockButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.UnlockButton.Size = new System.Drawing.Size(328, 64);
             this.UnlockButton.TabIndex = 2;
             this.UnlockButton.Text = "Unlock";
+            this.UnlockButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.UnlockButton.UseVisualStyleBackColor = true;
             this.UnlockButton.Click += new System.EventHandler(this.UnlockButton_Click);
             // 
             // InitButton
             // 
-            this.InitButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.InitButton.Location = new System.Drawing.Point(0, 0);
+            this.InitButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.InitButton.Location = new System.Drawing.Point(3, 3);
             this.InitButton.Name = "InitButton";
-            this.InitButton.Size = new System.Drawing.Size(158, 70);
+            this.InitButton.Size = new System.Drawing.Size(160, 64);
             this.InitButton.TabIndex = 17;
             this.InitButton.Text = "Initialize";
             this.InitButton.UseVisualStyleBackColor = true;
@@ -223,18 +235,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea4);
+            chartArea2.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea2);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend2);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 270);
             this.chartTimeseries.Name = "chartTimeseries";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartTimeseries.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartTimeseries.Series.Add(series2);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 185);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -242,14 +254,29 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.InitButton);
-            this.panel6.Controls.Add(this.LockButton);
-            this.panel6.Controls.Add(this.UnlockButton);
+            this.panel6.Controls.Add(this.tableLayoutPanel10);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 194);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(1110, 70);
             this.panel6.TabIndex = 36;
+            // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 3;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel10.Controls.Add(this.LockButton, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.UnlockButton, 2, 0);
+            this.tableLayoutPanel10.Controls.Add(this.InitButton, 0, 0);
+            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 1;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(1110, 70);
+            this.tableLayoutPanel10.TabIndex = 18;
             // 
             // modAmpText
             // 
@@ -577,17 +604,6 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(193, 160);
             this.tableLayoutPanel7.TabIndex = 18;
             // 
-            // MQTTServer
-            // 
-            this.MQTTServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MQTTServer.Location = new System.Drawing.Point(0, 0);
-            this.MQTTServer.Margin = new System.Windows.Forms.Padding(0);
-            this.MQTTServer.Name = "MQTTServer";
-            this.MQTTServer.Size = new System.Drawing.Size(93, 20);
-            this.MQTTServer.TabIndex = 26;
-            this.MQTTServer.Text = "192.168.1.229";
-            this.MQTTServer.TextChanged += new System.EventHandler(this.MQTTServer_TextChanged);
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -682,6 +698,45 @@
             this.label5.Size = new System.Drawing.Size(72, 17);
             this.label5.TabIndex = 25;
             this.label5.Text = "MQTT Server";
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 2;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel9.Controls.Add(this.MQTTServer, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.reconnectButton, 1, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(90, 0);
+            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(103, 26);
+            this.tableLayoutPanel9.TabIndex = 27;
+            // 
+            // MQTTServer
+            // 
+            this.MQTTServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MQTTServer.Location = new System.Drawing.Point(0, 0);
+            this.MQTTServer.Margin = new System.Windows.Forms.Padding(0);
+            this.MQTTServer.Name = "MQTTServer";
+            this.MQTTServer.Size = new System.Drawing.Size(85, 20);
+            this.MQTTServer.TabIndex = 26;
+            this.MQTTServer.Text = "192.168.1.229";
+            this.MQTTServer.TextChanged += new System.EventHandler(this.MQTTServer_TextChanged);
+            // 
+            // reconnectButton
+            // 
+            this.reconnectButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reconnectButton.Location = new System.Drawing.Point(85, 0);
+            this.reconnectButton.Margin = new System.Windows.Forms.Padding(0);
+            this.reconnectButton.Name = "reconnectButton";
+            this.reconnectButton.Size = new System.Drawing.Size(18, 26);
+            this.reconnectButton.TabIndex = 27;
+            this.reconnectButton.Text = "⟲";
+            this.reconnectButton.UseVisualStyleBackColor = true;
+            this.reconnectButton.Click += new System.EventHandler(this.reconnectButton_Click);
             // 
             // PID
             // 
@@ -1371,34 +1426,6 @@
             this.logText.TabIndex = 37;
             this.logText.Text = "Hello";
             // 
-            // tableLayoutPanel9
-            // 
-            this.tableLayoutPanel9.ColumnCount = 2;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel9.Controls.Add(this.MQTTServer, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.reconnectButton, 1, 0);
-            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(90, 0);
-            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 1;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(103, 26);
-            this.tableLayoutPanel9.TabIndex = 27;
-            // 
-            // reconnectButton
-            // 
-            this.reconnectButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reconnectButton.Location = new System.Drawing.Point(93, 0);
-            this.reconnectButton.Margin = new System.Windows.Forms.Padding(0);
-            this.reconnectButton.Name = "reconnectButton";
-            this.reconnectButton.Size = new System.Drawing.Size(17, 20);
-            this.reconnectButton.TabIndex = 27;
-            this.reconnectButton.Text = "⟲";
-            this.reconnectButton.UseVisualStyleBackColor = true;
-            this.reconnectButton.Click += new System.EventHandler(this.reconnectButton_Click);
-            // 
             // SpectroscopyControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1410,6 +1437,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartXY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeseries)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.modAmpText)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.modPhaseText)).EndInit();
@@ -1428,6 +1457,8 @@
             this.tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StreamTargetPortInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelInput)).EndInit();
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
             this.PID.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -1456,8 +1487,6 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1465,8 +1494,8 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartXY;
-        private System.Windows.Forms.Button LockButton;
-        private System.Windows.Forms.Button UnlockButton;
+        private System.Windows.Forms.CheckBox LockButton;
+        private System.Windows.Forms.CheckBox UnlockButton;
         private System.Windows.Forms.Button InitButton;
         private System.Windows.Forms.TextBox StreamTargetIPInput;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeseries;
@@ -1543,6 +1572,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.Button reconnectButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
     }
 }
 
