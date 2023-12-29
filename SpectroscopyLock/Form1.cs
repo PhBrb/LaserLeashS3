@@ -384,8 +384,7 @@ namespace ChartTest2
             mqtt.sendDemodulationAmplitude(Decimal.ToDouble(demodAmpText.Value));
             mqtt.sendPhase(Decimal.ToDouble(modPhaseText.Value));
             double min = Decimal.ToDouble(YminText.Value), max = Decimal.ToDouble(YmaxText.Value);
-            mqtt.sendScanAmplitude((max-min)/2);
-            mqtt.sendScanOffset((max+min)/2, min, max);
+            setScanRange(min, max);
             mqtt.sendScanFrequency(Decimal.ToDouble(FGFrequencyText.Value));
             mqtt.sendScanSymmetry(1);
             mqtt.sendSignal();
