@@ -304,7 +304,7 @@ namespace ChartTest2
                 var posXStart = (xMax + xMin) / 2 - (xMax - xMin) / 1.3;
                 var posXFinish = (xMax + xMin) / 2 + (xMax - xMin) / 1.3;
 
-                setScanRange(Math.Max(posXStart, 0), Math.Min(posXFinish, 10));
+                setScanRange(Math.Max(posXStart, Decimal.ToDouble(YminText.Value)), Math.Min(posXFinish, Decimal.ToDouble(YmaxText.Value)));
             }
         }
 
