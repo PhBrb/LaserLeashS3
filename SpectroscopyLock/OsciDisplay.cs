@@ -11,7 +11,6 @@ namespace ChartTest2
     {
         Memory memory;
         int averages = Properties.Settings.Default.Averages;
-        double XYSmoothing = Properties.Settings.Default.XYSmoothing;
         int pointsOnDisplay = Properties.Settings.Default.DisplayResolution;
 
         /// <summary>
@@ -207,11 +206,6 @@ namespace ChartTest2
                     i--;
                 }
                 adcList[i] = (sum + adcList[i]) / sumCount;
-
-                if (i < adcList.Count - 1)
-                {
-                    adcList[i] = (1 - XYSmoothing) * adcList[i] + XYSmoothing * adcList[i + 1]; //apply low pass filter
-                }
             }
             return (dacList.ToArray(), adcList.ToArray());
         }
@@ -246,16 +240,6 @@ namespace ChartTest2
             adcDataSorted = new double[size];
             dacDataSorted = new double[size];
             _UpdateTimeData();
-        }
-
-        public void setXYSmoothing(double value)
-        {
-            lock (editJobs)
-                editJobs.Add(() => _setXYSmoothing(value));
-        }
-        private void _setXYSmoothing(double value)
-        {
-            XYSmoothing = value;
         }
 
         /// <summary>

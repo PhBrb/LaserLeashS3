@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.CheckBox();
             this.UnlockButton = new System.Windows.Forms.CheckBox();
@@ -90,8 +90,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.XYSmoothing = new System.Windows.Forms.NumericUpDown();
             this.MemorySizeText = new System.Windows.Forms.NumericUpDown();
             this.samplesOnDisplayText = new System.Windows.Forms.NumericUpDown();
             this.AveragesText = new System.Windows.Forms.NumericUpDown();
@@ -146,7 +144,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.XYSmoothing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MemorySizeText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.samplesOnDisplayText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).BeginInit();
@@ -162,18 +159,18 @@
             // 
             // chartXY
             // 
-            chartArea17.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea17);
+            chartArea19.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea19);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend17.Name = "Legend1";
-            this.chartXY.Legends.Add(legend17);
+            legend19.Name = "Legend1";
+            this.chartXY.Legends.Add(legend19);
             this.chartXY.Location = new System.Drawing.Point(3, 461);
             this.chartXY.Name = "chartXY";
-            series17.ChartArea = "ChartArea1";
-            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series17.Legend = "Legend1";
-            series17.Name = "Series1";
-            this.chartXY.Series.Add(series17);
+            series19.ChartArea = "ChartArea1";
+            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series19.Legend = "Legend1";
+            series19.Name = "Series1";
+            this.chartXY.Series.Add(series19);
             this.chartXY.Size = new System.Drawing.Size(1110, 185);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -235,18 +232,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea18.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea18);
+            chartArea20.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea20);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend18.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend18);
+            legend20.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend20);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 270);
             this.chartTimeseries.Name = "chartTimeseries";
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series18.Legend = "Legend1";
-            series18.Name = "Series1";
-            this.chartTimeseries.Series.Add(series18);
+            series20.ChartArea = "ChartArea1";
+            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series20.Legend = "Legend1";
+            series20.Name = "Series1";
+            this.chartTimeseries.Series.Add(series20);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 185);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -1007,8 +1004,6 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.label14, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.label16, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label21, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.XYSmoothing, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.MemorySizeText, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.samplesOnDisplayText, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.AveragesText, 1, 2);
@@ -1044,41 +1039,6 @@
             this.label16.Size = new System.Drawing.Size(88, 28);
             this.label16.TabIndex = 5;
             this.label16.Text = "Graph resolution [Samples]";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label21.Location = new System.Drawing.Point(3, 84);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(88, 30);
-            this.label21.TabIndex = 7;
-            this.label21.Text = "XY Smoothing [0:1]";
-            // 
-            // XYSmoothing
-            // 
-            this.XYSmoothing.DecimalPlaces = 1;
-            this.XYSmoothing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.XYSmoothing.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.XYSmoothing.Location = new System.Drawing.Point(97, 87);
-            this.XYSmoothing.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.XYSmoothing.Name = "XYSmoothing";
-            this.XYSmoothing.Size = new System.Drawing.Size(89, 20);
-            this.XYSmoothing.TabIndex = 8;
-            this.XYSmoothing.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            65536});
-            this.XYSmoothing.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // MemorySizeText
             // 
@@ -1473,7 +1433,6 @@
             this.groupBox5.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.XYSmoothing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MemorySizeText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.samplesOnDisplayText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AveragesText)).EndInit();
@@ -1556,8 +1515,6 @@
         private System.Windows.Forms.TextBox logText;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown samplesOnDisplayText;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown XYSmoothing;
         private System.Windows.Forms.CheckBox freezeMemoryCheckbox;
         private System.Windows.Forms.NumericUpDown StreamTargetPortInput;
         private System.Windows.Forms.ToolTip toolTip1;

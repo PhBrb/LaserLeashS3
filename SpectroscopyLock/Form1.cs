@@ -156,7 +156,6 @@ namespace ChartTest2
             SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second\nClears memory when changed");
             SetNumericTooltip(samplesOnDisplayText);
             SetNumericTooltip(AveragesText);
-            SetNumericTooltip(XYSmoothing, "Implemented as a low pass filter");
             SetNumericTooltip(FGFrequencyText);
             SetNumericTooltip(FGAmplitudeText);
             SetNumericTooltip(ChannelInput);

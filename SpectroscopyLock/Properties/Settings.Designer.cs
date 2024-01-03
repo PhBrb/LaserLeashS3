@@ -253,18 +253,6 @@ namespace ChartTest2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
-        public double XYSmoothing {
-            get {
-                return ((double)(this["XYSmoothing"]));
-            }
-            set {
-                this["XYSmoothing"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int Channel {
             get {

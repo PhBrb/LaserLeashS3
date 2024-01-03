@@ -34,7 +34,6 @@ namespace ChartTest2
                 {FGAmplitudeText, (amplitude) => {previousAmplitude = amplitude; mqtt.sendScanAmplitude(amplitude); } },
                 {FGFrequencyText, mqtt.sendScanFrequency},
                 {MemorySizeText, MemoryResize},
-                {XYSmoothing, osciDisplay.setXYSmoothing },
                 {KpText, PID_ValueChanged},
                 {KiText, PID_ValueChanged},
                 {KdText, PID_ValueChanged},
@@ -66,7 +65,6 @@ namespace ChartTest2
                 {FGAmplitudeText, (value) => { }}, //TODO properly implement function generator
                 {FGFrequencyText, (value) => { }},
                 {MemorySizeText, (value) => Properties.Settings.Default.MemorySize = value},
-                {XYSmoothing, (value) => Properties.Settings.Default.XYSmoothing = value },
                 {KpText,  (value) => Properties.Settings.Default.P = value},
                 {KiText,  (value) => Properties.Settings.Default.I = value},
                 {KdText,  (value) => Properties.Settings.Default.D = value},
@@ -211,7 +209,6 @@ namespace ChartTest2
             //FGAmplitudeText.Value = ;//TODO properly implement function generator
             //FGFrequencyText.Value = ;
             MemorySizeText.Value = (decimal)Properties.Settings.Default.MemorySize;
-            XYSmoothing.Value = (decimal)Properties.Settings.Default.XYSmoothing;
             AveragesText.Value = Properties.Settings.Default.Averages;
             samplesOnDisplayText.Value = Properties.Settings.Default.DisplayResolution;
 
