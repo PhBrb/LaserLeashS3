@@ -6,7 +6,7 @@ A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Poun
 
 ## Usage:
 
-![GUI Image](GUI.PNG)
+![GUI Image](media/GUI.PNG)
 
 ### Lock the laser
 1. Start Stabilizer with https://github.com/quartiq/stabilizer/pull/725
