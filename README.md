@@ -4,10 +4,10 @@ A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Poun
  - Network Oscilloscope
  - Click & lock
 
-## Usage:
 
 ![GUI Image](media/GUI.PNG)
 
+## Usage:
 ### Lock the laser
 1. Start Stabilizer with https://github.com/quartiq/stabilizer/pull/725
 1. Start MQTT broker
