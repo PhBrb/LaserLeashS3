@@ -388,6 +388,8 @@ namespace ChartTest2
             mqtt.sendScanSymmetry(1);
             mqtt.sendSignal();
             lockMode = false;
+
+            InitButton.BackColor = System.Drawing.SystemColors.Control;
         }
 
         public static void WriteLine(string message)
