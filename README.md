@@ -4,6 +4,7 @@ A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Poun
  - Network Oscilloscope
  - Click & lock
 
+We demonstrated a frequency modulation spectroscopy and reached a stability of TODO.
 
 ![GUI Image](media/GUI.PNG)
 
@@ -36,12 +37,15 @@ A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Poun
 * SHG NTT Electronics WH-0780-000-F-B-C-M
 * Frequency Modulation Spectroscopy cell Vescent D2-210-Rb-FC (~ 1 mW laser input power)
 
+TODO add schematic of setup
+
 The image above shows the spectrum of Rb85 F=3, F'=2,3,4 including crossover peaks, recorded with this setup.
 
 ## Tests
 * TODO
 
 ![Wavelength measurement](./media/wavelength.png)
+
 Wavelength measurement with a Bristol 671A. PID values 0.4, 0.16, 0 (not optimized). The datasheet of the wavelength meter specifies a repeatability of ~15 MHz.
 
 ## Possible future features
