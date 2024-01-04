@@ -9,9 +9,9 @@ A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Poun
 
 ## Usage:
 ### Lock the laser
-1. Start Stabilizer with https://github.com/quartiq/stabilizer/pull/725
+1. Start the Stabilizer with the firmware from this pull request https://github.com/quartiq/stabilizer/pull/725
 1. Start MQTT broker
-1. Start Software
+1. Start this Software
 1. Click initialize to send initial values to stabilizer & pounder
 1. Double click XY plot to zoom into that area, zoom until the transition is nicely visible, wait for old data to flush
     * Select 0.5 signal symmetry to make sure you are not prone to hysteresis, but use 1 at larger sweep ranges to improve signal quality
