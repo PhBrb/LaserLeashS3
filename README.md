@@ -41,6 +41,8 @@ The image above shows the spectrum of Rb85 F=3, F'=2,3,4 including crossover pea
 ## Tests
 * TODO
 
+![Wavelength measurement](./media/wavelength.png)
+Wavelength measurement with a Bristol 671A. PID values 0.4, 0.16, 0 (not optimized). The datasheet of the wavelength meter specifies a repeatability of ~15 MHz.
 
 ## Possible future features
 - Reading back MQTT parameters, at the moment it is not checked if a setting was applied successfully
