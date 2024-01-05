@@ -33,7 +33,7 @@ We demonstrated a frequency modulation spectroscopy and reached a stability of T
 ## Example Setup
 The image above shows the spectrum of Rb85 F=3, F'=2,3,4 transitions including crossover peaks, recorded with the following setup.
 
-![Setup schematic](./media/schematic.svg)
+<img src="./media/schematic.svg" alt="Setup schematic" width="600"/>
 
 * Fiber Laser NKT Koheras Basik Mikro at 1560 nm (~ 40 mW output, wavelength modulation with piezo)
 * 99:1 fiber splitter
