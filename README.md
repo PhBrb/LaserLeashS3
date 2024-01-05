@@ -31,22 +31,22 @@ We demonstrated a frequency modulation spectroscopy and reached a stability of T
 
 
 ## Example Setup
-* Fiber Laser 1560 nm NKT Koheras Basik Mikro (~ 40 mW output, wavelength modulation with piezo)
-* 99:1 fiber splitter (for beat measurement)
+The image above shows the spectrum of Rb85 F=3, F'=2,3,4 transitions including crossover peaks, recorded with the following setup.
+
+![Setup schematic](./media/schematic.svg)
+
+* Fiber Laser NKT Koheras Basik Mikro at 1560 nm (~ 40 mW output, wavelength modulation with piezo)
+* 99:1 fiber splitter
 * EOM iXBlue MPZ-LN-10 
 * SHG NTT Electronics WH-0780-000-F-B-C-M
-* Frequency Modulation Spectroscopy cell Vescent D2-210-Rb-FC (~ 1 mW laser input power)
-
-TODO add schematic of setup
-
-The image above shows the spectrum of Rb85 F=3, F'=2,3,4 including crossover peaks, recorded with this setup.
+* Frequency Modulation Spectroscopy cell Vescent D2-210-Rb-FC (~1 mW laser input power)
 
 ## Tests
 * TODO
 
 ![Wavelength measurement](./media/wavelength.png)
 
-Wavelength measurement with a Bristol 671A. PID values 0.4, 0.16, 0 (not optimized). The datasheet of the wavelength meter specifies a repeatability of ~15 MHz.
+Wavelength measurement using the 1% pick off with a Bristol 671A. PID values 0.4, 0.16, 0 (not optimized). The datasheet of the wavelength meter specifies a repeatability of ~15 MHz.
 
 ## Possible future features
 - Reading back MQTT parameters, at the moment it is not checked if a setting was applied successfully
