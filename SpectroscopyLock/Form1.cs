@@ -394,6 +394,8 @@ namespace LaserLeash
 
         public static void WriteLine(string message)
         {
+            if (!(form != null && form.logText.InvokeRequired))
+                Console.WriteLine(message);
             if (form == null)
                 return;
             if (SpectroscopyControlForm.stopped)
