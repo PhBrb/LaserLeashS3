@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public class CyclicArray
     {

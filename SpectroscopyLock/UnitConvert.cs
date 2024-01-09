@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public static class UnitConvert
     {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public class UDPReceiver
     {

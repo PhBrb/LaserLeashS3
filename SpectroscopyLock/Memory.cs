@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public class Memory
     {

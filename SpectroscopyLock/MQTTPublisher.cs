@@ -5,7 +5,7 @@ using MQTTnet;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading.Tasks;
 
-namespace ChartTest2
+namespace LaserLeash
 {
 
     public class MQTTPublisher

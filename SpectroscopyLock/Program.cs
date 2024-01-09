@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Threading;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     internal static class Program
     {

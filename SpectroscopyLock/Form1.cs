@@ -8,11 +8,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Net.Configuration;
-using ChartTest2.Properties;
+using LaserLeash.Properties;
 using System.IO;
 using System.Globalization;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public partial class SpectroscopyControlForm : Form
     {
@@ -389,7 +389,7 @@ namespace ChartTest2
             mqtt.sendSignal();
             lockMode = false;
 
-            InitButton.BackColor = System.Drawing.SystemColors.Control;
+            InitButton.BackColor = System.Drawing.SystemColors.Control; //this is the same color as the other buttons, but looks different...
         }
 
         public static void WriteLine(string message)

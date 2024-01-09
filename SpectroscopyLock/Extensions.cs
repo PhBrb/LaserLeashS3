@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public static class Extensions
     {

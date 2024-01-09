@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     public static class Deserializer
     {

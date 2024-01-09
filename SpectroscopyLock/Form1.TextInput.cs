@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ChartTest2
+namespace LaserLeash
 {
     /// <summary>
     /// Contains logic handling user input; loading, saving and forwarding changed values. Generic actions are collected in a map, more complex logic is handled individually.
