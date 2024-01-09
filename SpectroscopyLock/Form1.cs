@@ -35,7 +35,7 @@ namespace LaserLeash
 
         public static SpectroscopyControlForm form;
 
-        public bool stopped { get; private set; }
+        public static bool stopped { get; private set; }
         public bool receiveEvents { get; private set; }
 
         public SpectroscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
@@ -396,7 +396,7 @@ namespace LaserLeash
         {
             if (form == null)
                 return;
-            if (form.stopped)
+            if (SpectroscopyControlForm.stopped)
                 return;
             if (form.logText.InvokeRequired)
             {

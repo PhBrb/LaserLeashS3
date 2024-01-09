@@ -45,11 +45,10 @@ namespace LaserLeash
                 while (!formReady)
                     Thread.Sleep(10);
 
-                while (!form.stopped)
+                while (!SpectroscopyControlForm.stopped)
                 {
                     udpReceiver.DeserializeTo(memory);
                 }
-                udpReceiver.Stop();
             }));
             deserializerThread.Start();
 
@@ -59,7 +58,7 @@ namespace LaserLeash
                 while(!formReady)
                     Thread.Sleep(10);
                 
-                while (!form.stopped)
+                while (!SpectroscopyControlForm.stopped)
                 {
                     form.RefreshData();
                     Thread.Sleep(50);

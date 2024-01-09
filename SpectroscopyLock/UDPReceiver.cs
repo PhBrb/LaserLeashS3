@@ -11,10 +11,6 @@ namespace LaserLeash
 {
     public class UDPReceiver
     {
-        /// <summary>
-        /// Stops the thread
-        /// </summary>
-        private bool stop = false;
         private Thread thread;
         public int port;
 
@@ -31,7 +27,7 @@ namespace LaserLeash
                 UdpClient udpClient = null;
                 uint lastSequenceNumber = 0;
                 uint skipped = 0;
-                while (!stop)
+                while (!SpectroscopyControlForm.stopped)
                 {
                     if (udpClient == null || ((IPEndPoint)udpClient.Client.LocalEndPoint).Port != port)
                     {
@@ -58,7 +54,6 @@ namespace LaserLeash
                     {
                         ReuseBuffer.Frame frame = buffer.getNextBuffer();
                         udpClient.Client.Receive(frame.data);
-
                         frame.calcMetadata();
 
                         int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / 22 - 1;
@@ -87,16 +82,7 @@ namespace LaserLeash
         /// <returns></returns>
         public void Start()
         {
-            stop = false;
             thread.Start();
-        }
-
-        /// <summary>
-        /// Request the thread to stop. Continues before thread has stopped.
-        /// </summary>
-        public void Stop()
-        {
-            stop = true;
         }
 
         /// <summary>
@@ -107,6 +93,8 @@ namespace LaserLeash
         public void DeserializeTo(Memory memory)
         {
             ReuseBuffer.Frame frame = buffer.getNextFrame();
+            if(frame == null)
+                return;
             lock(memory)
                 Deserializer.Deserialize(frame.data, memory);
         }

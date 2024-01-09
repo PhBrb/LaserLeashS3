@@ -52,7 +52,9 @@ namespace LaserLeash
         {
             int next = (readingFrom + 1) % size;
             while (next == writingTo)
-            {//TODO is SpinWait appropriate here?
+            {
+                if (SpectroscopyControlForm.stopped == true)
+                    return null;
             }
             readingFrom = next;
             Frame ret = frames[next];
