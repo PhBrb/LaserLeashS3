@@ -17,17 +17,17 @@ We demonstrated a frequency modulation spectroscopy and reached a stability of T
 1. Double click XY plot to zoom into that area, zoom until the transition is nicely visible, wait for old data to flush
     * Select 0.5 signal symmetry to make sure you are not prone to hysteresis, but use 1 at larger sweep ranges to improve signal quality
 1. Move red line to the wanted transition with a single click
-1. Click Lock. The XY plot will keep showing the last data samples, so you can check if the output value drifts too far away. You can freeze data recording to get a more detailed look at the lock procedure. Double-click the time series to zoom in, double right click to zoom out.
+1. Click Lock. The XY plot will keep showing the last data samples, so you can check if the output value (indicated by gray line) drifts too far away. You can freeze data recording to get a more detailed look at the lock procedure. Double-click the time series to zoom in, double right click to zoom out.
 * Unlock disables the PID and activates the function generator. The amplitude of the sweeping is equal to the amplitude before locking.
 
 ### Settings
-* DDS: Change modulation and demodulation properties, good values are setup dependent. The modulation and demodulation frequency should be the same, unless you intentionally want to create a bad signal.
+* DDS: Change the modulation and demodulation properties, good values are setup dependent. The modulation and demodulation frequency should be the same, unless you intentionally want to create a bad signal.
 * PID: PID parameters of the Stabilizer, this will only be applied when the system gets locked
-* Connectivity: Specify MQTT server IP; where the stabilizer stream should go (usually the IP of your PC, the software also listens on the specified port) and the ID of the stabilizer
-* Oscilloscope: Change behavior of data visualization; How much data to keep in the memory, how many points to show in the graph and how many consecutive data points to average. Allows freezing the memory (no new data will be written to memory while active) and saving the current memory in a file
+* Connectivity: Specify MQTT server IP; where the stabilizer stream should go (usually the IP of your PC, the software listens on the specified port) and the ID of the stabilizer
+* Oscilloscope: Change the behavior of data visualization; How much data to keep in the memory, how many points to show in the graph and how many consecutive data points to average. Allows freezing the memory (no new data will be written to memory while active) and saving the current memory in a file
    * The upper graph will show a time series of the stabilizer input (demodulated signal, right axis) and output (left axis)
    * The lower graph will show an XY plot of the input and output signal
-* Function generator: rudimentary implementation, only control over sweeping frequency and signal symmetry implemented (change symmetry based on severeness of eg, piezo hysteresis)
+* Function generator: rudimentary implementation, only control over sweeping frequency and signal symmetry implemented (change symmetry based on severeness of eg. piezo hysteresis)
 
 
 ## Example Setup
