@@ -57,10 +57,8 @@ namespace LaserLeash
 
             newestDataPosition = Math.Max(positionToWriteTo, newestDataPosition);
 
-            if (skip == 0 && !double.IsNaN(array[positionToWriteTo % size]))
-                throw new ArgumentException();
             array[positionToWriteTo%size] = value;
-            array[(positionToWriteTo+1)%size] = double.NaN;
+
             fresh = false;
         }
 
