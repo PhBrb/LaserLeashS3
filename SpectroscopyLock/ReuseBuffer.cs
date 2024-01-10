@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace LaserLeash
 {
@@ -36,9 +37,13 @@ namespace LaserLeash
         /// <returns></returns>
         public Frame getNextBuffer()
         {
+            SpinWait spin = new SpinWait();
             int next = (writingTo + 1) % size;
             while (next == readingFrom)
-            {//TODO is SpinWait appropriate here?
+            {
+                spin.SpinOnce();
+                if (SpectroscopyControlForm.stopped == true)
+                    return null;
             }
             writingTo = next;
             return frames[next];
@@ -50,9 +55,11 @@ namespace LaserLeash
         /// <returns></returns>
         public Frame getNextFrame()
         {
+            SpinWait spin = new SpinWait();
             int next = (readingFrom + 1) % size;
             while (next == writingTo)
             {
+                spin.SpinOnce();
                 if (SpectroscopyControlForm.stopped == true)
                     return null;
             }

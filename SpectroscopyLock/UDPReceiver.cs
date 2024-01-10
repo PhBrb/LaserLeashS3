@@ -54,6 +54,8 @@ namespace LaserLeash
                     try
                     {
                         ReuseBuffer.Frame frame = buffer.getNextBuffer();
+                        if (frame == null)
+                            continue;
                         udpClient.Client.Receive(frame.data);
                         frame.calcMetadata();
 
