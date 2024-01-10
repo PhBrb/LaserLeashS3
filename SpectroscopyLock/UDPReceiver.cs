@@ -26,6 +26,7 @@ namespace LaserLeash
             {
                 UdpClient udpClient = null;
                 uint lastSequenceNumber = 0;
+                uint firstSequenceNumber = 0;
                 uint skipped = 0;
                 while (!SpectroscopyControlForm.stopped)
                 {
@@ -56,12 +57,17 @@ namespace LaserLeash
                         udpClient.Client.Receive(frame.data);
                         frame.calcMetadata();
 
+#if DEBUG //calculate skipped frames
                         int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / 22 - 1;
                         lastSequenceNumber = frame.sequenceNumber;
+                        if (firstSequenceNumber == 0)
+                            firstSequenceNumber = lastSequenceNumber - 1;
                         if (skip > 0 && skip < 1000)
                         {
                             skipped += (uint)skip * 22;
+                            Console.WriteLine($"Skipped: {(100.0 * skipped) / (lastSequenceNumber - firstSequenceNumber) : 0.00} %");
                         }
+#endif
                     }
                     catch (SocketException)
                     {
