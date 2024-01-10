@@ -40,9 +40,9 @@ namespace LaserLeash
             {
                 long position = adc.newestDataPosition;
                 adc = new CyclicArray(adc.getSize());
-                adc.setPosition(position);
+                adc.setNewestDataPosition(position);
                 dac = new CyclicArray(dac.getSize());
-                dac.setPosition(position);
+                dac.setNewestDataPosition(position);
             }
         }
 
