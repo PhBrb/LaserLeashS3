@@ -60,14 +60,14 @@ namespace LaserLeash
                         frame.calcMetadata();
 
 #if DEBUG //calculate skipped frames
-                        int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / 22 - 1;
+                        int skip = (int)(frame.sequenceNumber - lastSequenceNumber) / Deserializer.batchesPerFrame - 1;
                         lastSequenceNumber = frame.sequenceNumber;
                         if (firstSequenceNumber == 0)
-                            firstSequenceNumber = lastSequenceNumber - 1;
+                            firstSequenceNumber = lastSequenceNumber - 1;//-1 to avoid division by 0
                         if (skip > 0 && skip < 1000)
                         {
-                            skipped += (uint)skip * 22;
-                            Console.WriteLine($"Skipped: {(100.0 * skipped) / (lastSequenceNumber - firstSequenceNumber) : 0.00} %");
+                            skipped += (uint)skip * Deserializer.batchesPerFrame;
+                            Console.WriteLine($"Skipped: {(100.0 * skipped) / (lastSequenceNumber - firstSequenceNumber) : 0.00} %"); //will be wrong if there was a timejump
                         }
 #endif
                     }

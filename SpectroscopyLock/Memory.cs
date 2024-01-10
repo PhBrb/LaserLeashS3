@@ -8,7 +8,6 @@ namespace LaserLeash
         private CyclicArray adc;
         private CyclicArray dac;
 
-        public uint lastSequenceNumber;
         public int consecutiveTimeJumpsBack;
         
         public bool freeze = false;
@@ -38,11 +37,8 @@ namespace LaserLeash
         {
             lock (locker)
             {
-                long position = adc.newestDataPosition;
                 adc = new CyclicArray(adc.getSize());
-                adc.setNewestDataPosition(position);
                 dac = new CyclicArray(dac.getSize());
-                dac.setNewestDataPosition(position);
             }
         }
 

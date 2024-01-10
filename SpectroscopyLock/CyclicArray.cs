@@ -59,11 +59,6 @@ namespace LaserLeash
             return ((int)(x % m) + m) % m;
         }
 
-        public void setNewestDataPosition(long pos)
-        {
-            newestDataPosition = pos;
-        }
-
         public void writeAt(double value, uint sequence, int batch, int sample)
         {
             long positionToWriteTo = (sequence + batch) * batchSize + sample;
