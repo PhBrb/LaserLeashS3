@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace LaserLeash
 {
@@ -8,11 +7,22 @@ namespace LaserLeash
         private CyclicArray adc;
         private CyclicArray dac;
 
-        public int consecutiveTimeJumpsBack;
         
+        /// <summary>
+        /// If true, no new data will be written to the memory.
+        /// </summary>
         public bool freeze = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public object locker = new object();
 
+        /// <summary>
+        /// Holds datastructures, for streamdata of ADC and DAC channels
+        /// </summary>
+        /// <param name="size"></param>
+        /// <exception cref="ArgumentException"></exception>
         public Memory(int size)
         {
             if (size < 1)

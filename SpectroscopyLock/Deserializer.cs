@@ -18,6 +18,7 @@ namespace LaserLeash
 
         public const int batchesPerFrame = 22;
         private static uint lastSequenceNumber;
+        private static int consecutiveTimeJumpsBack;
 
         /// <summary>
         /// Deserializes stream data and writes it to memory
@@ -41,11 +42,11 @@ namespace LaserLeash
                 //handle not monotonically increasing sequenceNumbers
                 if (h.sequenceNumber < lastSequenceNumber)
                 {
-                    memory.consecutiveTimeJumpsBack += 1;
+                    consecutiveTimeJumpsBack += 1;
                     SpectroscopyControlForm.WriteLine("Received data out of order");
 
                     //if consistent time jump backwards happened eg. on sequence number overflow or stabilizer reset
-                    if (memory.consecutiveTimeJumpsBack > 7)
+                    if (consecutiveTimeJumpsBack > 7)
                     {
                         SpectroscopyControlForm.WriteLine("Time jump detected, resetting memory.");
                         memory.clear();
@@ -70,7 +71,7 @@ namespace LaserLeash
                 }
                 else
                 {
-                    memory.consecutiveTimeJumpsBack = 0;
+                    consecutiveTimeJumpsBack = 0;
                 }
 
                 lastSequenceNumber = h.sequenceNumber;

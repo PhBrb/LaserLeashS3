@@ -4,6 +4,11 @@ namespace LaserLeash
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Formats elements into [a, b, ...]
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public static string ToBracketString(this IList<double> list)
         {
             string ret = "[";
