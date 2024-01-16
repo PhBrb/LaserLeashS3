@@ -921,7 +921,7 @@
             this.label13.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label13.Size = new System.Drawing.Size(45, 30);
             this.label13.TabIndex = 5;
-            this.label13.Text = "Sample Rate";
+            this.label13.Text = "Sample Period";
             // 
             // YminText
             // 
