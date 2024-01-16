@@ -6,7 +6,6 @@ namespace LaserLeash
 {
     internal static class Program
     {
-
         public static UDPReceiver udpReceiver;
         static Thread deserializerThread;
         static Thread displayRefreshThread;

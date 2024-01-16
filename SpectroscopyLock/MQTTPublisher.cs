@@ -2,15 +2,11 @@ using System.Threading;
 using MQTTnet.Client;
 using System.Text;
 using MQTTnet;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Threading.Tasks;
 
 namespace LaserLeash
 {
-
     public class MQTTPublisher
     {
-
         IMqttClient mqttClient;
         string ID { get => Properties.Settings.Default.StabilizerID; }
         int Channel { get => Properties.Settings.Default.Channel; }
@@ -106,11 +102,6 @@ namespace LaserLeash
 
         public void sendSignal()
         {
-            /*var applicationMessage = new MqttApplicationMessageBuilder()
-                    .WithTopic($"dt/sinara/dual-iir/{ID}/settings/signal_generator/0/signal")
-                    .WithPayload($"\"Triangle\"")
-                    .Build();
-            mqttClient.PublishAsync(applicationMessage, CancellationToken.None);*/
             send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/signal", $"\"Triangle\"");
         }
 
