@@ -37,26 +37,7 @@ namespace LaserLeash
 
         public static List<double> CalculateIIR(double Kp, double Ki, double Kd, double samplePeriod)
         {
-            // original python code
-            //
-            // kernels = [
-            //    [1, 0, 0],
-            //    [1, -1, 0],
-            //    [1, -2, 1]
-            // ]
-            // gains = [args.Kii, args.Ki, args.Kp, args.Kd, args.Kdd]
-            // limits = [args.Kii / args.Kii_limit, args.Ki / args.Ki_limit,
-            //          1, args.Kd / args.Kd_limit, args.Kdd / args.Kdd_limit]
-            // w = 2 * pi * args.sample_period
-            // b = [ sum(gains[2 - order + i] * w * *(order - i) * kernels[i][j] for i in range(3))
-            //      for j in range(3)]
-
-            // a = [sum(limits[2 - order + i] * w * *(order - i) * kernels[i][j]
-            //         for i in range(3)) for j in range(3)]
-            // b = [i / a[0] for i in b]
-            // a = [i / a[0] for i in a]
-            // assert a[0] == 1
-            // return b + [-ai for ai in a[1:]]
+            // code based on https://github.com/quartiq/stabilizer/blob/831a9ba747b51241936b13a2df23753c03cc9dd5/py/stabilizer/iir_coefficients.py
 
             double[,] kernels = new double[,] { { 1, 0, 0 }, { 1, -1, 0 }, { 1, -2, 1 } };
 
