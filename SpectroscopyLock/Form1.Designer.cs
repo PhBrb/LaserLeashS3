@@ -798,8 +798,13 @@
             0,
             131072});
             this.KiText.Location = new System.Drawing.Point(62, 29);
+            this.KiText.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.KiText.Minimum = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             -2147483648});
@@ -831,10 +836,15 @@
             1,
             0,
             0,
-            65536});
+            131072});
             this.KpText.Location = new System.Drawing.Point(3, 29);
+            this.KpText.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.KpText.Minimum = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             -2147483648});
@@ -870,16 +880,21 @@
             // 
             // KdText
             // 
-            this.KdText.DecimalPlaces = 2;
+            this.KdText.DecimalPlaces = 3;
             this.KdText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.KdText.Increment = new decimal(new int[] {
             1,
             0,
             0,
-            131072});
+            196608});
             this.KdText.Location = new System.Drawing.Point(121, 29);
+            this.KdText.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.KdText.Minimum = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             -2147483648});
