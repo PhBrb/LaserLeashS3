@@ -790,13 +790,13 @@
             // 
             // KiText
             // 
-            this.KiText.DecimalPlaces = 2;
+            this.KiText.DecimalPlaces = 3;
             this.KiText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.KiText.Increment = new decimal(new int[] {
             1,
             0,
             0,
-            131072});
+            196608});
             this.KiText.Location = new System.Drawing.Point(62, 29);
             this.KiText.Maximum = new decimal(new int[] {
             1000,
@@ -830,13 +830,13 @@
             // 
             // KpText
             // 
-            this.KpText.DecimalPlaces = 2;
+            this.KpText.DecimalPlaces = 3;
             this.KpText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.KpText.Increment = new decimal(new int[] {
             1,
             0,
             0,
-            131072});
+            196608});
             this.KpText.Location = new System.Drawing.Point(3, 29);
             this.KpText.Maximum = new decimal(new int[] {
             1000,
@@ -880,13 +880,13 @@
             // 
             // KdText
             // 
-            this.KdText.DecimalPlaces = 3;
+            this.KdText.DecimalPlaces = 5;
             this.KdText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.KdText.Increment = new decimal(new int[] {
             1,
             0,
             0,
-            196608});
+            327680});
             this.KdText.Location = new System.Drawing.Point(121, 29);
             this.KdText.Maximum = new decimal(new int[] {
             1000,
@@ -990,6 +990,11 @@
             0,
             0,
             0});
+            this.SamplerateText.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            327680});
             this.SamplerateText.Name = "SamplerateText";
             this.SamplerateText.Size = new System.Drawing.Size(65, 20);
             this.SamplerateText.TabIndex = 11;
