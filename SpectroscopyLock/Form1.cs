@@ -27,7 +27,7 @@ namespace LaserLeash
         VerticalLineAnnotation xyLineAnnotaion;
         MQTTPublisher mqtt;
         bool lockMode = false;
-        OsciDisplay osciDisplay;
+        Oscilloscope osciDisplay;
         Memory memory;
 
         double previousAmplitude, previousOffset;
@@ -38,7 +38,7 @@ namespace LaserLeash
         public static bool stopped { get; private set; }
         public bool receiveEvents { get; private set; }
 
-        public SpectroscopyControlForm(Memory memory, OsciDisplay osciDisplay, MQTTPublisher mqtt)
+        public SpectroscopyControlForm(Memory memory, Oscilloscope osciDisplay, MQTTPublisher mqtt)
         {
             stopped = false;
             InitializeComponent();

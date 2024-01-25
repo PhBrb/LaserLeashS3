@@ -82,20 +82,20 @@ namespace LaserLeash
         }
 
         /// <summary>
-        /// Returns the sum of a chunk, which is offset from the newest data 
+        /// Returns the sum of multiple samples, which are offset from the newest data 
         /// </summary>
         /// <param name="offset">Offset from newest datapoint, must be negative</param>
         /// <param name="sumSize">Number of samples</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public double GetADCSumFromPast(int offset, int sumSize)
+        public double GetAverageFromPast(int offset, int sumSize)
         {
             if (offset >= 0)
-                throw new ArgumentException("previous must be negative");
+                throw new ArgumentException("offset must be negative");
             if (sumSize <= 0)
                 throw new ArgumentException("sum must be positive");
             if (offset + sumSize > 0)
-                throw new ArgumentException("previous + outArray size must be <= 0");
+                throw new ArgumentException("offset + size size must be <= 0");
             if (offset >= size - 1)
                 throw new ArgumentException("requested too old data");
             int start = mod(newestDataPosition + offset, size);
@@ -104,11 +104,11 @@ namespace LaserLeash
             {
                 sum += get(start + i); 
             }
-            return sum;
+            return sum/sumSize;
         }
 
         /// <summary>
-        /// REturns element at index. Wraps over if index exceeds array size. Uses python indexing for negative numbers.
+        /// Returns element at index. Wraps over if index exceeds array size. Uses python indexing for negative numbers.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -140,6 +140,11 @@ namespace LaserLeash
         /// <returns></returns>
         public double[] getArray(int startOffset, int stopOffset)
         {
+            if (stopOffset>0 || startOffset>0)
+                throw new ArgumentException("Arguments have to be negative");
+            if (stopOffset >= startOffset)
+                throw new ArgumentException("Stop value has to be smaller than start value");
+
             double[] cutArray = new double[-stopOffset + startOffset];
             for(int i = 0; i < cutArray.Length; i++) 
             {

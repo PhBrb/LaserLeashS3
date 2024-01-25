@@ -17,18 +17,24 @@ namespace LaserLeash
         [STAThread]
         static void Main()
         {
+            /// Data flow:
+            /// <see cref="UDPReceiver"/>
+            /// -> <see cref="Deserializer"/>
+            /// -> <see cref="Memory"/>
+            /// -> <see cref="Oscilloscope"/>
+            /// -> <see cref="SpectroscopyControlForm"/>
+            /// (user input) -> <see cref="SpectroscopyControlForm"/> -> <see cref="MQTTPublisher"/>
 
-            //Data flow: udpReceiver -> deserializer -> memory -> oscidisplay -> form -> (user input) -> mqtt
             udpReceiver = new UDPReceiver();
-            Memory memory = new Memory(1000000); //5 000 000 is roughly 7s
-            OsciDisplay osciDisplay = new OsciDisplay(memory);
+            Memory memory = new Memory(1000000);
+            Oscilloscope osciDisplay = new Oscilloscope(memory);
 
             MQTTPublisher mqttPublisher = new MQTTPublisher(Properties.Settings.Default.MQTTServer, Properties.Settings.Default.MQTTPort);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SpectroscopyControlForm form = new SpectroscopyControlForm(memory, osciDisplay, mqttPublisher);
-            form.Shown += new System.EventHandler(Form1_Shown);
+            form.Shown += new System.EventHandler(OnFormShown);
 
             //delay starting the UDP thread, as it accesses the form
             new Thread(new ThreadStart(() =>
@@ -51,7 +57,7 @@ namespace LaserLeash
             }));
             deserializerThread.Start();
 
-            //Refresh the dislayed data
+            //Refresh the displayed data
             displayRefreshThread = new Thread(new ThreadStart(() =>
             {
                 while(!formReady)
@@ -68,7 +74,7 @@ namespace LaserLeash
             Application.Run(form);
         }
 
-        static void Form1_Shown(object sender, EventArgs e)
+        static void OnFormShown(object sender, EventArgs e)
         {
             formReady = true;
             ((SpectroscopyControlForm) sender).LoadSettings();

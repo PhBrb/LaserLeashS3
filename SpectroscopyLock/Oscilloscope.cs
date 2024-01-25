@@ -5,9 +5,9 @@ using System.Linq;
 namespace LaserLeash
 {
     /// <summary>
-    /// Prepares date for displaying
+    /// Holds and prepares date for displaying
     /// </summary>
-    public class OsciDisplay
+    public class Oscilloscope
     {
         Memory memory;
         int averages = Properties.Settings.Default.Averages;
@@ -17,6 +17,7 @@ namespace LaserLeash
         /// Positive number, the higher the number, the older the sample
         /// </summary>
         public int newestSampleToDisplay { get; private set; }
+
         /// <summary>
         /// Positive number, the higher the number, the older the sample
         /// </summary>
@@ -30,17 +31,17 @@ namespace LaserLeash
 
 
         /// <summary>
-        /// Pools jobs that change parameters in the class, to stay thread safe.
+        /// Pools jobs that change parameters in the class (for thread safety)
         /// </summary>
         private List<Action> editJobs = new List<Action>();
 
-        public OsciDisplay(Memory memory)
+        public Oscilloscope(Memory memory)
         {
             this.memory = memory;
 
             //default to maximum range
             newestSampleToDisplay = 0;
-            oldestSampleToDisplay = UnitConvert.TimeToSample(Properties.Settings.Default.MemorySize);
+            oldestSampleToDisplay = memory.getSize();
 
             _UpdateTimeData();
         }
@@ -57,6 +58,9 @@ namespace LaserLeash
             }
         }
 
+        /// <summary>
+        /// Updates the internal time array, necessary after changing <see cref="pointsOnDisplay"/>, <see cref="oldestSampleToDisplay"/> or <see cref="newestSampleToDisplay"/>
+        /// </summary>
         public void UpdateTimeData()
         {
             lock (editJobs) 
@@ -66,16 +70,21 @@ namespace LaserLeash
         {
             timeData = new double[pointsOnDisplay];
             int samplesPerPoint = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
+
+            ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
             for (int i = 0; i < pointsOnDisplay; i++)
             {
-                ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
                 timeData[i] = -UnitConvert.SampleToTime((pointsOnDisplay - i) * samplesPerPoint + newestSampleToDisplay);
             }
         }
 
+        /// <summary>
+        /// Returns ADC and DAC data ín the display range, the current DAC output and a flag if all values in the array are NaN
+        /// </summary>
+        /// <returns>(ADC, DAC, current DAC, NaN)</returns>
         public (double[], double[], double, bool) GetTimeSeries()
         {
-            double newestValue = 0;
+            double newestDACValue = 0;
             int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
             int samplesToUse = averages + 1;
             int iOffset = newestSampleToDisplay;
@@ -84,31 +93,34 @@ namespace LaserLeash
             {
                 for (int i = 0; i < pointsOnDisplay; i++)
                 {
-                    adcData[pointsOnDisplay - i - 1] = memory.GetADCSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                    /// get sample corresponding to point i, shift it by <see cref="samplesToUse"/>  to make sure there is enough data to average over
+                    /// and save newest data i=0 into last adcData index
+                    adcData[pointsOnDisplay - i - 1] = memory.GetADCAverageFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse);
                     if(!double.IsNaN(adcData[pointsOnDisplay - i - 1]))
                         allNaN = false;
                 }
                 for (int i = 0; i < pointsOnDisplay; i++)
                 {
-                    dacData[pointsOnDisplay - i - 1] = memory.GetDACSumFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse) / samplesToUse; // get sample corresponding to point i, shift it to make sure there is enough data to average over and save newest data i=0 into last adcData index
+                    /// get sample corresponding to point i, shift it by <see cref="samplesToUse"/>  to make sure there is enough data to average over
+                    /// and save newest data i=0 into last dacData index
+                    dacData[pointsOnDisplay - i - 1] = memory.GetDACAverageFromPast(-i * iSampleDistance - samplesToUse - iOffset, samplesToUse);
                     if (!double.IsNaN(adcData[pointsOnDisplay - i - 1]))
                         allNaN = false;
                 }
-                newestValue = memory.GetDACSumFromPast(-samplesToUse,samplesToUse)/samplesToUse;
+                newestDACValue = memory.GetDACAverageFromPast(-samplesToUse,samplesToUse);
             }
-
-            return (adcData, dacData, newestValue, allNaN);
+            return (adcData, dacData, newestDACValue, allNaN);
         }
 
+        /// <summary>
+        /// Reduces viewing range of the timeseries and tries to center around <paramref name="position"/>
+        /// </summary>
+        /// <param name="position">Position from 0 to 1, relative to current viewing range</param>
         public void ZoomIn(double position)
         {
             lock (editJobs)
                 editJobs.Add(() => _ZoomIn(position));
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="position">Position from 0 to 1, relative to current viewing range</param>
         private void _ZoomIn(double position)
         {
             int iCenter = (newestSampleToDisplay + oldestSampleToDisplay)/2;
@@ -134,6 +146,9 @@ namespace LaserLeash
             _UpdateTimeData();
         }
 
+        /// <summary>
+        /// Increases range of the timeseries
+        /// </summary>
         public void ZoomOut()
         {
             lock (editJobs)
@@ -148,6 +163,9 @@ namespace LaserLeash
             _UpdateTimeData();
         }
 
+        /// <summary>
+        /// Resets to full viewing range of the timeseries
+        /// </summary>
         public void ZoomReset()
         {
             lock (editJobs)
@@ -175,17 +193,18 @@ namespace LaserLeash
         /// <summary>
         /// Returns stored data in (sorted) XY format. <see cref="GetTimeSeries"/> has to be called first to update the internal data storage.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>(DAC, ADC)</returns>
         public (double[], double[]) GetXYNoUpdate()
         {
             Array.Copy(adcData, adcDataSorted, pointsOnDisplay);
             Array.Copy(dacData, dacDataSorted, pointsOnDisplay);
 
-            Array.Sort(dacDataSorted, adcDataSorted); //sort by x axis value to not mess up the graph
-            List<double> dacList = dacDataSorted.ToList();
+            Array.Sort(dacDataSorted, adcDataSorted); //sort by x axis value, since the graph connects data by index
+
+            List<double> dacList = dacDataSorted.ToList(); //convert to list to make editing easier
             List<double> adcList = adcDataSorted.ToList();
             
-            for(int i = pointsOnDisplay - 1; i >= 0 ; i--) // remove nan
+            for(int i = pointsOnDisplay - 1; i >= 0 ; i--) // remove NaN
             {
                 if (double.IsNaN(dacDataSorted[i]) || double.IsNaN(adcDataSorted[i]))
                 {
@@ -193,11 +212,12 @@ namespace LaserLeash
                     dacList.RemoveAt(i);
                 }
             }
+
             for (int i = adcList.Count - 1; i > 0; i--) // average ADC values if DAC values are the same (multiple datapoints at the same output voltage)
             {
-                int sumCount = 1;
+                int sumCount = 1; //one element will be added separately to not delete it in the loop
                 double sum = 0;
-                while (i > 1 && dacList[i] == dacList[i - 1]) //sorted array, relying on equal values being grouped
+                while (i > 1 && dacList[i] == dacList[i - 1]) //relying on equal values being grouped by previous sorting
                 {
                     sumCount += 1;
                     sum += adcList[i];
@@ -210,35 +230,55 @@ namespace LaserLeash
             return (dacList.ToArray(), adcList.ToArray());
         }
 
+        /// <summary>
+        /// Returns the minimum of the ADC values, using values that are already in the memory
+        /// </summary>
+        /// <returns></returns>
         public double GetADCMinNoUpdate()
         {
             return adcDataSorted.Min();
         }
+
+        /// <summary>
+        /// Returns the maximum of the ADC values, using values that are already in the memory
+        /// </summary>
+        /// <returns></returns>
         public double GetADCMaxNoUpdate()
         {
             return adcDataSorted.Max();
         }
+
+        /// <summary>
+        /// Returns the minimum of the DAC values, using values that are already in the memory
+        /// </summary>
+        /// <returns></returns>
         public double GetDACMinNoUpdate()
         {
             return dacDataSorted[0];
         }
+
+
+        /// <summary>
+        /// Returns the maximum of the DAC values, using values that are already in the memory
+        /// </summary>
+        /// <returns></returns>
         public double GetDACMaxNoUpdate()
         {
             return dacDataSorted[adcDataSorted.Length - 1];
         }
 
-        public void setSize(int size)
+        public void setDisplaySize(int samples)
         {
             lock (editJobs)
-                editJobs.Add(() => _setSize(size));
+                editJobs.Add(() => _setDisplaySize(samples));
         }
-        private void _setSize(int size)
+        private void _setDisplaySize(int samples)
         {
-            pointsOnDisplay = size;
-            adcData = new double[size];
-            dacData = new double[size];
-            adcDataSorted = new double[size];
-            dacDataSorted = new double[size];
+            pointsOnDisplay = samples;
+            adcData = new double[samples];
+            dacData = new double[samples];
+            adcDataSorted = new double[samples];
+            dacDataSorted = new double[samples];
             _UpdateTimeData();
         }
 

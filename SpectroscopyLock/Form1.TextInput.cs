@@ -44,7 +44,7 @@ namespace LaserLeash
             //Actions to perform when int inputs are changed
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
-                {samplesOnDisplayText, osciDisplay.setSize},
+                {samplesOnDisplayText, osciDisplay.setDisplaySize},
                 {ChannelInput,  (value) => { } },
                 {StreamTargetPortInput, (value) => {
                                                         mqtt.sendStreamTarget(Properties.Settings.Default.StreamIP, value.ToString());
@@ -273,7 +273,7 @@ namespace LaserLeash
             int samples = sender == MemorySizeText ?//memory size change triggers zooming out
                 UnitConvert.TimeToSample(Decimal.ToDouble(MemorySizeText.Value)) :
                 osciDisplay.oldestSampleToDisplay - osciDisplay.newestSampleToDisplay + 1;
-            if (!OsciDisplay.enoughSamples(samplesOnDisplay, averages, samples))
+            if (!Oscilloscope.enoughSamples(samplesOnDisplay, averages, samples))
             {
                 e.Cancel = true;
                 string msg = "Available memory has to be >= display resolution * (averages +1)";

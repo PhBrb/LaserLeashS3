@@ -8,9 +8,14 @@ namespace LaserLeash
     public class MQTTPublisher
     {
         IMqttClient mqttClient;
-        string ID { get => Properties.Settings.Default.StabilizerID; }
-        int Channel { get => Properties.Settings.Default.Channel; }
+        string stabilizerID { get => Properties.Settings.Default.StabilizerID; }
+        int stabilizerChannel { get => Properties.Settings.Default.Channel; }
 
+        /// <summary>
+        /// Creates a connection to an MQTT server
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="port"></param>
         public MQTTPublisher(string server, int port)
         {
             connect(server, port);
@@ -76,12 +81,12 @@ namespace LaserLeash
 
         public void sendScanAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/signal_generator/{stabilizerChannel}/amplitude", amplitude);
         }
 
         public void sendScanSymmetry(double symmetry)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/symmetry", symmetry);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/signal_generator/{stabilizerChannel}/symmetry", symmetry);
         }
 
         public void sendScanOffset(double offset, double ymin, double ymax)
@@ -91,58 +96,58 @@ namespace LaserLeash
 
         public void sendScanFrequency(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/frequency", frequency);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/signal_generator/{stabilizerChannel}/frequency", frequency);
         }
 
         public void sendPID(double offset, string iir, double ymin, double ymax)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/iir_ch/{Channel}/0",
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/iir_ch/{stabilizerChannel}/0",
                 $"{{\"ba\":{iir},\"y_min\":{UnitConvert.YVToMU(ymin)},\"y_max\":{UnitConvert.YVToMU(ymax)},\"y_offset\":{UnitConvert.YVToMU(offset)}}}");
         }
 
         public void sendSignal()
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/signal_generator/{Channel}/signal", $"\"Triangle\"");
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/signal_generator/{stabilizerChannel}/signal", $"\"Triangle\"");
         }
 
         public void sendPhase(double phase)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/phase_offset", phase);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/out_channel/{stabilizerChannel}/dds/phase_offset", phase);
         }
 
         public void sendModulationAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/out_channel/{stabilizerChannel}/dds/amplitude", amplitude);
         }
 
         public void sendDemodulationAmplitude(double amplitude)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/dds/amplitude", amplitude);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/in_channel/{stabilizerChannel}/dds/amplitude", amplitude);
         }
 
         public void sendModulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/dds/frequency", frequency*1000000);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/out_channel/{stabilizerChannel}/dds/frequency", frequency*1000000);
         }
         public void sendDemodulationFrequencyMHz(double frequency)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/dds/frequency", frequency*1000000);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/in_channel/{stabilizerChannel}/dds/frequency", frequency*1000000);
         }
 
         public void sendModulationAttenuation(double attenuation)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/out_channel/{Channel}/attenuation", attenuation);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/out_channel/{stabilizerChannel}/attenuation", attenuation);
         }
 
         public void sendDemodulationAttenuation(double attenuation)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/pounder/in_channel/{Channel}/attenuation", attenuation);
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/pounder/in_channel/{stabilizerChannel}/attenuation", attenuation);
         }
 
         public void sendStreamTarget(string ip, string port)
         {
-            send($"dt/sinara/dual-iir/{ID}/settings/stream_target",
-                $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is sent as an array, so replace . with ,
+            send($"dt/sinara/dual-iir/{stabilizerID}/settings/stream_target",
+                $"{{\"ip\":[{ip.Replace('.', ',')}],\"port\":{port}}}"); //IP is an array, so replace . with ,
         }
     }
 }

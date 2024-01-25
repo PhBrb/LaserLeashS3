@@ -89,7 +89,7 @@
     <Compile Include="MQTTPublisher.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Deserializer.cs" />
-    <Compile Include="OsciDisplay.cs" />
+    <Compile Include="Oscilloscope.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReuseBuffer.cs" />

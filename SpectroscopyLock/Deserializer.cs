@@ -97,12 +97,12 @@ namespace LaserLeash
                     for (int iFloat = 0; iFloat < h.batchSize; iFloat++)
                     {
                         iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size;
-                        memory.ADCEnqueueAt(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
+                        memory.ADCEnqueue(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
                     }
                     for (int iFloat = 0; iFloat < h.batchSize; iFloat++)
                     {
                         iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size + 2 * h.batchSize * 2;
-                        memory.DACEnqueueAt(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
+                        memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
                     }
                 }
             }
