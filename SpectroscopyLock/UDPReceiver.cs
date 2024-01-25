@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace LaserLeash
@@ -17,7 +13,7 @@ namespace LaserLeash
         ReuseBuffer buffer = new ReuseBuffer(500); //randomly chosen buffer size
 
         /// <summary>
-        /// Starts a continuously running thread that receives and buffers data
+        /// Prepares a continuously running thread that receives and buffers data
         /// </summary>
         public UDPReceiver()
         {
@@ -26,7 +22,7 @@ namespace LaserLeash
             {
                 UdpClient udpClient = null;
                 uint lastSequenceNumber = 0;
-                uint firstSequenceNumber = 0;
+                uint firstSequenceNumber = 0; 
                 uint skipped = 0;
                 while (!SpectroscopyControlForm.stopped)
                 {
