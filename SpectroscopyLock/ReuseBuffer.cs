@@ -16,9 +16,21 @@ namespace LaserLeash
             }
         }
 
+        /// <summary>
+        /// Data storage
+        /// </summary>
         Frame[] frames;
+
+        /// <summary>
+        ///  Index pointer to the buffer element that is being written to
+        /// </summary>
         int writingTo = 1;
+
+        /// <summary>
+        ///  Index pointer to the buffer element that is being read
+        /// </summary>
         int readingFrom = 0;
+
         int size;
 
         public ReuseBuffer(int size) 
@@ -50,7 +62,7 @@ namespace LaserLeash
         }
 
         /// <summary>
-        /// Returns the next oldest received data. Blocks until data is available.
+        /// Returns the next received data. Blocks until data is available.
         /// </summary>
         /// <returns></returns>
         public Frame getNextFrame()
