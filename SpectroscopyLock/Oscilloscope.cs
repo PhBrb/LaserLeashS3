@@ -69,7 +69,7 @@ namespace LaserLeash
         private void _UpdateTimeData()
         {
             timeData = new double[pointsOnDisplay];
-            int samplesPerPoint = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
+            int samplesPerPoint = (oldestSampleToDisplay - newestSampleToDisplay + 1) / pointsOnDisplay;
 
             ///map a range of 0 - <see cref="pointsOnDisplay"/> to <see cref="newestSampleToDisplay"/> - <see cref="oldestSampleToDisplay"/>
             for (int i = 0; i < pointsOnDisplay; i++)
@@ -85,7 +85,7 @@ namespace LaserLeash
         public (double[], double[], double, bool) GetTimeSeries()
         {
             double newestDACValue = 0;
-            int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay) / pointsOnDisplay;
+            int iSampleDistance = (oldestSampleToDisplay - newestSampleToDisplay + 1) / pointsOnDisplay;
             int samplesToUse = averages + 1;
             int iOffset = newestSampleToDisplay;
             bool allNaN = true;
@@ -140,8 +140,13 @@ namespace LaserLeash
                 SpectroscopyControlForm.WriteLine(msg);
 
                 //zoom in as far as possible
-                newestSampleToDisplay = Math.Max(0, iNewCenter - (pointsOnDisplay * (averages + 1)) / 2);
-                oldestSampleToDisplay = newestSampleToDisplay + pointsOnDisplay * (averages + 1);
+                int samplesNeeded = pointsOnDisplay * (averages + 1);
+                //relative to oldest sample for easier calculation
+                int iStart = Math.Max(0, iNewCenter - samplesNeeded / 2);
+                iStart = Math.Min(memory.getSize() - 1 - samplesNeeded, iStart);
+
+                newestSampleToDisplay = iStart; 
+                oldestSampleToDisplay = iStart + samplesNeeded - 1;
             }
             _UpdateTimeData();
         }
