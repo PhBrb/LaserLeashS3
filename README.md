@@ -49,7 +49,7 @@ To confirm the operation of this preliminary setup, a laser beat measurement has
 
 Our laser was locked to <sup>85</sup>Rb F=3 -> F'=3 crossover 4 with (P, I, D, sample period) parameters (0.001, 0.009, 0, 10<sup>-5</sup>). The beat signal was recorded with a Moku:Pro using a VHDL program to measure the period length ([source](./measurement/PeriodLength.vhd)).
 
-![OADev Beat Frequency](./measurement/unbenannt.png)
+![OADev Beat Frequency](measurement/Unbenannt.PNG)
 
 The above graph shows the overlapping allan deviation of the beat frequency. Strong deviations can be seen at long integration times. These are most likely due to temperatur influences on our system. The demodulated error signal was showing an offset, which changed during AC cycles or even if hands were held in close proximity of the fibers. Around 20 ms integration time, influence of 50 Hz can be seen. In our preliminary setup no efforts were made to avoid ground loops. 
 
