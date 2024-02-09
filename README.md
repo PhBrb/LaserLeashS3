@@ -45,13 +45,15 @@ The screenshot above shows the spectrum of <sup>85</sup>Rb F=3 -> F'=2,3,4 trans
 
 ### Stability Measurement
 
-To confirm the operation of this preliminary setup, a laser beat measurement has been conducted. The other laser light was taken from an MTS stabilized BEC interferometer setup, locked to <sup>85</sup>Rb F=3 -> F'=4. The stability of this laser was not measured, so the significance of this measurement is limited. To improve this a three cornered hat measurement or reference with known stability is needed. This will be performed once we have improved the initial setup.
+To confirm the operation of this preliminary setup, a laser beat measurement has been conducted. Our setup was compared to laser light taken from an MTS stabilized atom interferometer setup, locked to <sup>85</sup>Rb F=3 -> F'=4. The stability of this laser was not measured, so the significance of this measurement is limited. To improve this, a three-cornered hat measurement or reference with known stability is needed. Such a measurement will be performed once we have improved the initial setup.
 
 Our laser was locked to <sup>85</sup>Rb F=3 -> F'=3 crossover 4 with (P, I, D, sample period) parameters (0.001, 0.009, 0, 10<sup>-5</sup>). The beat signal was recorded with a Moku:Pro using a VHDL program to measure the period length ([source](./measurement/PeriodLength.vhd)).
 
 ![OADev Beat Frequency](measurement/Unbenannt.PNG)
 
-The above graph shows the overlapping allan deviation of the beat frequency. Strong deviations can be seen at long integration times. These are most likely due to temperatur influences on our system. The demodulated error signal was showing an offset, which changed during AC cycles or even if hands were held in close proximity of the fibers. Around 20 ms integration time, influence of 50 Hz can be seen. In our preliminary setup no efforts were made to avoid ground loops. 
+The above graph shows the overlapping Allan deviation of the beat frequency.
+<br>Strong deviations can be seen at long integration times. These are most likely due to temperature influences on our system. The demodulated error signal was showing an offset, which changed during AC cycles or even if hands were held in close proximity of the fibers.
+<br>Around 20 ms integration time, influence of 50 Hz can be seen. In our preliminary setup, no efforts were made to avoid ground loops. 
 
 To improve the demonstrated setup (independent of this software)
   * environmental influences have to be reduced
