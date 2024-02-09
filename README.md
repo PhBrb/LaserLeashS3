@@ -1,10 +1,12 @@
 # LaserLeash S³
-A Software for Spectroscopy Stabilization of your Laser (using Stabilizer & Pounder)
+A Software for Spectroscopy Stabilization of your Laser (using [Stabilizer](https://github.com/sinara-hw/Stabilizer) & [Pounder](https://github.com/sinara-hw/Pounder))
+
+Key features:
  - MQTT GUI 
  - Network Oscilloscope
  - Click & lock
 
-We demonstrated a frequency modulation spectroscopy and reached a stability of TODO.
+Using this software we demonstrated a frequency modulation spectroscopy (FMS). A laser beat measurement with an existing modulation transfer spectroscopy (MTS) has been conducted, but a conclusive measurement on the stability of the system has yet to be made.
 
 ![GUI Image](media/GUI.PNG)
 
@@ -13,7 +15,7 @@ We demonstrated a frequency modulation spectroscopy and reached a stability of T
 1. Start the Stabilizer with the firmware from this pull request https://github.com/quartiq/stabilizer/pull/725
 1. Start MQTT broker
 1. Start this Software
-1. Click initialize to send initial values to stabilizer & pounder
+1. Click initialize to send initial values to stabilizer & pounder. The Stabilizer will start sweeping the output voltage.
 1. Double click XY plot to zoom into that area, zoom until the transition is nicely visible, wait for old data to flush
     * Select 0.5 signal symmetry to make sure you are not prone to hysteresis, but use 1 at larger sweep ranges to improve signal quality
 1. Move red line to the wanted transition with a single click
@@ -31,7 +33,7 @@ We demonstrated a frequency modulation spectroscopy and reached a stability of T
 
 
 ## Example Setup
-The image above shows the spectrum of Rb85 F=3, F'=2,3,4 transitions including crossover peaks, recorded with the following setup.
+The screenshot above shows the spectrum of <sup>85</sup>Rb F=3 -> F'=2,3,4 transitions including crossover peaks, recorded with the following setup.
 
 <img src="./media/schematic.svg" alt="Setup schematic" width="600"/>
 
@@ -41,20 +43,28 @@ The image above shows the spectrum of Rb85 F=3, F'=2,3,4 transitions including c
 * SHG NTT Electronics WH-0780-000-F-B-C-M
 * Frequency Modulation Spectroscopy cell Vescent D2-210-Rb-FC (~1 mW laser input power)
 
-## Tests
-* TODO
+### Stability Measurement
 
-![Wavelength measurement](./media/wavelength.png)
+To confirm the operation of this preliminary setup, a laser beat measurement has been conducted. The other laser light was taken from an MTS stabilized BEC interferometer setup, locked to <sup>85</sup>Rb F=3 -> F'=4. The stability of this laser was not measured, so the significance of this measurement is limited. To improve this a three cornered hat measurement or reference with known stability is needed. This will be performed once we have improved the initial setup.
 
-Wavelength measurement using the 1% pick off with a Bristol 671A. PID values 0.4, 0.16, 0 (not optimized). The datasheet of the wavelength meter specifies a repeatability of ~15 MHz.
+Our laser was locked to <sup>85</sup>Rb F=3 -> F'=3 crossover 4 with (P, I, D, sample period) parameters (0.001, 0.009, 0, 10<sup>-5</sup>). The beat signal was recorded with a Moku:Pro using a VHDL program to measure the period length ([source](./measurement/PeriodLength.vhd)).
+
+![OADev Beat Frequency](./measurement/unbenannt.png)
+
+The above graph shows the overlapping allan deviation of the beat frequency. Strong deviations can be seen at long integration times. These are most likely due to temperatur influences on our system. The demodulated error signal was showing an offset, which changed during AC cycles or even if hands were held in close proximity of the fibers. Around 20 ms integration time, influence of 50 Hz can be seen. In our preliminary setup no efforts were made to avoid ground loops. 
+
+To improve the demonstrated setup (independent of this software)
+  * environmental influences have to be reduced
+  * ground loops have to be evaluated
+  * PID parameters have to be optimized
 
 ## Possible future features
-- Reading back MQTT parameters, at the moment it is not checked if a setting was applied successfully
+- Reading back MQTT parameters; at the moment it is not checked if a setting was applied successfully
 - Channel selection
 - Function generator with square signal
 - Trigger on square signal for step response analysis
-- Reset memory when values are changed, at the moment the XY plot shows a (confusing) mix of obsolete signals when settings are changed
-- Detect settings at program start, at the moment it is necessary to press initialize to synchronize Software & Stabilizer
+- Reset memory when values are changed; at the moment the XY plot shows a (confusing) mix of obsolete signals when settings are changed
+- Detect settings at program start; at the moment it is necessary to press initialize to synchronize Software & Stabilizer & MQTT server
 - Better graphs (better autoscaling, ticks, ...)
 - Error signal analysis (instead maybe use https://github.com/quartiq/stabilizer-stream)
 - Auto relock / out-of-lock warning
@@ -64,15 +74,13 @@ Wavelength measurement using the 1% pick off with a Bristol 671A. PID values 0.4
 * The firmware that is necessary is currently not merged into the main branch of the dual-iir firmware, as a result the Stabilizer needs to be flashed after a restart (https://github.com/quartiq/stabilizer/pull/725)
 * The dual-iir firmware has (at least in the PR) no parameter for an offset of the error signal. This means that the PID will always stabilize to 0 error signal, and it is not possible to compensate DC offsets of the atomic transition signal.
 * The dual-iir firmware has no output limit. The ylimit of the PID does only apply to the PID, the Function generator gets added afterwards. Eg. piezos do not like negative voltages. To protect your system this has to be considered. At the moment the software limits the FG output to the ylimit values, but since it is not checked if software settings get applied, it could be possible to have PID and FG active at the same time, exceeding the ylimit range. A parameter in the stabilizer firmware that limits the final output might be usefull.
-* There is a short (~1.5 ms) packet loss in the data stream after changing a parameter. This means you do not see the reaction of your system right after enabling the lock. The source of the packet loss is unknown.
+* There is a short (~1.5 ms) packet loss in the data stream after changing a parameter. This means you do not see the reaction of your system right after enabling the lock. The source of the packet loss is unknown and could also be rooted in the stabilizer firmware.
 * During development of the software, an unstable DC offset was observed. It is suspected that this is due to the test setup being unprotected from the environment (and having an air conditioner blowing on it). More tests and a better setup are needed.
 
 ## Additional info:
-- SNR improvement possible with more modulation depth (external amplifier needed, a short test at ~20 dBm with Minicircuits ZX60-100VH looked promising)
+- An SNR improvement is possible with more modulation depth (external amplifier needed, a short test at ~20 dBm with Minicircuits ZX60-100VH looked promising)
 - At certain Oscilloscope & FG frequency settings the XY plot signal quality appears bad. It looks like X values get grouped. Exact source is unknown, I suspect an aliasing effect. 
-- After changing settings, the memory does not get flushed. Reduce the memory size to not have old and new data overlapping in the XY plot.
-- Eg. piezos have hysteresis. This can make the signal appear bad. To avoid this, change the signal symmetry to 1.
-- If there is a problem, check the log, eg. for connection errors or click Initialize (this will take the laser out of lock). Rarely, settings do not get applied. Reason unknown (packet loss?).
+- If there is a problem, check the log, eg. for connection errors or click Initialize (this will take the laser out of lock).
 
 
 # Acknowledgement

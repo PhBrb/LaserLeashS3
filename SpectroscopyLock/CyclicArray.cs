@@ -133,7 +133,7 @@ namespace LaserLeash
         }
 
         /// <summary>
-        /// Returns an array of values with the first value being <see cref="startOffset"/> indexes old.
+        /// Returns an array of values with the first value being <paramref name="startOffset"/> indexes old.
         /// </summary>
         /// <param name="start">Offset from newest datapoint, must be negative. First value in the returned array.</param>
         /// <param name="stop">Offset from newest datapoint, must be negative. Last value in the returned array.</param>
