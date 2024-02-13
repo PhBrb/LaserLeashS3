@@ -50,7 +50,7 @@ To confirm the operation of this preliminary setup, a laser beat measurement has
 Our laser was locked to <sup>85</sup>Rb F=3 -> F'=3 crossover 4 with (P, I, D, sample period) parameters (0.001, 0.009, 0, 10<sup>-5</sup>). The beat signal was recorded with a Moku:Pro using a VHDL program to measure the period length ([source](./measurement/PeriodLength.vhd)).
 
 
-<img src="./measurement/PSD.PNG" alt="Power Spectral Density Beat Frequency" width="500"/> <img src="./measurement/OADev.PNG" alt="Overlapping Allan Deviation Beat Frequency" width="500"/>
+<img src="./measurement/PSD.png" alt="Power Spectral Density Beat Frequency" width="500"/> <img src="./measurement/OADev.png" alt="Overlapping Allan Deviation Beat Frequency" width="500"/>
 
 The above graph shows the Power Spectral Density and the overlapping Allan deviation of the recorded beat frequency.
 <br>The dominant noise source visible in the PSD is at 50 Hz and its harmonics. In our preliminary setup, no efforts were made to avoid ground loops. 
