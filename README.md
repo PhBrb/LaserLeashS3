@@ -62,7 +62,7 @@ To improve the demonstrated setup (independent of this software)
   * ground loops have to be evaluated
   * PID parameters have to be optimized
 
-## Possible future features
+## Possible future features / Limitations
 - Reading back MQTT parameters; at the moment it is not checked if a setting was applied successfully
 - Channel selection
 - Function generator with square signal
@@ -73,9 +73,9 @@ To improve the demonstrated setup (independent of this software)
 - Error signal analysis (instead maybe use https://github.com/quartiq/stabilizer-stream)
 - Auto relock / out-of-lock warning
 
+<br>
 
-## Limitations
-* The firmware that is necessary is currently not merged into the main branch of the dual-iir firmware, as a result the Stabilizer needs to be flashed after a restart (https://github.com/quartiq/stabilizer/pull/725)
+* The firmware that is necessary is currently not merged into the main branch of the dual-iir firmware, as a result the Stabilizer has to be reflashed after a restart (https://github.com/quartiq/stabilizer/pull/725)
 * The dual-iir firmware has (at least in the PR) no parameter for an offset of the error signal. This means that the PID will always stabilize to 0 error signal, and it is not possible to compensate DC offsets of the atomic transition signal.
 * The dual-iir firmware has no output limit. The ylimit of the PID does only apply to the PID, the Function generator gets added afterwards. Eg. piezos do not like negative voltages. To protect your system this has to be considered. At the moment the software limits the FG output to the ylimit values, but since it is not checked if software settings get applied, it could be possible to have PID and FG active at the same time, exceeding the ylimit range. A parameter in the stabilizer firmware that limits the final output might be usefull.
 * There is a short (~1.5 ms) packet loss in the data stream after changing a parameter. This means you do not see the reaction of your system right after enabling the lock. The source of the packet loss is unknown and could also be rooted in the stabilizer firmware.
