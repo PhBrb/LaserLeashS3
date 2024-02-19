@@ -39,7 +39,6 @@ namespace LaserLeash
                 {KdText, PID_ValueChanged},
                 {YminText, PID_ValueChanged},
                 {YmaxText, PID_ValueChanged},
-                {SamplerateText, PID_ValueChanged}
             };
             //Actions to perform when int inputs are changed
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
@@ -70,7 +69,6 @@ namespace LaserLeash
                 {KdText,  (value) => Properties.Settings.Default.D = value},
                 {YminText,  (value) => Properties.Settings.Default.yMin = value},
                 {YmaxText,  (value) => Properties.Settings.Default.yMax = value},
-                {SamplerateText,  (value) => Properties.Settings.Default.SampleRate = value}
             };
             //Where to store changed int values
             OnValueIntSaveMap = new Dictionary<NumericUpDown, Action<int>>(){
@@ -198,7 +196,6 @@ namespace LaserLeash
             KdText.Value = (decimal)Properties.Settings.Default.D;
             YminText.Value = (decimal)Properties.Settings.Default.yMin;
             YmaxText.Value = (decimal)Properties.Settings.Default.yMax;
-            SamplerateText.Value = (decimal)Properties.Settings.Default.SampleRate;
 
             MQTTServer.Text = Properties.Settings.Default.MQTTServer;
             StreamTargetIPInput.Text = Properties.Settings.Default.StreamIP;
@@ -224,11 +221,10 @@ namespace LaserLeash
             double p = Decimal.ToDouble(KpText.Value);
             double i = Decimal.ToDouble(KiText.Value);
             double d = Decimal.ToDouble(KdText.Value);
-            double sampleRate = Decimal.ToDouble(SamplerateText.Value);
             double yMin = Decimal.ToDouble(YminText.Value);
             double yMax = Decimal.ToDouble(YmaxText.Value);
 
-            List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, sampleRate);
+            List<double> iirParameters = UnitConvert.CalculateIIR(p, i, d, UnitConvert.SamplePeriod);
             mqtt.sendPID(0, iirParameters.ToBracketString(), yMin, yMax);
         }
 

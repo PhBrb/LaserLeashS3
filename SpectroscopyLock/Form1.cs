@@ -151,7 +151,6 @@ namespace LaserLeash
             SetNumericTooltip(KdText);
             SetNumericTooltip(YminText);
             SetNumericTooltip(YmaxText);
-            SetNumericTooltip(SamplerateText);
             SetNumericTooltip(StreamTargetPortInput);
             SetNumericTooltip(MemorySizeText, $"{UnitConvert.TimeToSample(1)} samples per second\nClears memory when changed");
             SetNumericTooltip(samplesOnDisplayText);
@@ -328,10 +327,10 @@ namespace LaserLeash
                 lockMode = true;
 
                 mqtt.sendScanAmplitude(0);
-                Thread.Sleep(300); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
+                Thread.Sleep(300); 
                 mqtt.sendScanOffset(LockLineAnnotation.X, Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
-                Thread.Sleep(300);
-                List<double> iirs = UnitConvert.CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), Decimal.ToDouble(SamplerateText.Value));
+                Thread.Sleep(300); // is there a better way? we can only check if the value has changed at the broker? but we are interested in when it changed on the stabilizer
+                List<double> iirs = UnitConvert.CalculateIIR(Decimal.ToDouble(KpText.Value), Decimal.ToDouble(KiText.Value), Decimal.ToDouble(KdText.Value), UnitConvert.SamplePeriod);
                 mqtt.sendPID(0, iirs.ToBracketString(), Decimal.ToDouble(YminText.Value), Decimal.ToDouble(YmaxText.Value));
             });
         }

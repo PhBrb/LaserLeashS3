@@ -82,10 +82,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.KdText = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.YminText = new System.Windows.Forms.NumericUpDown();
             this.YmaxText = new System.Windows.Forms.NumericUpDown();
-            this.SamplerateText = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
@@ -141,7 +139,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.KdText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YminText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YmaxText)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MemorySizeText)).BeginInit();
@@ -762,10 +759,8 @@
             this.tableLayoutPanel2.Controls.Add(this.label12, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.KdText, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.label10, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label13, 2, 2);
             this.tableLayoutPanel2.Controls.Add(this.YminText, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.YmaxText, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.SamplerateText, 2, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
@@ -913,16 +908,6 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "D";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(121, 70);
-            this.label13.Name = "label13";
-            this.label13.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label13.Size = new System.Drawing.Size(45, 30);
-            this.label13.TabIndex = 5;
-            this.label13.Text = "Sample Period";
-            // 
             // YminText
             // 
             this.YminText.DecimalPlaces = 1;
@@ -974,36 +959,6 @@
             0});
             this.YmaxText.Validating += new System.ComponentModel.CancelEventHandler(this.YmaxText_Validating);
             this.YmaxText.Validated += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
-            // 
-            // SamplerateText
-            // 
-            this.SamplerateText.DecimalPlaces = 5;
-            this.SamplerateText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SamplerateText.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            262144});
-            this.SamplerateText.Location = new System.Drawing.Point(121, 117);
-            this.SamplerateText.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.SamplerateText.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            327680});
-            this.SamplerateText.Name = "SamplerateText";
-            this.SamplerateText.Size = new System.Drawing.Size(65, 20);
-            this.SamplerateText.TabIndex = 11;
-            this.SamplerateText.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            262144});
-            this.SamplerateText.ValueChanged += new System.EventHandler(this.NumberFieldDouble_ValueChanged);
             // 
             // groupBox5
             // 
@@ -1449,7 +1404,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.KdText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.YminText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.YmaxText)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SamplerateText)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -1507,13 +1461,11 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.NumericUpDown KpText;
         private System.Windows.Forms.NumericUpDown KdText;
         private System.Windows.Forms.NumericUpDown KiText;
         private System.Windows.Forms.NumericUpDown YminText;
         private System.Windows.Forms.NumericUpDown YmaxText;
-        private System.Windows.Forms.NumericUpDown SamplerateText;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;

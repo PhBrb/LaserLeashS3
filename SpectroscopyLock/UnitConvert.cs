@@ -7,7 +7,7 @@ namespace LaserLeash
     public static class UnitConvert
     {
         const double DACLSBPerVolt = (1 << 16) / (4.096 * 5);
-        const double SamplePeriod = 10e-9 * 128;
+        public const double SamplePeriod = 10e-9 * 128;
 
         /// <summary>
         /// Converts voltage to IIR y limit machine units

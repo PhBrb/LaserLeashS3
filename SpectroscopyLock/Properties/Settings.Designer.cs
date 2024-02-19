@@ -169,18 +169,6 @@ namespace LaserLeash.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0001")]
-        public double SampleRate {
-            get {
-                return ((double)(this["SampleRate"]));
-            }
-            set {
-                this["SampleRate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.2")]
         public string StreamIP {
             get {

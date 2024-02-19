@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ChartTest2.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LaserLeash.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="ModAmp" Type="System.Double" Scope="User">
@@ -37,9 +37,6 @@
     </Setting>
     <Setting Name="yMax" Type="System.Double" Scope="User">
       <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="SampleRate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.0001</Value>
     </Setting>
     <Setting Name="StreamIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.2</Value>
