@@ -45,7 +45,7 @@
       <Value Profile="(Default)">4000</Value>
     </Setting>
     <Setting Name="StabilizerID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">04-91-62-d2-60-2f</Value>
+      <Value Profile="(Default)">00-00-00-00-00-00</Value>
     </Setting>
     <Setting Name="MemorySize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">3</Value>

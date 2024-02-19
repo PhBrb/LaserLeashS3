@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartXY = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LockButton = new System.Windows.Forms.CheckBox();
             this.UnlockButton = new System.Windows.Forms.CheckBox();
@@ -156,18 +156,18 @@
             // 
             // chartXY
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartXY.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.chartXY.ChartAreas.Add(chartArea5);
             this.chartXY.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartXY.Legends.Add(legend1);
+            legend5.Name = "Legend1";
+            this.chartXY.Legends.Add(legend5);
             this.chartXY.Location = new System.Drawing.Point(3, 461);
             this.chartXY.Name = "chartXY";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartXY.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chartXY.Series.Add(series5);
             this.chartXY.Size = new System.Drawing.Size(1110, 185);
             this.chartXY.TabIndex = 0;
             this.chartXY.Text = "chart1";
@@ -230,18 +230,18 @@
             // 
             // chartTimeseries
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTimeseries.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            this.chartTimeseries.ChartAreas.Add(chartArea6);
             this.chartTimeseries.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chartTimeseries.Legends.Add(legend2);
+            legend6.Name = "Legend1";
+            this.chartTimeseries.Legends.Add(legend6);
             this.chartTimeseries.Location = new System.Drawing.Point(3, 270);
             this.chartTimeseries.Name = "chartTimeseries";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartTimeseries.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chartTimeseries.Series.Add(series6);
             this.chartTimeseries.Size = new System.Drawing.Size(1110, 185);
             this.chartTimeseries.TabIndex = 24;
             this.chartTimeseries.Text = "chart2";
@@ -637,7 +637,7 @@
             this.StabilizerIDInput.Size = new System.Drawing.Size(97, 20);
             this.StabilizerIDInput.TabIndex = 21;
             this.StabilizerIDInput.Text = "049162d2602f";
-            this.StabilizerIDInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
+            this.StabilizerIDInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StabilizerIDInput_KeyDown);
             // 
             // ChannelInput
             // 
