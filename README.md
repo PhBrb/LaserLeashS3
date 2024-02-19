@@ -69,7 +69,7 @@ To improve the demonstrated setup (independent of this software)
 - Trigger on square signal for step response analysis
 - Reset memory when values are changed; at the moment the XY plot shows a (confusing) mix of obsolete signals when settings are changed
 - Detect settings at program start; at the moment it is necessary to press initialize to synchronize Software & Stabilizer & MQTT broker
-- Better graphs (better autoscaling, ticks, ...)
+- Better graphs (better autoscaling, ticks, cross-platfrom support, ...)
 - Error signal analysis (instead maybe use https://github.com/quartiq/stabilizer-stream)
 - Auto relock / out-of-lock warning
 
