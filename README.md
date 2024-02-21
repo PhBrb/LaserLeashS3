@@ -2,11 +2,11 @@
 A Software for Spectroscopy Stabilization of your Laser (using [Stabilizer](https://github.com/sinara-hw/Stabilizer) & [Pounder](https://github.com/sinara-hw/Pounder))
 
 Key features:
- - MQTT GUI 
  - Network Oscilloscope
+ - MQTT GUI
  - Click & lock
 
-Using this software we demonstrated a frequency modulation spectroscopy (FMS). A laser beat measurement with an existing modulation transfer spectroscopy (MTS) has been conducted, but a conclusive measurement on the stability of the system has yet to be made.
+Using this software, we demonstrated a frequency modulation spectroscopy (FMS). A laser beat measurement with an existing modulation transfer spectroscopy (MTS) has been conducted, but a conclusive measurement on the stability of the system has yet to be made.
 
 ![GUI Image](media/GUI.PNG)
 
@@ -41,11 +41,12 @@ The screenshot above shows the spectrum of <sup>85</sup>Rb F=3 -> F'=2,3,4 trans
 * 99:1 fiber splitter
 * EOM iXBlue MPZ-LN-10 
 * SHG NTT Electronics WH-0780-000-F-B-C-M
-* Frequency Modulation Spectroscopy cell Vescent D2-210-Rb-FC (~1 mW laser input power)
+* Frequency Modulation Spectroscopy cell [Vescent D2-210-Rb-FC](https://vescent.com/de/d2-210-saturated-absorption-spectroscopy-module.html) (~1 mW laser input power)
+
 
 ### Stability Measurement
 
-To confirm the operation of this preliminary setup, a laser beat measurement has been conducted. Our setup was compared to laser light taken from an MTS stabilized atom interferometer setup, locked to <sup>85</sup>Rb F=3 -> F'=4. The stability of this laser was not measured, so the significance of this measurement is limited. To improve this, a three-cornered hat measurement or reference with known stability is needed. Such a measurement will be performed once we have improved the initial setup.
+To confirm the operation of this preliminary setup, a laser beat measurement has been conducted. Our setup was compared to laser light taken from an MTS stabilized atom interferometer setup, locked to <sup>85</sup>Rb F=3 -> F'=4. The stability of this laser was not measured. To improve this, a three-cornered hat measurement or reference with known stability is needed.
 
 Our laser was locked to <sup>85</sup>Rb F=3 -> F'=3 crossover 4. The beat signal was recorded with a Moku:Pro using a VHDL program to measure the period length ([source](./measurement/PeriodLength.vhd)).
 
@@ -69,7 +70,7 @@ To improve the demonstrated setup (independent of this software)
 - Trigger on square signal for step response analysis
 - Reset memory when values are changed; at the moment the XY plot shows a (confusing) mix of obsolete signals when settings are changed
 - Detect settings at program start; at the moment it is necessary to press initialize to synchronize Software & Stabilizer & MQTT broker
-- Better graphs (better autoscaling, ticks, cross-platfrom support, ...)
+- Better graphs (better autoscaling, ticks, cross-platform support, ...)
 - Error signal analysis (instead maybe use https://github.com/quartiq/stabilizer-stream)
 - Auto relock / out-of-lock warning
 
@@ -77,13 +78,13 @@ To improve the demonstrated setup (independent of this software)
 
 * The firmware that is necessary is currently not merged into the main branch of the dual-iir firmware, as a result the Stabilizer has to be reflashed after a restart (https://github.com/quartiq/stabilizer/pull/725)
 * The iir coefficient calculation seems to calculate slightly different values than its python implementation.
-* The dual-iir firmware has no output limit. The ylimit of the PID does only apply to the PID, the Function generator gets added afterwards. Eg. piezos do not like negative voltages. To protect your system this has to be considered. At the moment the software limits the function generator output to the ylimit values, but since it is not checked if software settings get applied, it could be possible to have PID and function generator active at the same time, exceeding the ylimit range.
+* The dual-iir firmware has no output limit. The ylimit of the PID does only apply to the PID, the Function generator gets added afterwards. E.g. piezos do not like negative voltages. To protect your system, this has to be considered. At the moment the software limits the function generator output to the ylimit values, but since it is not checked if software settings get applied, it could be possible to have PID and function generator active at the same time, exceeding the ylimit range.
 * There is a short (~1.5 ms) packet loss in the data stream after changing a parameter. This means you do not see the reaction of your system right after enabling the lock.
 
 ## Additional info:
 - An SNR improvement is possible with more optical modulation depth (external amplifier needed, a short test at ~20 dBm with Minicircuits ZX60-100VH looked promising)
-- At certain Oscilloscope & FG frequency settings the XY plot signal quality appears bad. It looks like X values get grouped. Exact source is unknown, I suspect an aliasing effect. 
-- If there is a problem, check the log, eg. for connection errors or click Initialize (this will take the laser out of lock).
+- At certain Oscilloscope & FG frequency settings, the XY plot signal quality appears bad. It looks like X values get grouped. Exact source is unknown, I suspect an aliasing effect. 
+- If there is a problem, check the log, e.g. for connection errors or click Initialize (this will take the laser out of lock).
 
 
 # Acknowledgement
