@@ -65,7 +65,6 @@ To improve the demonstrated setup (independent of this software)
 
 ## Possible future features / Limitations
 - Reading back MQTT parameters; at the moment it is not checked if a setting was applied successfully
-- Channel selection
 - Function generator with square signal
 - Trigger on square signal for step response analysis
 - Reset memory when values are changed; at the moment the XY plot shows a (confusing) mix of obsolete signals when settings are changed

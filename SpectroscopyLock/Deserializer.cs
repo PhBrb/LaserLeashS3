@@ -75,6 +75,7 @@ namespace LaserLeash
                 }
 
                 lastSequenceNumber = h.sequenceNumber;
+                int channel = Properties.Settings.Default.Channel;
 
                 if (h.magic != 0x57B)
                     throw new ArgumentOutOfRangeException("wrong magic number");
@@ -96,12 +97,12 @@ namespace LaserLeash
                 {
                     for (int iFloat = 0; iFloat < h.batchSize; iFloat++)
                     {
-                        iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size;
+                        iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size + channel * h.batchSize * 2;
                         memory.ADCEnqueue(UnitConvert.ADCMuToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
                     }
                     for (int iFloat = 0; iFloat < h.batchSize; iFloat++)
                     {
-                        iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size + 2 * h.batchSize * 2;
+                        iPos = iBatch * h.batchSize * 2 * 4 + iFloat * 2 + header.size + (2 + channel) * h.batchSize * 2;
                         memory.DACEnqueue(UnitConvert.DACMUToV(BitConverter.ToInt16(rawData, iPos)), h.sequenceNumber, iBatch, iFloat);
                     }
                 }

@@ -44,7 +44,7 @@ namespace LaserLeash
             OnValueIntChangeMap = new Dictionary<NumericUpDown, Action<int>>(){
                 {AveragesText, osciDisplay.setAverages},
                 {samplesOnDisplayText, osciDisplay.setDisplaySize},
-                {ChannelInput,  (value) => { } },
+                {ChannelInput,  (value) => {memory.clear(); } },
                 {StreamTargetPortInput, (value) => {
                                                         mqtt.sendStreamTarget(Properties.Settings.Default.StreamIP, value.ToString());
                                                         Program.udpReceiver.port = value;
